@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Reabilit.Domain\Reabilit.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
