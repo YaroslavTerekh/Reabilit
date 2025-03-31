@@ -1,0 +1,6 @@
+@Reabilit.API_HostAddress = http://localhost:5062
+
+GET {{Reabilit.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
