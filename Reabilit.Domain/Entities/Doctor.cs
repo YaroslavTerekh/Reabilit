@@ -11,5 +11,8 @@ public class Doctor : BaseEntity
     public int Age { get; set; }
 
     public List<Patient> Patients { get; set; } = new();
+
+    public Guid AppUserId { get; set; }
+    public AppUser? AppUser { get; set; }
 }
  

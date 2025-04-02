@@ -15,4 +15,7 @@ public class Patient : BaseEntity
 
     public Guid AppUserId { get; set; }
     public AppUser? AppUser { get; set; }
+
+    public Guid? DoctorId { get; set; }
+    public Doctor? Doctor { get; set; }
 }
