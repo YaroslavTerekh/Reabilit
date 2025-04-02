@@ -27,9 +27,10 @@ public class RegisterPatientCommandHandler : IRequestHandler<RegisterPatientComm
         {
             FirstName = command.FirstName,
             LastName = command.LastName,
+            UserName = String.Concat(command.FirstName, command.LastName, command.PhoneNumber),
             Age = command.Age,
             PhoneNumber = command.PhoneNumber,
-            PhoneNumberConfirmed = true // Create sms-validation if need
+            PhoneNumberConfirmed = true // Create sms validation if need
         };
 
         var result = await _userManager.CreateAsync(newUser, command.Password);

@@ -20,6 +20,4 @@ public class RegisterPatientCommand : IRequest
     public required string Password { get; set; }
 
     public Guid CityId { get; set; }
-
-    public Guid AppUserId { get; set; }
 }

@@ -10,6 +10,7 @@ using Swashbuckle.AspNetCore.Filters;
 using System.Reflection;
 using System.Text;
 using static Reabilit.Domain.DbConnection.DatabaseSeed.DbSeeding;
+using Reabilit.Domain.Constants;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,7 +29,8 @@ builder.Services.UseDatabaseContext(builder.Configuration);
 
 builder.Services.AddIdentity<AppUser, AppRole>()
     .AddEntityFrameworkStores<DataContext>()
-    .AddDefaultTokenProviders();
+    .AddDefaultTokenProviders()
+    .AddErrorDescriber<CustomIdentityErrorDescriber>();
 
 builder.Services.Configure<IdentityOptions>(options =>
 {

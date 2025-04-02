@@ -9,5 +9,6 @@ namespace Reabilit.Domain.DbConnection;
 
 public class AppRole : IdentityRole<Guid>
 {
+    public AppRole(string name) : base(name) { }
 
 }
