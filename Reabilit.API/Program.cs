@@ -9,6 +9,7 @@ using Reabilit.BL.ExtensionMethods.MediatrExtension;
 using Swashbuckle.AspNetCore.Filters;
 using System.Reflection;
 using System.Text;
+using static Reabilit.Domain.DbConnection.DatabaseSeed.DbSeeding;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -71,6 +72,12 @@ builder.Services.AddAuthentication(options => {
     });
 
 var app = builder.Build();
+var scope = app.Services.CreateScope();
+
+await SeedDataContext(
+    scope.ServiceProvider.GetRequiredService<DataContext>(),
+    scope.ServiceProvider.GetRequiredService<RoleManager<AppRole>>(),
+    scope.ServiceProvider.GetRequiredService<UserManager<AppUser>>());
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
