@@ -30,6 +30,15 @@ public static class DbSeeding
             "Сімферополь", "Севастополь", "Євпаторія", "Керч", "Ялта", "Феодосія", "Бахчисарай", "Джанкой", "Алушта", "Саки", "Армянськ", "Судак"
         };
 
+        List<string> rehabCenterDoctors = new List<string> 
+        { 
+            "Фізіотерапевт", "Реабілітолог", "Невролог", "Травматолог", "Ортопед", "Психолог", 
+            "Психотерапевт", "Психіатр", "Логопед", "Кардіолог", "Пульмонолог", "Гастроентеролог", 
+            "Ендокринолог", "Масажист", "Терапевт", "Дієтолог", "Анестезіолог", "Інструктор ЛФК", 
+            "Ерготерапевт", "Соціальний працівник" 
+        };
+
+
 
         if (!await roleManager.Roles.AnyAsync(t => t.Name == ApplicationRoles.RoleAdmin))
             await roleManager.CreateAsync(new AppRole(ApplicationRoles.RoleAdmin));
@@ -75,6 +84,25 @@ public static class DbSeeding
                 };
 
                 await context.AddAsync(newCity);
+            }
+
+            await context.SaveChangesAsync();
+        }
+
+        var doctorClasses = await context.DoctorClasses.ToListAsync();
+
+        if (doctorClasses.Count != rehabCenterDoctors.Count)
+        {
+            context.RemoveRange(doctorClasses);
+
+            foreach (var doctorClass in rehabCenterDoctors)
+            {
+                var docClassEntity = new DoctorClass
+                {
+                    ClassName = doctorClass
+                };
+
+                await context.DoctorClasses.AddAsync(docClassEntity);
             }
 
             await context.SaveChangesAsync();

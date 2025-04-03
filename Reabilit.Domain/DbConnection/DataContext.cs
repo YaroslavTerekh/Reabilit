@@ -13,4 +13,5 @@ public class DataContext : IdentityDbContext<AppUser, AppRole, Guid>
     public DbSet<City> Cities { get; set; }
     public DbSet<Doctor> Doctors { get; set; }
     public DbSet<Patient> Patients { get; set; }
+    public DbSet<DoctorClass> DoctorClasses { get; set; }
 } 
