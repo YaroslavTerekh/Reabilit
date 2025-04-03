@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Reabilit.BL.Behaviours.Authentication.RegisterDoctor;
 using Reabilit.BL.Behaviours.Authentication.RegisterPatient;
 
 namespace Reabilit.API.Controllers;
@@ -18,6 +19,13 @@ public class AdminController : ControllerBase
 
     [HttpPost("regiter/patient")]
     public async Task<IActionResult> RegisterPatientAsync([FromBody] RegisterPatientCommand command, CancellationToken cancellationToken = default)
+    {
+        await _sender.Send(command, cancellationToken);
+        return Ok();
+    }
+
+    [HttpPost("regiter/doctor")]
+    public async Task<IActionResult> RegisterDoctorAsync([FromBody] RegisterDoctorCommand command, CancellationToken cancellationToken = default)
     {
         await _sender.Send(command, cancellationToken);
         return Ok();

@@ -11,10 +11,13 @@ using System.Reflection;
 using System.Text;
 using static Reabilit.Domain.DbConnection.DatabaseSeed.DbSeeding;
 using Reabilit.Domain.Constants;
+using Reabilit.BL.Services.Abstractions;
+using Reabilit.BL.Services.Realizations;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddSingleton<IJWTService, JWTService>();
 
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
