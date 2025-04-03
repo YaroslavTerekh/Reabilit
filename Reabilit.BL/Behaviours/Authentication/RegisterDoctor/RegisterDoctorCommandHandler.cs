@@ -8,21 +8,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
-namespace Reabilit.BL.Behaviours.Authentication.RegisterPatient;
+namespace Reabilit.BL.Behaviours.Authentication.RegisterDoctor;
 
-public class RegisterPatientCommandHandler : IRequestHandler<RegisterPatientCommand>
+public class RegisterDoctorCommandHandler : IRequestHandler<RegisterDoctorCommand>
 {
     private readonly DataContext _context;
     private readonly UserManager<AppUser> _userManager;
 
-    public RegisterPatientCommandHandler(DataContext context, UserManager<AppUser> userManager)
+    public RegisterDoctorCommandHandler(DataContext context, UserManager<AppUser> userManager)
     {
         _context = context;
         _userManager = userManager;
     }
 
-    public async Task Handle(RegisterPatientCommand command, CancellationToken cancellationToken)
+    public async Task Handle(RegisterDoctorCommand command, CancellationToken cancellationToken)
     {
         var newUser = new AppUser
         {
@@ -38,16 +39,19 @@ public class RegisterPatientCommandHandler : IRequestHandler<RegisterPatientComm
 
         if (result.Succeeded)
         {
-            await _userManager.AddToRoleAsync(newUser, ApplicationRoles.RolePatient);
+            await _userManager.AddToRoleAsync(newUser, ApplicationRoles.RoleDoctor);
 
-            var patient = new Patient
+            var doctor = new Doctor
             {
-                AppUserId = newUser.Id,
-                CityId = command.CityId,
+                Degree = command.Degree,
+                DoctorClassId = command.DoctorClassId,
+                ExperienceInYear = command.ExperienceInYear,
+                AppUserId = newUser.Id
             };
 
-            await _context.Patients.AddAsync(patient, cancellationToken);
+            await _context.Doctors.AddAsync(doctor, cancellationToken);
             await _context.SaveChangesAsync(cancellationToken);
         }
+
     }
 }
