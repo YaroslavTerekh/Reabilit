@@ -44,6 +44,7 @@ public class RegisterPatientCommandHandler : IRequestHandler<RegisterPatientComm
             {
                 AppUserId = newUser.Id,
                 CityId = command.CityId,
+                IsActive = true
             };
 
             await _context.Patients.AddAsync(patient, cancellationToken);
