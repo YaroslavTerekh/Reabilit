@@ -13,6 +13,7 @@ using static Reabilit.Domain.DbConnection.DatabaseSeed.DbSeeding;
 using Reabilit.Domain.Constants;
 using Reabilit.BL.Services.Abstractions;
 using Reabilit.BL.Services.Realizations;
+using Reabilit.Domain.CustomMiddlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -90,6 +91,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 app.UseHttpsRedirection();
 
