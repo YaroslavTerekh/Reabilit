@@ -18,4 +18,6 @@ public class Patient : BaseEntity
 
     public Guid? DoctorId { get; set; }
     public Doctor? Doctor { get; set; }
+
+    public bool IsActive { get; set; }
 }
