@@ -8,6 +8,20 @@ namespace Reabilit.Domain.Constants;
 
 public static class ErrorMessages
 {
+    public static string Status404EntityNotFound(EntityType entityType)
+    {
+        return entityType switch
+        {
+            EntityType.Analyze => "Дослідження не знайдено",
+            EntityType.City => "Міста не знайдено",
+            EntityType.Doctor => "Лікаря не знайдено",
+            EntityType.DoctorClass => "Спеціальності не знайдено",
+            EntityType.Patient => "Пацієнта не знайдено",
+            EntityType.ProcedureEvent => "Запису не знайдено",
+            _ => "Не знайдено"
+        };
+    }
+
     public static string Status404UserNotFound(UserRole role)
     {
         return role switch
@@ -26,4 +40,14 @@ public enum UserRole
     Support = 2,
     Admin = 3,
     Default = 4
+}
+
+public enum EntityType
+{
+    Analyze = 0,
+    City = 1,
+    Doctor = 2,
+    DoctorClass = 3,
+    Patient = 4,
+    ProcedureEvent = 5
 }

@@ -13,8 +13,8 @@ public class Doctor : BaseEntity
     public int ExperienceInYear { get; set; }
 
     public List<Patient> Patients { get; set; } = new();
-    
-    
+    public List<ProcedureEvent> ProcedureEvents { get; set; } = new();
+
     public Guid DoctorClassId { get; set; }
     public DoctorClass? DoctorClass { get; set; }
 
