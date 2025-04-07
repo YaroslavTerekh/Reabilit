@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 
 namespace Reabilit.Domain.Entities;
 
-public class ProcedureEvent : BaseEntity //ToDo: add event time
+public class ProcedureEvent : BaseEntity
 {
     public required string Title { get; set; }
     public required string Description { get; set; }
     public ProcedureEventStatus Status { get; set; } = ProcedureEventStatus.Planned;
+    public DateTime StartsOn { get; set; }
 
     public Guid PatientId { get; set; }
     public Patient? Patient { get; set; }

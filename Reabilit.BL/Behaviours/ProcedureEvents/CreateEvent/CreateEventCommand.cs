@@ -13,4 +13,5 @@ public class CreateEventCommand : IRequest  // ToDo: Add field DateTime StatsOn
     public required string Description { get; set; }
     public Guid PatientId { get; set; }
     public Guid DoctorId { get; set; }
+    public DateTime StartsOn { get; set; }
 }

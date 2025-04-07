@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Reabilit.BL.Behaviours.DoctorSchedules.AddDoctorSchedule;
 using Reabilit.BL.Behaviours.ProcedureEvents.CreateEvent;
 using Reabilit.BL.Behaviours.ProcedureEvents.DoctorGetEvents;
 using Reabilit.BL.Behaviours.ProcedureEvents.EditEvent;
@@ -25,6 +26,14 @@ public class DoctorController : ControllerBase
 
     [HttpPost("event/add")]
     public async Task<IActionResult> AddEventAsync([FromBody] CreateEventCommand command, CancellationToken cancellationToken = default)
+    {
+        await _sender.Send(command, cancellationToken);
+
+        return Ok();
+    }
+
+    [HttpPost("schedule/add")]
+    public async Task<IActionResult> AddScheduleAsync([FromBody] AddDoctorScheduleCommand command, CancellationToken cancellationToken = default)
     {
         await _sender.Send(command, cancellationToken);
 

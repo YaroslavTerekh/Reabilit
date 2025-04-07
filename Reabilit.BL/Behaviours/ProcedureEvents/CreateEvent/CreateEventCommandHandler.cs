@@ -27,9 +27,38 @@ public class CreateEventCommandHandler : IRequestHandler<CreateEventCommand>
             throw new NotFoundException(ErrorMessages.Status404UserNotFound(UserRole.Patient));
         }
 
-        if (!await _context.Doctors.AnyAsync(d => d.Id == request.DoctorId, cancellationToken))
+        var doctor = await _context.Doctors
+            .Include(d => d.DoctorSchedules)
+            .FirstOrDefaultAsync(d => d.Id == request.DoctorId, cancellationToken);
+
+        if (doctor is null)
         {
             throw new NotFoundException(ErrorMessages.Status404UserNotFound(UserRole.Doctor));
+        }
+
+        var selectedDoctorSchedule = doctor.DoctorSchedules.FirstOrDefault(dc => dc.Day == request.StartsOn.DayOfWeek);
+
+        if (selectedDoctorSchedule is null)
+        {
+            throw new RequestException("лікар не працює");
+        }
+
+        var allSlots = new List<TimeSpan>();
+
+        for (var time = selectedDoctorSchedule.StartTime; time.Add(TimeSpan.FromMinutes(30)) <= selectedDoctorSchedule.EndTime; time.Add(TimeSpan.FromMinutes(30)))
+        {
+            allSlots.Add(time);
+            time = time.Add(TimeSpan.FromMinutes(30));
+        }
+
+        if(!allSlots.Contains(request.StartsOn.TimeOfDay))
+        {
+            throw new RequestException("такого слоту німа");
+        }
+
+        if(await _context.ProcedureEvents.AnyAsync(pe => pe.StartsOn == request.StartsOn, cancellationToken))
+        {
+            throw new RequestException("дата зайнята");
         }
 
         var procedureEvent = new ProcedureEvent
@@ -37,7 +66,8 @@ public class CreateEventCommandHandler : IRequestHandler<CreateEventCommand>
             Title = request.Title,
             Description = request.Description,
             DoctorId = request.DoctorId,
-            PatientId = request.PatientId
+            PatientId = request.PatientId,
+            StartsOn = request.StartsOn
         };
 
         await _context.ProcedureEvents.AddAsync(procedureEvent, cancellationToken);

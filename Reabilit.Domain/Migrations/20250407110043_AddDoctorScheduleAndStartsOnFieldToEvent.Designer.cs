@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Reabilit.Domain.DbConnection;
 
@@ -11,9 +12,11 @@ using Reabilit.Domain.DbConnection;
 namespace Reabilit.Domain.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20250407110043_AddDoctorScheduleAndStartsOnFieldToEvent")]
+    partial class AddDoctorScheduleAndStartsOnFieldToEvent
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -363,7 +366,7 @@ namespace Reabilit.Domain.Migrations
 
                     b.HasIndex("DoctorId");
 
-                    b.ToTable("DoctorSchedules");
+                    b.ToTable("DoctorSchedule");
                 });
 
             modelBuilder.Entity("Reabilit.Domain.Entities.Patient", b =>
@@ -417,8 +420,8 @@ namespace Reabilit.Domain.Migrations
                     b.Property<Guid>("PatientId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("StartsOn")
-                        .HasColumnType("datetime2");
+                    b.Property<TimeSpan>("StartsOn")
+                        .HasColumnType("time");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
