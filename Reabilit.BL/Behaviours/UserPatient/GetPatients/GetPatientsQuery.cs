@@ -6,9 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Reabilit.BL.Behaviours.UserDoctor.GetDoctors;
+namespace Reabilit.BL.Behaviours.UserPatient.GetPatients;
 
-public class GetDoctorsQuery : IRequest<List<Doctor>> // ToDo: AddDoctorDTO
+public class GetPatientsQuery : IRequest<List<Patient>> // ToDo: Add PatientDTO
 {
     public string? SearchText { get; set; }
 }

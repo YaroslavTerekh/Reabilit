@@ -6,9 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Reabilit.BL.Behaviours.UserDoctor.GetDoctor;
+namespace Reabilit.BL.Behaviours.UserPatient.GetPatient;
 
-public class GetDoctorQuery : IRequest<Doctor> // ToDo: Add DoctorDTO
+public class GetPatientQuery : IRequest<Patient> //ToDo: Add PatientDTO
 {
-    public Guid DoctorId { get; set; }
+    public Guid PatientId { get; set; }
 }
