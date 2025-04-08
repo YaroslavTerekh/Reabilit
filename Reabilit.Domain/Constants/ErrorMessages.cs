@@ -17,6 +17,7 @@ public static class ErrorMessages
             EntityType.Doctor => "Лікаря не знайдено",
             EntityType.DoctorClass => "Спеціальності не знайдено",
             EntityType.Patient => "Пацієнта не знайдено",
+            EntityType.Banner => "Баннер не знайдено",
             EntityType.ProcedureEvent => "Запису не знайдено",
             _ => "Не знайдено"
         };
@@ -49,5 +50,6 @@ public enum EntityType
     Doctor = 2,
     DoctorClass = 3,
     Patient = 4,
-    ProcedureEvent = 5
+    ProcedureEvent = 5,
+    Banner = 6
 }

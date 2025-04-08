@@ -22,7 +22,7 @@ public class ExceptionHandlingMiddleware
         } 
         catch (Exception ex)
         {
-            HandleError(context, ex);
+            await HandleError(context, ex);
         }
     }
 

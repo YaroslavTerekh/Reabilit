@@ -6,12 +6,7 @@ using System.Threading.Tasks;
 
 namespace Reabilit.Domain.CustomExceptions;
 
-public class NotFoundException : Exception
+public class NotFoundException(string description) : Exception
 {
-    public string Description { get; set; }
-
-    public NotFoundException(string description = "Не знайдено")
-    {
-        Description = description;
-    }
+    public string Description { get; set; } = description;
 }
