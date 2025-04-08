@@ -1,6 +1,8 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Reabilit.BL.Behaviours.ProcedureEvents.DoctorGetEvents;
+using Reabilit.BL.Behaviours.ProcedureEvents.PatientGetEvents;
 using Reabilit.BL.Behaviours.UserPatient.ModifyPatientInfo;
 using Reabilit.BL.Behaviours.UserPatient.ToggleAccount;
 
@@ -28,4 +30,8 @@ public class PatientController : ControllerBase
 
         return Ok();
     }
+
+    [HttpPost("event/get")]
+    public async Task<IActionResult> GetEventsAsync([FromBody] PatientGetEventsQuery query, CancellationToken cancellationToken = default)
+        => Ok(await _sender.Send(query, cancellationToken));
 }

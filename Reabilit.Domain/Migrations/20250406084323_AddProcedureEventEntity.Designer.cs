@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Reabilit.Domain.DbConnection;
 
@@ -11,9 +12,11 @@ using Reabilit.Domain.DbConnection;
 namespace Reabilit.Domain.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20250406084323_AddProcedureEventEntity")]
+    partial class AddProcedureEventEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -338,34 +341,6 @@ namespace Reabilit.Domain.Migrations
                     b.ToTable("DoctorClasses");
                 });
 
-            modelBuilder.Entity("Reabilit.Domain.Entities.DoctorSchedule", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("Day")
-                        .HasColumnType("int");
-
-                    b.Property<Guid>("DoctorId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<TimeSpan>("EndTime")
-                        .HasColumnType("time");
-
-                    b.Property<TimeSpan>("StartTime")
-                        .HasColumnType("time");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DoctorId");
-
-                    b.ToTable("DoctorSchedules");
-                });
-
             modelBuilder.Entity("Reabilit.Domain.Entities.Patient", b =>
                 {
                     b.Property<Guid>("Id")
@@ -416,9 +391,6 @@ namespace Reabilit.Domain.Migrations
 
                     b.Property<Guid>("PatientId")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("StartsOn")
-                        .HasColumnType("datetime2");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
@@ -513,17 +485,6 @@ namespace Reabilit.Domain.Migrations
                     b.Navigation("DoctorClass");
                 });
 
-            modelBuilder.Entity("Reabilit.Domain.Entities.DoctorSchedule", b =>
-                {
-                    b.HasOne("Reabilit.Domain.Entities.Doctor", "Doctor")
-                        .WithMany("DoctorSchedules")
-                        .HasForeignKey("DoctorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Doctor");
-                });
-
             modelBuilder.Entity("Reabilit.Domain.Entities.Patient", b =>
                 {
                     b.HasOne("Reabilit.Domain.Entities.AppUser", "AppUser")
@@ -575,8 +536,6 @@ namespace Reabilit.Domain.Migrations
 
             modelBuilder.Entity("Reabilit.Domain.Entities.Doctor", b =>
                 {
-                    b.Navigation("DoctorSchedules");
-
                     b.Navigation("Patients");
 
                     b.Navigation("ProcedureEvents");

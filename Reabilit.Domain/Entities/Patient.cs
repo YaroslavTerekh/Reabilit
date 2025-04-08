@@ -9,6 +9,7 @@ namespace Reabilit.Domain.Entities;
 public class Patient : BaseEntity
 { 
     public List<Analyze> Analyzes { get; set; } = new();
+    public List<ProcedureEvent> ProcedureEvents { get; set; } = new();
 
     public Guid CityId { get; set; }
     public City? City { get; set; }

@@ -1,0 +1,23 @@
+﻿using MediatR;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Reabilit.BL.Behaviours.DoctorSchedules.GetDoctorFreeSlots;
+using Reabilit.BL.Behaviours.UserDoctor.ModifyDoctorInfo;
+
+namespace Reabilit.API.Controllers;
+
+[Route("api/[controller]")]
+[ApiController]
+public class DoctorScheduleController : ControllerBase
+{
+    private readonly ISender _sender;
+
+    public DoctorScheduleController(ISender sender)
+    {
+        _sender = sender;
+    }
+
+    [HttpPost("slots/get")]
+    public async Task<IActionResult> GetDoctorFreeSlotsAsync([FromBody] GetDoctorFreeSlotsQuery query, CancellationToken cancellationToken = default)
+    => Ok(await _sender.Send(query, cancellationToken));
+}
