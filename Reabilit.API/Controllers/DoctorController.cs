@@ -4,8 +4,9 @@ using Reabilit.BL.Behaviours.DoctorSchedules.AddDoctorSchedule;
 using Reabilit.BL.Behaviours.ProcedureEvents.CreateEvent;
 using Reabilit.BL.Behaviours.ProcedureEvents.DoctorGetEvents;
 using Reabilit.BL.Behaviours.ProcedureEvents.EditEvent;
+using Reabilit.BL.Behaviours.UserDoctor.GetDoctor;
+using Reabilit.BL.Behaviours.UserDoctor.GetDoctors;
 using Reabilit.BL.Behaviours.UserDoctor.ModifyDoctorInfo;
-using Reabilit.BL.Behaviours.UserPatient.ToggleAccount;
 
 namespace Reabilit.API.Controllers;
 
@@ -51,4 +52,12 @@ public class DoctorController : ControllerBase
     [HttpPost("event/get")]
     public async Task<IActionResult> GetEventsAsync([FromBody] DoctorGetEventsQuery query, CancellationToken cancellationToken = default)
         => Ok(await _sender.Send(query, cancellationToken));
+
+    [HttpPost("doctor/get")]
+    public async Task<IActionResult> GetDoctorAsync([FromBody] GetDoctorQuery query, CancellationToken cancellationToken = default)
+        => Ok(await _sender.Send(query, cancellationToken));
+
+    [HttpPost("doctors/get")]
+    public async Task<IActionResult> GetDoctorsAsync([FromBody] GetDoctorsQuery query, CancellationToken cancellationToken = default)
+    => Ok(await _sender.Send(query, cancellationToken));
 }
