@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Reabilit.BL.Behaviours.Authentication.RegisterDoctor;
 using Reabilit.BL.Behaviours.Authentication.RegisterPatient;

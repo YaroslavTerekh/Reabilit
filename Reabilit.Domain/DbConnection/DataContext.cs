@@ -17,6 +17,7 @@ public class DataContext : IdentityDbContext<AppUser, AppRole, Guid>
     public DbSet<DoctorClass> DoctorClasses { get; set; }
     public DbSet<ProcedureEvent> ProcedureEvents { get; set; }
     public DbSet<DoctorSchedule> DoctorSchedules { get; set; }
+    public DbSet<Banner> Banners { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
