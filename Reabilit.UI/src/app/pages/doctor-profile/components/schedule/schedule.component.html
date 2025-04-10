@@ -1,0 +1,17 @@
+<div class="schedule">
+    <h3>ЗАПИС НА ПРИЙОМ</h3>
+  
+    <div class="days-grid">
+      @for (day of weekSchedule; track day.label) {
+        <div class="day">
+          <h4>{{ day.label }}</h4>
+          <div class="times">
+            @for (time of day.times; track time) {
+              <button>{{ time }}</button>
+            }
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+  

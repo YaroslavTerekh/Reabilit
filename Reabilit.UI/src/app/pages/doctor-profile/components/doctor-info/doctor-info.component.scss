@@ -1,0 +1,39 @@
+.info-container {
+    display: flex;
+    gap: 30px;
+    align-items: flex-start;
+  
+    img {
+      width: 180px;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    }
+  
+    .details {
+      flex: 1;
+  
+      h2 {
+        font-size: 24px;
+        margin-bottom: 10px;
+  
+        span {
+          font-weight: normal;
+          color: gray;
+          text-transform: uppercase;
+        }
+      }
+  
+      p {
+        margin: 5px 0;
+        line-height: 1.5;
+      }
+  
+      .bio {
+        color: #444;
+        margin-top: 10px;
+        font-size: 14px;
+      }
+    }
+  }
+  
