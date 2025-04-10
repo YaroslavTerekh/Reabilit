@@ -26,6 +26,7 @@
     body {
         font-family: "Roboto", sans-serif;
         font-optical-sizing: auto; 
+        
     font-size: 14px;
     line-height: 1;
     color: #373737;
@@ -38,13 +39,22 @@
     clear: both;
     } 
 
-    .content {
-        max-width: calc(100% - 400px); 
-        margin: 0 auto;
-      }
+    .wide-content {
+      max-width: 70vw; 
+      margin: 0 auto;
+    }
+
+    .default-content {
+      max-width: 60vw; 
+      margin: 0 auto;
+    }
 
       .actor-regular {
         font-family: "Actor", sans-serif;
         font-weight: 400;
         font-style: normal;
+      }
+
+      input:focus {
+        outline: none;
       }
