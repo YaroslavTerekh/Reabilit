@@ -1,0 +1,46 @@
+<div class="profile-wrapper">
+    <h2 class="title">МІЙ ПРОФІЛЬ</h2>
+  
+    <div class="profile-container">
+      <div class="form-section">
+        <label>
+          Ваше ім’я
+          <input type="text" placeholder="Ім’я" />
+        </label>
+        <label>
+          Ваше прізвище
+          <input type="text" placeholder="Прізвище" />
+        </label>
+        <label>
+          Ваш номер телефону
+          <input type="tel" placeholder="Номер телефону" />
+        </label>
+        <label>
+          Ваш вік
+          <input type="number" placeholder="Вік" />
+        </label>
+        <label>
+          Ваше місто
+          <select>
+            <option value="">Оберіть місто</option>
+            <option value="lviv">Львів</option>
+            <option value="kyiv">Київ</option>
+            <option value="odesa">Одеса</option>
+          </select>
+        </label>
+      </div>
+  
+      <div class="doctor-section">
+        <p class="section-title">Ваш лікуючий лікар</p>
+        <p class="doctor-name">Андрій Андрійович Матвієнко</p>
+        <p class="doctor-type">ЛОР</p>
+  
+        <div class="button-group">
+          <button class="btn danger">СКАРГА</button>
+          <button class="btn warning">ЗАПИТ НА ЗАМІНУ</button>
+          <button [routerLink]="['/my-doctor']" class="btn success">ЗАПИС НА ПРИЙОМ</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
