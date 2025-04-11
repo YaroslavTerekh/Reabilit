@@ -1,0 +1,83 @@
+.doctor-card {
+  background-color: #fff; // Білий фон для картки
+  border-radius: 5px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05); // Легка тінь
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  border: 1px solid #e0e0e0; // Тонка сіра межа
+
+  .doctor-image {
+    height: 120px; // Зменшимо висоту зображення
+    background-color: #e9ecef; // Світло-сірий фон для placeholder
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  .doctor-info {
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex-grow: 1;
+
+    .doctor-name {
+      font-size: 1.1em;
+      font-weight: 500; // Трохи менша жирність
+      margin-bottom: 5px;
+      color: #333; // Темно-сірий колір
+    }
+
+    .doctor-degree,
+    .doctor-class {
+      color: #6c757d; // Сірий колір тексту
+      font-size: 0.9em;
+    }
+
+    .doctor-details {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 8px;
+
+      .detail-item {
+        font-size: 0.9em;
+        color: #495057;
+
+        .detail-label {
+          font-weight: bold;
+        }
+      }
+    }
+
+    .doctor-bio {
+      color: #555;
+      font-size: 0.95em;
+      margin-bottom: 12px;
+      flex-grow: 1;
+      line-height: 1.4; // Додамо міжрядковий інтервал
+    }
+
+    .view-details-button {
+      background-color: #007bff; // Основний синій колір
+      color: white;
+      border: none;
+      padding: 8px 12px; // Менші відступи
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 0.9em;
+      transition: background-color 0.2s ease-in-out;
+
+      &:hover {
+        background-color: #0056b3;
+      }
+    }
+  }
+}
