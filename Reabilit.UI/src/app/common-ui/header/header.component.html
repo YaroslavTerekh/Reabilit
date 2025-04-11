@@ -10,7 +10,7 @@
                 <li [routerLink]="['my-doctor']" class="nav-link">Мій лікар</li>
                 <li class="section__login_button">
                     <div>N</div>
-                    <p [routerLink]="['my-profile']" class="login_button">Увійти</p>
+                    <p class="login_button" (click)="showLoginModal()">Увійти</p>
                 </li>
             </ul>
         </nav>

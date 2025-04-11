@@ -1,0 +1,18 @@
+<div class="modal-content">
+    <h2 class="modal-title">Вхід</h2>
+    <form class="login-form">
+        <div class="form-group">
+            <label for="phone">Номер телефону</label>
+            <input type="tel" id="phone" name="phone" placeholder="+380XXXXXXXXX">
+        </div>
+        <div class="form-group">
+            <label for="password">Пароль</label>
+            <input type="password" id="password" name="password" placeholder="Введіть пароль">
+        </div>
+        <div class="form-actions">
+            <button type="submit" class="login-button">Увійти</button>
+            <button type="button" class="close-button">Скасувати</button>
+        </div>
+    </form>
+</div>
+<div class="modal-overlay" (click)="hideLoginModal()"> </div>
