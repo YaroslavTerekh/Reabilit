@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { AuthService } from '../../services/authorization/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -9,4 +10,11 @@ import { RouterLink } from '@angular/router';
 })
 export class HeaderComponent {
 
+    constructor(
+      private readonly authService: AuthService
+    ) {}
+
+    protected showLoginModal(): void {
+      this.authService.$showLoginModalSubject.next(true);
+    }
 }
