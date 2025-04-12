@@ -8,6 +8,8 @@ namespace Reabilit.Domain.Constants;
 
 public static class ErrorMessages
 {
+    public const string WrongPassword = "Неправильний пароль";
+
     public static string Status404EntityNotFound(EntityType entityType)
     {
         return entityType switch
