@@ -35,10 +35,15 @@ public class ExceptionHandlingMiddleware
                     code = StatusCodes.Status404NotFound,
                     message = notFoundException.Description
                 },
-
+            RequestException requestException =>
+                new
+                {
+                    code = StatusCodes.Status400BadRequest,
+                    message = requestException.Description
+                },
             _ => new
             {
-                code = 0,
+                code = 500,
                 message = "Щось пішло не так"
             }
         };
