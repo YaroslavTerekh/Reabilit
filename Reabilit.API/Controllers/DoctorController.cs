@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Reabilit.BL.Behaviours.DoctorSchedules.AddDoctorSchedule;
 using Reabilit.BL.Behaviours.ProcedureEvents.CreateEvent;
@@ -7,9 +8,11 @@ using Reabilit.BL.Behaviours.ProcedureEvents.EditEvent;
 using Reabilit.BL.Behaviours.UserDoctor.GetDoctor;
 using Reabilit.BL.Behaviours.UserDoctor.GetDoctors;
 using Reabilit.BL.Behaviours.UserDoctor.ModifyDoctorInfo;
+using Reabilit.Domain.Constants;
 
 namespace Reabilit.API.Controllers;
 
+[Authorize(Policy = ApplicationPolicies.Doctors)]
 [Route("api/[controller]")]
 [ApiController]
 public class DoctorController : ControllerBase
