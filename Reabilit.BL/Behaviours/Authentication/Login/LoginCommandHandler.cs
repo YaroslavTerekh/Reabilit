@@ -3,15 +3,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Reabilit.BL.Services.Abstractions;
 using Reabilit.Domain.Constants;
-using Reabilit.Domain.CustomExceptions;
 using Reabilit.Domain.DbConnection;
 using Reabilit.Domain.DTOs;
 using Reabilit.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Reabilit.BL.Behaviours.Authentication.Login;
 
