@@ -1,11 +1,14 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Reabilit.BL.Behaviours.DoctorSchedules.GetDoctorFreeSlots;
 using Reabilit.BL.Behaviours.UserDoctor.ModifyDoctorInfo;
+using Reabilit.Domain.Constants;
 
 namespace Reabilit.API.Controllers;
 
+[Authorize(Policy = ApplicationPolicies.AdminOnly)]
 [Route("api/[controller]")]
 [ApiController]
 public class DoctorScheduleController : ControllerBase
