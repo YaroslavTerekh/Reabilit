@@ -10,13 +10,23 @@ import { HttpClient } from '@angular/common/http';
 })
 export class AuthService {
   public $showLoginModalSubject: ReplaySubject<boolean> = new ReplaySubject<boolean>();
+  public $isAuthorized: ReplaySubject<boolean> = new ReplaySubject<boolean>();
   private readonly baseUrl: string = config.apiUrl;
 
   constructor(
     private readonly http: HttpClient
-  ) { }
+  ) {
+    let token = localStorage.getItem("token");
+    if(token) {
+      this.$isAuthorized.next(true);
+    }
+  }
 
   public login(request: LoginModel): Observable<AuthToken> {
     return this.http.post<AuthToken>(`${this.baseUrl}/Auth/login`, request);
+  }
+
+  public getCurrentUserRole(): Observable<string> {
+    return this.http.get<string>(`${this.baseUrl}/Auth/role/get`);
   }
 }

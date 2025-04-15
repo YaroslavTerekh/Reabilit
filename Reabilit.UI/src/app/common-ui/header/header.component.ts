@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { AuthService } from '../../services/authorization/auth.service';
 
@@ -8,13 +8,22 @@ import { AuthService } from '../../services/authorization/auth.service';
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
+  protected isAuthorized: boolean = false;
 
-    constructor(
-      private readonly authService: AuthService
-    ) {}
+  constructor(
+    private readonly authService: AuthService
+  ) { }
 
-    protected showLoginModal(): void {
-      this.authService.$showLoginModalSubject.next(true);
-    }
+  ngOnInit(): void {
+    this.authService.$isAuthorized.subscribe({
+      next: res => {
+        this.isAuthorized = res;
+      }
+    })
+  }
+
+  protected showLoginModal(): void {
+    this.authService.$showLoginModalSubject.next(true);
+  }
 }
