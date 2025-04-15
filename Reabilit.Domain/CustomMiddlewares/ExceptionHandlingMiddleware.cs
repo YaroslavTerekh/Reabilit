@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
+using Reabilit.Domain.Constants;
 using Reabilit.Domain.CustomExceptions;
+using System.Data.Common;
 using System.Text.Json;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Reabilit.Domain.CustomMiddlewares;
 
@@ -41,11 +43,18 @@ public class ExceptionHandlingMiddleware
                     code = StatusCodes.Status400BadRequest,
                     message = requestException.Description
                 },
-            _ => new
-            {
-                code = 500,
-                message = "Щось пішло не так"
-            }
+            DbUpdateException dbUpdateEx when dbUpdateEx.InnerException is DbException dbEx && dbEx.Message.Contains("IX_AspNetUsers_PhoneNumber") => 
+                new
+                {
+                    code = StatusCodes.Status400BadRequest,
+                    message = ErrorMessages.PhoneNumberExists
+                },
+            _ => 
+                new
+                {
+                    code = 500,
+                    message = "Щось пішло не так"
+                }
         };
 
         context.Response.ContentType = "application/json";
