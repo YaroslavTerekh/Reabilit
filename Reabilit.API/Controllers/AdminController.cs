@@ -1,10 +1,13 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Reabilit.BL.Behaviours.Authentication.RegisterDoctor;
 using Reabilit.BL.Behaviours.Authentication.RegisterPatient;
+using Reabilit.Domain.Constants;
 
 namespace Reabilit.API.Controllers;
 
+[Authorize(Policy = ApplicationPolicies.Admins)]
 [Route("api/[controller]")]
 [ApiController]
 public class AdminController : ControllerBase
