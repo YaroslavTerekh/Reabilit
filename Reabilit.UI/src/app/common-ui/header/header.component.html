@@ -10,7 +10,11 @@
                 <li [routerLink]="['my-doctor']" class="nav-link">Мій лікар</li>
                 <li class="section__login_button">
                     <div>N</div>
-                    <p class="login_button" (click)="showLoginModal()">Увійти</p>
+                    @if(!isAuthorized) {
+                        <p class="action_button login_button" (click)="showLoginModal()">Увійти</p>
+                    } @else {
+                        <p class="action_button myaccount_button">Мій акаунт</p>
+                    }
                 </li>
             </ul>
         </nav>

@@ -43,9 +43,13 @@ export class LoginComponent {
     this.authService.login(loginData).subscribe({
       next: (token: AuthToken) => {
         this.hideLoginModal();
-        console.log(new DatePipe("uk_UA").transform(token.expires, "hh:mm dd/MM/yyyy"));
-        
+
+        localStorage.setItem('token', token.token);
+        localStorage.setItem('expires', token.expires);
+
         this.toastService.show(`Ваша сесія активна до ${new DatePipe("uk-UA").transform(token.expires, "hh:mm dd/MM/yyyy")}`, 'info');
+
+        this.authService.$isAuthorized.next(true);
       },
       error: (err) => {        
         this.toastService.show(err.error?.message, 'error');
