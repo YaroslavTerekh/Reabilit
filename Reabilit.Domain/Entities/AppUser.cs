@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Reabilit.Domain.DbConnection;
 using System;
 using System.Collections.Generic;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace Reabilit.Domain.Entities;
 
+[Index(nameof(PhoneNumber), IsUnique = true)]
 public class AppUser : IdentityUser<Guid>
 {
     public required string FirstName { get; set; }
