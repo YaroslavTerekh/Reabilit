@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Reabilit.Domain.DTOs;
 using Reabilit.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Reabilit.BL.Behaviours.UserPatient.GetPatient;
 
-public class GetPatientQuery : IRequest<Patient> //ToDo: Add PatientDTO
+public class GetPatientQuery : IRequest<PatientDTO> //ToDo: Add PatientDTO
 {
-    public Guid PatientId { get; set; }
+    public Guid AppUserId { get; set; }
 }
