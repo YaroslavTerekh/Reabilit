@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Reabilit.BL.Behaviours.ProcedureEvents.DoctorGetEvents;
@@ -7,9 +8,11 @@ using Reabilit.BL.Behaviours.UserPatient.GetPatient;
 using Reabilit.BL.Behaviours.UserPatient.GetPatients;
 using Reabilit.BL.Behaviours.UserPatient.ModifyPatientInfo;
 using Reabilit.BL.Behaviours.UserPatient.ToggleAccount;
+using Reabilit.Domain.Constants;
 
 namespace Reabilit.API.Controllers;
 
+[Authorize(Policy = ApplicationPolicies.Patients)]
 [Route("api/[controller]")]
 [ApiController]
 public class PatientController : ControllerBase

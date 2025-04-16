@@ -4,6 +4,7 @@ import { config } from '../../config';
 import { LoginModel } from '../requestModels/LoginModel';
 import { AuthToken } from '../responseModels/AuthToken';
 import { HttpClient } from '@angular/common/http';
+import { UserRoleDTO } from '../responseModels/UserRoleDTO';
 
 @Injectable({
   providedIn: 'root'
@@ -26,7 +27,7 @@ export class AuthService {
     return this.http.post<AuthToken>(`${this.baseUrl}/Auth/login`, request);
   }
 
-  public getCurrentUserRole(): Observable<string> {
-    return this.http.get<string>(`${this.baseUrl}/Auth/role/get`);
+  public getCurrentUserRole(): Observable<UserRoleDTO> {
+    return this.http.get<UserRoleDTO>(`${this.baseUrl}/Auth/role/get`);
   }
 }

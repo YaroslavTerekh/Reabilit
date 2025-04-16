@@ -9,6 +9,7 @@ namespace Reabilit.Domain.Constants;
 public static class ErrorMessages
 {
     public const string WrongPassword = "Неправильний пароль";
+    public const string PhoneNumberExists = "Користувач із таким номером телефону вже існує";
 
     public static string Status404EntityNotFound(EntityType entityType)
     {

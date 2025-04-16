@@ -15,6 +15,7 @@ using Reabilit.BL.Services.Abstractions;
 using Reabilit.BL.Services.Realizations;
 using Reabilit.Domain.CustomMiddlewares;
 using Microsoft.AspNetCore.Builder;
+using System.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,10 +27,29 @@ builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
-builder.Services.AddMediatr();
-
 builder.Services.AddAuthentication();
-builder.Services.AddAuthorization();
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy(ApplicationPolicies.Admins, policy =>
+    {
+        policy.RequireRole(ApplicationRoles.RoleAdmin, ApplicationRoles.RoleSupport);
+    });
+
+    options.AddPolicy(ApplicationPolicies.AdminOnly, policy =>
+    {
+        policy.RequireRole(ApplicationRoles.RoleAdmin);
+    });
+
+    options.AddPolicy(ApplicationPolicies.Doctors, policy =>
+    {
+        policy.RequireRole(ApplicationRoles.RoleDoctor);
+    });
+
+    options.AddPolicy(ApplicationPolicies.Patients, policy =>
+    {
+        policy.RequireRole(ApplicationRoles.RolePatient);
+    });
+});
 
 builder.Services.UseDatabaseContext(builder.Configuration);
 
@@ -90,6 +110,8 @@ builder.Services.AddAuthentication(options => {
             ValidateLifetime = true
         };
     });
+
+builder.Services.AddMediatr();
 
 var app = builder.Build();
 var scope = app.Services.CreateScope();

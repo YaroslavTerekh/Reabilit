@@ -1,13 +1,16 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Reabilit.BL.Behaviours.Banners.AddBanner;
 using Reabilit.BL.Behaviours.Banners.DeleteBanner;
 using Reabilit.BL.Behaviours.Banners.GetBanners;
 using Reabilit.BL.Behaviours.UserPatient.ModifyPatientInfo;
+using Reabilit.Domain.Constants;
 
 namespace Reabilit.API.Controllers;
 
+[Authorize(Policy = ApplicationPolicies.AdminOnly)]
 [Route("api/[controller]")]
 [ApiController]
 public class BannerController : ControllerBase
