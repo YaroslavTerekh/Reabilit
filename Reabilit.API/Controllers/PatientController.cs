@@ -44,7 +44,7 @@ public class PatientController : ControllerBase
     public async Task<IActionResult> GetPatientsAsync([FromBody] GetPatientsQuery query, CancellationToken cancellationToken = default)
         => Ok(await _sender.Send(query, cancellationToken));
 
-    [HttpPost("patient/get")]
+    [HttpPost("get")]
     public async Task<IActionResult> GetPatientAsync([FromBody] GetPatientQuery query, CancellationToken cancellationToken = default)
         => Ok(await _sender.Send(query, cancellationToken));
 }
