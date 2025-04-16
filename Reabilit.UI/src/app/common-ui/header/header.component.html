@@ -13,7 +13,7 @@
                     @if(!isAuthorized) {
                         <p class="action_button login_button" (click)="showLoginModal()">Увійти</p>
                     } @else {
-                        <p class="action_button myaccount_button">Мій акаунт</p>
+                        <p class="action_button myaccount_button" [routerLink]="['my-profile']">Мій акаунт</p>
                     }
                 </li>
             </ul>
