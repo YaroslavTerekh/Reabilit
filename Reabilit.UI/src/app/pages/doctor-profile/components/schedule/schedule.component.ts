@@ -1,18 +1,39 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { FreeSlotsDTO } from '../../../../services/responseModels/FreeSlotsDTO';
+import { PatientService } from '../../../../services/patient/patient.service';
+import { DoctorService } from '../../../../services/doctor/doctor.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-schedule',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './schedule.component.html',
   styleUrl: './schedule.component.scss'
 })
-export class ScheduleComponent {
-  weekSchedule = [
-    { label: 'ВТ, 5 КВІТНЯ', times: ['9:00', '9:30', '10:00', '10:30', '11:00', '11:30', '12:00', '12:30', '13:00'] },
-    { label: 'СР, 6 КВІТНЯ', times: ['9:00', '9:30', '10:00', '10:30', '11:00', '11:30', '12:00', '12:30', '13:00'] },
-    { label: 'ЧТ, 7 КВІТНЯ', times: ['9:00', '9:30', '10:00', '10:30', '11:00', '11:30', '12:00', '12:30', '13:00'] },
-    { label: 'ПТ, 8 КВІТНЯ', times: ['9:00', '9:30', '10:00', '10:30', '11:00', '11:30', '12:00', '12:30', '13:00'] },
-    { label: 'ПН, 11 КВІТНЯ', times: ['9:00', '9:30', '10:00', '10:30', '11:00', '11:30', '12:00', '12:30', '13:00'] },
-    { label: 'ВТ, 12 КВІТНЯ', times: ['9:00', '9:30', '10:00', '10:30', '11:00', '11:30', '12:00', '12:30', '13:00'] },
+export class ScheduleComponent implements OnInit {
+  docWeekSchedule: FreeSlotsDTO[] = [];
+  daysOfWeek: string[] = [
+    'Понеділок',
+    'Вівторок',
+    'Середа',
+    'Четвер',
+    'П’ятниця',
+    'Субота',
+    'Неділя'
   ];
+  
+  constructor(
+    private readonly doctorService: DoctorService
+  ) {}
+
+  ngOnInit(): void {
+    this.doctorService.GetLoggedInUserDoctorFreeSchedule()
+      .subscribe({
+        next: res => {
+          this.docWeekSchedule = res;
+          console.log(JSON.stringify(res));
+          
+        }
+      })
+  }
 }

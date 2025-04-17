@@ -2,14 +2,18 @@
     <h3>ЗАПИС НА ПРИЙОМ</h3>
   
     <div class="days-grid">
-      @for (day of weekSchedule; track day.label) {
+      @for (day of docWeekSchedule; track day) {
         <div class="day">
-          <h4>{{ day.label }}</h4>
-          <div class="times">
-            @for (time of day.times; track time) {
-              <button>{{ time }}</button>
-            }
-          </div>
+          <h4>{{ daysOfWeek[day.day] }}</h4>
+          @if(day.slots.length > 0) {
+            <div class="times">
+              @for (time of day.slots; track time) {
+                <button [ngClass]="time.isAvailable ? 'active' : 'inactive'">{{ time.time }}</button>
+              }
+            </div>
+          } @else {
+            <p class="absent">Лікар не приймає</p>
+          }
         </div>
       }
     </div>
