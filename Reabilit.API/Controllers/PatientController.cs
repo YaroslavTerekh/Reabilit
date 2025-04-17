@@ -2,8 +2,12 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Reabilit.BL.Behaviours.DoctorSchedules.GetDoctorFreeSlots;
 using Reabilit.BL.Behaviours.ProcedureEvents.DoctorGetEvents;
 using Reabilit.BL.Behaviours.ProcedureEvents.PatientGetEvents;
+using Reabilit.BL.Behaviours.UserDoctor.GetDoctor;
+using Reabilit.BL.Behaviours.UserPatient.GetMyDoctor;
+using Reabilit.BL.Behaviours.UserPatient.GetMyDoctorFreeSlots;
 using Reabilit.BL.Behaviours.UserPatient.GetPatient;
 using Reabilit.BL.Behaviours.UserPatient.GetPatients;
 using Reabilit.BL.Behaviours.UserPatient.ModifyPatientInfo;
@@ -15,7 +19,7 @@ namespace Reabilit.API.Controllers;
 [Authorize(Policy = ApplicationPolicies.Patients)]
 [Route("api/[controller]")]
 [ApiController]
-public class PatientController : ControllerBase
+public class PatientController : BaseController
 {
     private readonly ISender _sender;
 
@@ -47,4 +51,12 @@ public class PatientController : ControllerBase
     [HttpPost("get")]
     public async Task<IActionResult> GetPatientAsync([FromBody] GetPatientQuery query, CancellationToken cancellationToken = default)
         => Ok(await _sender.Send(query, cancellationToken));
+
+    [HttpGet("doctor/get")]
+    public async Task<IActionResult> GetDoctorAsync(CancellationToken cancellationToken = default)
+        => Ok(await _sender.Send(new GetMyDoctorQuery(CurrentUserId), cancellationToken));
+
+    [HttpGet("doctor/slots/get")]
+    public async Task<IActionResult> GetDoctorFreeSlotsAsync(CancellationToken cancellationToken = default)
+        => Ok(await _sender.Send(new GetMyDoctorFreeSlotsQuery(CurrentUserId), cancellationToken));
 }

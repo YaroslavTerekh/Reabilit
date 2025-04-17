@@ -8,7 +8,7 @@ using Reabilit.Domain.Constants;
 
 namespace Reabilit.API.Controllers;
 
-[Authorize(Policy = ApplicationPolicies.AdminOnly)]
+[Authorize]
 [Route("api/[controller]")]
 [ApiController]
 public class DoctorScheduleController : ControllerBase
