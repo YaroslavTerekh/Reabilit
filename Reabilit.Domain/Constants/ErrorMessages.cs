@@ -10,6 +10,11 @@ public static class ErrorMessages
 {
     public const string WrongPassword = "Неправильний пароль";
     public const string PhoneNumberExists = "Користувач із таким номером телефону вже існує";
+    public const string Unauthorized401 = "Схоже, Ви не увійшли в акаунт. Увійдіть, або спробуйте ще раз";
+    public const string Unauthorized403 = "На жаль, Ви не маєте доступу до цієї функції";
+    public const string DoctorAbsent = "В цей день лікар не працює";
+    public const string DateBusy = "Ця дата вже зайнята";
+    public const string SlotAbsent = "В цей час лікар зайнятий або вже не працюватиме";
 
     public static string Status404EntityNotFound(EntityType entityType)
     {

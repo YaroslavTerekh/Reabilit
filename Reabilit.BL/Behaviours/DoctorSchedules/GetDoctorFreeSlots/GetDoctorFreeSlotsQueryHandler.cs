@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Reabilit.Domain.Constants;
 using Reabilit.Domain.DbConnection;
 using Reabilit.Domain.DTOs;
+using Reabilit.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -65,7 +66,7 @@ public class GetDoctorFreeSlotsQueryHandler : IRequestHandler<GetDoctorFreeSlots
 
             foreach (var slot in allSlots)
             {
-                if(!doctor.ProcedureEvents.Any(pe => pe.StartsOn.DayOfWeek == schedule.Day && pe.StartsOn.TimeOfDay == slot))
+                if(!doctor.ProcedureEvents.Any(pe => pe.StartsOn.DayOfWeek == schedule.Day && pe.StartsOn.TimeOfDay == slot && pe.Status == ProcedureEventStatus.Planned))
                 {
                     freeSlot.Slots.Add(new SlotHour { Time = slot, IsAvailable = true });
 
