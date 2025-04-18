@@ -49,6 +49,12 @@ public class ExceptionHandlingMiddleware
                     code = StatusCodes.Status400BadRequest,
                     message = ErrorMessages.PhoneNumberExists
                 },
+            AuthException authException =>
+                new
+                {
+                    code = authException.Code,
+                    message = authException.Description
+                },
             _ => 
                 new
                 {
