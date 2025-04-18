@@ -1,5 +1,5 @@
 <div class="cards default-content">
-    <app-event-card></app-event-card>
-    <app-event-card></app-event-card>
-    <app-event-card></app-event-card>
+    @for(event of events; track event) {
+        <app-event-card [event]="event" (needToReload)="getAllEvents()"></app-event-card>
+    }
 </div>

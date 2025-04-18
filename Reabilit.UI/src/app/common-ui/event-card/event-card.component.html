@@ -3,25 +3,28 @@
       <img src="man-doc.png" alt="Doctor photo" />
       <div class="buttons">
         <button class="btn green">ПЕРЕНЕСТИ</button>
-        <button class="btn red">СКАСУВАТИ</button>
+        <button class="btn red" (click)="onCancel()">СКАСУВАТИ</button>
       </div>
     </div>
   
     <div class="card-content">
-      <div class="doctor-name">лор АНДРІЙ АНДРІЙОВИЧ</div>
-      <div class="description">
-        Sed ut perspiciatis unde omnis iste natus error sit voluptatem...
-      </div>
+      <div class="doctor-name">{{event?.doctor?.doctorClass?.className}} {{event?.doctor?.firstName}} {{event?.doctor?.lastName}}</div>
+      <div class="description">{{event?.doctor?.biography}}</div>
   
       <div class="card-header">
-        <span class="status scheduled">ЗАПЛАНОВАНО</span>
-        <span class="date-time">25.04.2025 16:00 - 16:30</span>
+        <ng-container *ngIf="event">
+          <span 
+            [ngClass]="event.status == 0 ? 'scheduled' : 
+            (event.status == 1 ? 'canceled' : 'completed')" 
+            class="status">
+            {{ProcedureEventStatusUkr[event.status]}}
+          </span>
+          <span class="date-time">{{formatUADateTime(event!.startsOn)}}</span>
+        </ng-container>
       </div>
   
-      <div class="purpose">ПЕРЕВІРКА ОРГАНІЗМУ</div>
-      <div class="details">
-        ПЕРЕВІРКА У ЛОРа ЗАЗВИЧАЙ ВКЛЮЧАЄ ОГЛЯД ВУХ, НОСА ТА ГОРЛА...
-      </div>
+      <div class="purpose">{{event?.title}}</div>
+      <div class="details">{{event?.description}}</div>
     </div>
   </div>
   

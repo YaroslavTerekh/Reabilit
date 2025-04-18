@@ -6,6 +6,9 @@ import { GetPatient } from '../requestModels/GetPatient';
 import { config } from '../../config';
 import { GetDoctor } from '../requestModels/GetDoctor';
 import { DoctorDTO } from '../responseModels/DoctorDTO';
+import { AddPatientProcedureEvent } from '../requestModels/AddPatientProcedureEvent';
+import { ProcedureEventDTO } from '../responseModels/ProcedureEventDTO';
+import { CancelEvent } from '../requestModels/CancelEvent';
 
 @Injectable({
   providedIn: 'root'
@@ -16,12 +19,24 @@ export class PatientService {
   constructor(
     private readonly http: HttpClient
   ) { }
-  
+
   public GetUserPatient(req: GetPatient): Observable<PatientDTO> {
     return this.http.post<PatientDTO>(`${this.baseUrl}/Patient/get`, req);
   }
 
-    public GetDoctor(): Observable<DoctorDTO> {
-      return this.http.get<DoctorDTO>(`${this.baseUrl}/Patient/doctor/get`);
-    }
+  public GetDoctor(): Observable<DoctorDTO> {
+    return this.http.get<DoctorDTO>(`${this.baseUrl}/Patient/doctor/get`);
+  }
+
+  public AddProcedureEvent(req: AddPatientProcedureEvent): Observable<any> {
+    return this.http.post(`${this.baseUrl}/Patient/doctor/slots/reserve`, req);
+  }
+
+  public GetMyEvents(): Observable<ProcedureEventDTO[]> {
+    return this.http.get<ProcedureEventDTO[]>(`${this.baseUrl}/Patient/events/get`);
+  }
+
+  public CancelEvent(request: CancelEvent): Observable<any> {
+    return this.http.post(`${this.baseUrl}/Patient/events/cancel`, request);
+  }
 }
