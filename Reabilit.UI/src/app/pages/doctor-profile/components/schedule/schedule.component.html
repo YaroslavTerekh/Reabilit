@@ -4,11 +4,11 @@
     <div class="days-grid">
       @for (day of docWeekSchedule; track day) {
         <div class="day">
-          <h4>{{ daysOfWeek[day.day] }}</h4>
+          <h4>{{ weekDates[day.day] }}</h4>
           @if(day.slots.length > 0) {
             <div class="times">
               @for (time of day.slots; track time) {
-                <button [ngClass]="time.isAvailable ? 'active' : 'inactive'">{{ time.time }}</button>
+                <button [ngClass]="time.isAvailable ? 'active' : 'inactive'" (click)="reserveSlot(getFullDateTime(day.day, time.time))">{{ time.time }}</button>
               }
             </div>
           } @else {
