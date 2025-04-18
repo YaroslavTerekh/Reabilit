@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Reabilit.Domain.Constants;
 using Reabilit.Domain.DbConnection;
 using Reabilit.Domain.DTOs;
+using Reabilit.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,11 +23,6 @@ public class GetMyDoctorFreeSlotsQueryHandler : IRequestHandler<GetMyDoctorFreeS
 
     public async Task<List<FreeSlot>> Handle(GetMyDoctorFreeSlotsQuery request, CancellationToken cancellationToken)
     {
-        //var doctor = await _context.Doctors
-        //    .Include(d => d.DoctorSchedules)
-        //    .Include(d => d.ProcedureEvents)
-        //    .FirstOrDefaultAsync(d => d.Id == request.CurrentUserId, cancellationToken);
-
         var doctor = await _context.Patients
             .Include(p => p.Doctor)
                 .ThenInclude(pd => pd.DoctorSchedules)
@@ -74,7 +70,7 @@ public class GetMyDoctorFreeSlotsQueryHandler : IRequestHandler<GetMyDoctorFreeS
 
             foreach (var slot in allSlots)
             {
-                if (!doctor.ProcedureEvents.Any(pe => pe.StartsOn.DayOfWeek == schedule.Day && pe.StartsOn.TimeOfDay == slot))
+                if (!doctor.ProcedureEvents.Any(pe => pe.StartsOn.DayOfWeek == schedule.Day && pe.StartsOn.TimeOfDay == slot && pe.Status == ProcedureEventStatus.Planned))
                 {
                     freeSlot.Slots.Add(new SlotHour { Time = slot, IsAvailable = true });
 
