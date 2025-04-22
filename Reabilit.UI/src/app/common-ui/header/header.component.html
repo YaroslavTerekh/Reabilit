@@ -6,14 +6,21 @@
         <nav>
             <ul>
                 <li [routerLink]="['']" class="nav-link">Головна</li>
-                <li [routerLink]="['events']" class="nav-link">Мої записи</li>
-                <li [routerLink]="['my-doctor']" class="nav-link">Мій лікар</li>
+                <ng-container *ngIf="!isDoctor">
+                    <li [routerLink]="['events']" class="nav-link">Мої записи</li>
+                    <li [routerLink]="['my-doctor']" class="nav-link">Мій лікар</li>
+                </ng-container>
+                <ng-container *ngIf="isDoctor">
+                    <li [routerLink]="['doctor-events']" class="nav-link">Мої записи</li>
+                    <li [routerLink]="['my-patients']" class="nav-link">Мої пацієнти</li>
+                </ng-container>
+
                 <li class="section__login_button">
                     <div>N</div>
                     @if(!isAuthorized) {
-                        <p class="action_button login_button" (click)="showLoginModal()">Увійти</p>
+                    <p class="action_button login_button" (click)="showLoginModal()">Увійти</p>
                     } @else {
-                        <p class="action_button myaccount_button" [routerLink]="['my-profile']">Мій акаунт</p>
+                    <p class="action_button myaccount_button" [routerLink]="['my-profile']">Мій акаунт</p>
                     }
                 </li>
             </ul>

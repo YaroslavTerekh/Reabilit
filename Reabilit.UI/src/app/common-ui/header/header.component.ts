@@ -1,15 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { AuthService } from '../../services/authorization/auth.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-header',
-  imports: [RouterLink],
+  imports: [RouterLink, CommonModule],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent implements OnInit {
   protected isAuthorized: boolean = false;
+  protected isDoctor: boolean = false;
 
   constructor(
     private readonly authService: AuthService
@@ -21,6 +23,13 @@ export class HeaderComponent implements OnInit {
         this.isAuthorized = res;
       }
     })
+
+    this.authService.getCurrentUserRole()
+      .subscribe({
+        next: res => {
+          this.isDoctor = res.appRole == "Doctor";
+        }
+      })
   }
 
   protected showLoginModal(): void {

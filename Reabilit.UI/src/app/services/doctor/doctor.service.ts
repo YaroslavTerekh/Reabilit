@@ -6,6 +6,7 @@ import { GetDoctor } from '../requestModels/GetDoctor';
 import { config } from '../../config';
 import { FreeSlotsDTO } from '../responseModels/FreeSlotsDTO';
 import { ProcedureEventDTO } from '../responseModels/ProcedureEventDTO';
+import { PatientDTO } from '../responseModels/PatientDTO';
 
 @Injectable({
   providedIn: 'root'
@@ -17,9 +18,9 @@ export class DoctorService {
     private readonly http: HttpClient
   ) { }
 
-  // public GetDoctor(): Observable<DoctorDTO> {
-  //   return this.http.get<DoctorDTO>(`${this.baseUrl}/Patient/doctor/get`);
-  // }
+  public GetMyPatients(): Observable<PatientDTO[]> {
+    return this.http.get<PatientDTO[]>(`${this.baseUrl}/Doctor/my-patients/get`);
+  }
 
   public GetLoggedInUserDoctorFreeSchedule(): Observable<FreeSlotsDTO[]> {
     return this.http.get<FreeSlotsDTO[]>(`${this.baseUrl}/Patient/doctor/slots/get`);
