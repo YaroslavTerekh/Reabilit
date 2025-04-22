@@ -7,6 +7,7 @@ using Reabilit.BL.Behaviours.ProcedureEvents.DoctorGetEvents;
 using Reabilit.BL.Behaviours.ProcedureEvents.EditEvent;
 using Reabilit.BL.Behaviours.UserDoctor.GetDoctor;
 using Reabilit.BL.Behaviours.UserDoctor.GetDoctors;
+using Reabilit.BL.Behaviours.UserDoctor.GetMyPatients;
 using Reabilit.BL.Behaviours.UserDoctor.ModifyDoctorInfo;
 using Reabilit.Domain.Constants;
 
@@ -15,7 +16,7 @@ namespace Reabilit.API.Controllers;
 [Authorize(Policy = ApplicationPolicies.Doctors)]
 [Route("api/[controller]")]
 [ApiController]
-public class DoctorController : ControllerBase
+public class DoctorController : BaseController
 {
     private readonly ISender _sender;
 
@@ -63,4 +64,8 @@ public class DoctorController : ControllerBase
     [HttpPost("doctors/get")]
     public async Task<IActionResult> GetDoctorsAsync([FromBody] GetDoctorsQuery query, CancellationToken cancellationToken = default)
     => Ok(await _sender.Send(query, cancellationToken));
+
+    [HttpGet("my-patients/get")]
+    public async Task<IActionResult> GetMyPatientsAsync(CancellationToken cancellationToken = default)
+        => Ok(await _sender.Send(new GetMyPatientsQuery(CurrentUserId), cancellationToken));
 }
