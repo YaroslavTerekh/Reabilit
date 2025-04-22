@@ -1,0 +1,101 @@
+.patient-list {
+    padding: 2rem;
+
+    .title {
+        font-size: 24px;
+        font-weight: 700;
+        margin-bottom: 2rem;
+    }
+
+    .card-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        gap: 1.5rem;
+    }
+
+    .patient-card {
+        cursor: pointer;
+        background: #ffffff;
+        border-radius: 16px;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+        padding: 1.5rem;
+        transition: 0.3s ease;
+
+        &:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            .name {
+                font-size: 20px;
+                font-weight: 600;
+                margin: 0;
+            }
+
+            .status {
+                font-size: 12px;
+                padding: 4px 8px;
+                border-radius: 8px;
+                font-weight: 600;
+
+                &.active {
+                    background-color: #dff5e1;
+                    color: #1f8b4c;
+                }
+
+                &.inactive {
+                    background-color: #fbe0e0;
+                    color: #d30000;
+                }
+            }
+        }
+
+        p {
+            margin: 4px 0;
+            font-size: 14px;
+        }
+
+        .analyzes {
+            margin-top: 1rem;
+
+            h4 {
+                font-size: 16px;
+                margin-bottom: 0.5rem;
+            }
+
+            .analyze {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                margin-bottom: 0.5rem;
+
+                .analyze-icon {
+                    width: 32px;
+                    height: 32px;
+                }
+
+                .analyze-info {
+                    .title {
+                        font-weight: 500;
+                        margin: 0;
+                    }
+
+                    .normal {
+                        color: #1f8b4c;
+                        font-weight: 600;
+                    }
+
+                    .abnormal {
+                        color: #d30000;
+                        font-weight: 600;
+                    }
+                }
+            }
+        }
+    }
+}

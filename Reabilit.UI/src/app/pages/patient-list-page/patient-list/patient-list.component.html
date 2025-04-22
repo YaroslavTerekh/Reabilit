@@ -1,0 +1,32 @@
+<div class="patient-list default-content">
+    <h1 class="title">Ваші пацієнти</h1>
+  
+    <div class="card-grid">
+      <div class="patient-card" *ngFor="let p of patients">
+        <div class="header">
+          <h2 class="name">{{ p.firstName }} {{ p.lastName }}</h2>
+          <span class="status" [ngClass]="{ active: p.isActive, inactive: !p.isActive }">
+            {{ p.isActive ? 'Активний' : 'Неактивний' }}
+          </span>
+        </div>
+  
+        <p>Вік: {{ p.age }}</p>
+        <p>Місто: {{ p.city.cityName }}</p>
+  
+        <div class="analyzes" *ngIf="p.analyzes.length > 0">
+          <h4>Аналізи:</h4>
+          <div class="analyze" *ngFor="let a of p.analyzes">
+            <div class="analyze-info">
+              <p class="title">{{ a.title }}</p>
+              <p>
+                <span [ngClass]="{ normal: a.isNormal, abnormal: !a.isNormal }">
+                  {{ a.value }} {{ a.unit }}
+                </span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+      
