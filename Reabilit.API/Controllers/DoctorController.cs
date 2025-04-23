@@ -7,6 +7,8 @@ using Reabilit.BL.Behaviours.ProcedureEvents.DoctorGetEvents;
 using Reabilit.BL.Behaviours.ProcedureEvents.EditEvent;
 using Reabilit.BL.Behaviours.UserDoctor.GetDoctor;
 using Reabilit.BL.Behaviours.UserDoctor.GetDoctors;
+using Reabilit.BL.Behaviours.UserDoctor.GetMyEvents;
+using Reabilit.BL.Behaviours.UserDoctor.GetMyInfo;
 using Reabilit.BL.Behaviours.UserDoctor.GetMyPatients;
 using Reabilit.BL.Behaviours.UserDoctor.ModifyDoctorInfo;
 using Reabilit.Domain.Constants;
@@ -27,7 +29,11 @@ public class DoctorController : BaseController
 
     [HttpPut("info/modify")]
     public async Task<IActionResult> ModifyDoctorInfoAsync([FromBody] ModifyDoctorInfoQuery query, CancellationToken cancellationToken = default)
-        => Ok(await _sender.Send(query, cancellationToken));
+    {
+        query.CurrentUserId = CurrentUserId;
+        
+        return Ok(await _sender.Send(query, cancellationToken));
+    }
 
     [HttpPost("event/add")]
     public async Task<IActionResult> AddEventAsync([FromBody] CreateEventCommand command, CancellationToken cancellationToken = default)
@@ -68,4 +74,12 @@ public class DoctorController : BaseController
     [HttpGet("my-patients/get")]
     public async Task<IActionResult> GetMyPatientsAsync(CancellationToken cancellationToken = default)
         => Ok(await _sender.Send(new GetMyPatientsQuery(CurrentUserId), cancellationToken));
+
+    [HttpGet("my-events/get")]
+    public async Task<IActionResult> GetMyEventsAsync(CancellationToken cancellationToken = default)
+    => Ok(await _sender.Send(new GetMyEventsQuery(CurrentUserId), cancellationToken));
+
+    [HttpGet("info/get")]
+    public async Task<IActionResult> GetMyInfoAsync(CancellationToken cancellationToken = default)
+        => Ok(await _sender.Send(new GetMyInfoQuery(CurrentUserId), cancellationToken));
 }
