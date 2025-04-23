@@ -19,8 +19,13 @@
                     <div>N</div>
                     @if(!isAuthorized) {
                     <p class="action_button login_button" (click)="showLoginModal()">Увійти</p>
-                    } @else {
-                    <p class="action_button myaccount_button" [routerLink]="['my-profile']">Мій акаунт</p>
+                    } @else {                    
+                    <ng-container *ngIf="!isDoctor">
+                        <p class="action_button myaccount_button" [routerLink]="['my-profile']">Мій акаунт</p>
+                    </ng-container>
+                    <ng-container *ngIf="isDoctor">
+                        <p class="action_button myaccount_button" [routerLink]="['my-doctor-profile']">Мій акаунт</p>
+                    </ng-container>
                     }
                 </li>
             </ul>

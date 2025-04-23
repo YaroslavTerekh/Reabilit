@@ -1,0 +1,38 @@
+<div class="container">
+    <h2>МІЙ ПРОФІЛЬ ЛІКАРЯ</h2>
+    <div class="profile-box">
+        <form [formGroup]="doctorForm" (ngSubmit)="onSubmit()">
+            <label>Ваше ім’я
+                <input type="text" formControlName="firstName">
+            </label>
+
+            <label>Ваше прізвище
+                <input type="text" formControlName="lastName">
+            </label>
+
+            <label>Ваш номер телефону
+                <input type="text" formControlName="phoneNumber">
+            </label>
+
+            <label>Ваш вік
+                <input type="number" formControlName="age">
+            </label>
+
+            <label>Ваш ступінь
+                <input type="text" formControlName="degree">
+            </label>
+
+            <label>Досвід (років)
+                <input type="number" formControlName="experienceInYear">
+            </label>
+
+            <label>Біографія
+                <textarea rows="4" formControlName="biography"></textarea>
+            </label>
+
+            <div class="button-group">
+                <button type="submit" class="btn-green">ЗБЕРЕГТИ ЗМІНИ</button>
+            </div>
+        </form>
+    </div>
+</div>
