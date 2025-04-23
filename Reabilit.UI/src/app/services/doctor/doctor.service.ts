@@ -22,6 +22,9 @@ export class DoctorService {
     return this.http.get<PatientDTO[]>(`${this.baseUrl}/Doctor/my-patients/get`);
   }
 
+  public GetMyEvents(): Observable<ProcedureEventDTO[]> {
+    return this.http.get<ProcedureEventDTO[]>(`${this.baseUrl}/Doctor/my-events/get`);
+  }
   public GetLoggedInUserDoctorFreeSchedule(): Observable<FreeSlotsDTO[]> {
     return this.http.get<FreeSlotsDTO[]>(`${this.baseUrl}/Patient/doctor/slots/get`);
   }

@@ -1,1 +1,41 @@
-<p>doctor-events-page works!</p>
+<div class="doctor-procedure-list default-content">
+    <div class="procedure-card" *ngFor="let item of procedureEvents">
+      <div class="card-content">
+        <img src="patient.png" class="avatar" />
+  
+        <div class="info">
+          <h3>Пацієнт {{ item.patient?.firstName }} {{ item.patient?.lastName }}</h3>
+          <div class="status-time">
+            <span class="status" [ngClass]="{
+                planned: item.status === 0,
+                cancelled: item.status === 1,
+                finished: item.status === 2
+              }">
+              {{
+                item.status === 0 ? 'Заплановано' :
+                item.status === 1 ? 'Скасовано' :
+                'Завершено'
+              }}
+            </span>
+            <span class="datetime">{{ formatUADateTime(item.startsOn) }}</span>
+          </div>
+  
+          <h4>{{ item.title }}</h4>
+          <p>{{ item.description }}</p>
+        </div>
+  
+        <div class="actions">
+          <button class="green">ПЕРЕЙТИ</button>
+  
+          <button class="red" *ngIf="item.status === 0">
+            СКАСУВАТИ
+          </button>
+  
+          <button class="gray" *ngIf="item.status === 2" disabled>
+            ЗАВЕРШЕНО
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
