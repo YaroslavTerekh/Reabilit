@@ -1,16 +1,19 @@
 ﻿using MediatR;
+using Reabilit.Domain.DTOs;
 using Reabilit.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Reabilit.BL.Behaviours.UserDoctor.ModifyDoctorInfo;
 
-public class ModifyDoctorInfoQuery : IRequest<Doctor> //ToDo: add Doctor DTO
+public class ModifyDoctorInfoQuery : IRequest<DoctorDTO>
 {
-    public Guid DoctorId { get; set; }
+    [JsonIgnore]
+    public Guid CurrentUserId { get; set; }
 
     public required string FirstName { get; set; }
 

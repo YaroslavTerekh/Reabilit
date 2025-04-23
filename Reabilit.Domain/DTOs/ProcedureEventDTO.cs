@@ -15,5 +15,5 @@ public class ProcedureEventDTO
     public ProcedureEventStatus Status { get; set; }
     public DateTime StartsOn { get; set; }
     public PatientDTO? Patient { get; set; }
-    public required DoctorDTO Doctor { get; set; }
+    public DoctorDTO? Doctor { get; set; }
 }
