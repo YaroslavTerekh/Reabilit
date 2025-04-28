@@ -22,6 +22,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddSingleton<IJWTService, JWTService>();
 builder.Services.AddScoped<IFileService, FileService>();
+builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
@@ -42,12 +43,12 @@ builder.Services.AddAuthorization(options =>
 
     options.AddPolicy(ApplicationPolicies.Doctors, policy =>
     {
-        policy.RequireRole(ApplicationRoles.RoleDoctor);
+        policy.RequireRole(ApplicationRoles.RoleDoctor, ApplicationRoles.RoleAdmin);
     });
 
     options.AddPolicy(ApplicationPolicies.Patients, policy =>
     {
-        policy.RequireRole(ApplicationRoles.RolePatient);
+        policy.RequireRole(ApplicationRoles.RolePatient, ApplicationRoles.RoleAdmin);
     });
 });
 
