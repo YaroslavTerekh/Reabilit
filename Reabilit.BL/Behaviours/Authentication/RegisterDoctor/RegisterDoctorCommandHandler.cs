@@ -29,7 +29,7 @@ public class RegisterDoctorCommandHandler : IRequestHandler<RegisterDoctorComman
         {
             FirstName = command.FirstName,
             LastName = command.LastName,
-            UserName = String.Concat(command.FirstName, command.LastName, command.PhoneNumber),
+            UserName = String.Concat(Guid.NewGuid().ToString(), command.PhoneNumber),
             Age = command.Age,
             PhoneNumber = command.PhoneNumber,
             PhoneNumberConfirmed = true // Create sms validation if need
