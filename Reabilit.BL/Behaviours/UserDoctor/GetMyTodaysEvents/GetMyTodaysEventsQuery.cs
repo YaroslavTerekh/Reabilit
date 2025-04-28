@@ -7,9 +7,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Reabilit.BL.Behaviours.UserDoctor.GetDoctors;
+namespace Reabilit.BL.Behaviours.UserDoctor.GetMyTodaysEvents;
 
-public class GetDoctorsQuery : IRequest<List<DoctorDTO>>
-{
-    public string? SearchText { get; set; }
-}
+public record GetMyTodaysEventsQuery(Guid CurrentUsedId) : IRequest<List<ProcedureEventDTO>>;

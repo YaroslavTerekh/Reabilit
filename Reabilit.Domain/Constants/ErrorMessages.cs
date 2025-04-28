@@ -16,6 +16,8 @@ public static class ErrorMessages
     public const string DateBusy = "Ця дата вже зайнята";
     public const string SlotAbsent = "В цей час лікар зайнятий або вже не працюватиме";
 
+    public const string Error500 = "Сталась невідома помилка. Спробуйте ще раз";
+
     public static string Status404EntityNotFound(EntityType entityType)
     {
         return entityType switch

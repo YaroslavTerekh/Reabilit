@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.Extensions.Configuration;
 using Reabilit.BL.Services.Abstractions;
 using Reabilit.Domain.DbConnection;
 using Reabilit.Domain.Entities;
@@ -14,11 +15,13 @@ public class AddBannerCommandHandler : IRequestHandler<AddBannerCommand>
 {
     private readonly DataContext _context;
     private readonly IFileService _fileService;
+    private readonly IConfiguration _config;
 
-    public AddBannerCommandHandler(DataContext context, IFileService fileService)
+    public AddBannerCommandHandler(DataContext context, IFileService fileService, IConfiguration config)
     {
         _context = context;
         _fileService = fileService;
+        _config = config;
     }
 
     public async Task Handle(AddBannerCommand request, CancellationToken cancellationToken)
@@ -29,7 +32,7 @@ public class AddBannerCommandHandler : IRequestHandler<AddBannerCommand>
         {
             Description = request.Description,
             ImageName = fileName,
-            ImagePath = await _fileService.SaveFileAsync(request.Image, fileName, cancellationToken)
+            ImagePath = await _fileService.SaveFileAsync(request.Image, _config.GetSection("AppSettings:Banner_ContentFolderName").Value!, fileName, cancellationToken)
         };
 
         try
@@ -39,7 +42,7 @@ public class AddBannerCommandHandler : IRequestHandler<AddBannerCommand>
         }
         catch
         {
-            File.Delete(banner.ImagePath);
+            _fileService.DeleteFileFromRoot(banner.ImagePath);
             throw new RequestException("Не вдалося додати банер");
         }
     }

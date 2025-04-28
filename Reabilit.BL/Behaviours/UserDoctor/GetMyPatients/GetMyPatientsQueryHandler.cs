@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using Reabilit.BL.Services.Abstractions;
 using Reabilit.Domain.Constants;
 using Reabilit.Domain.DbConnection;
 using Reabilit.Domain.DTOs;
@@ -15,10 +16,12 @@ namespace Reabilit.BL.Behaviours.UserDoctor.GetMyPatients;
 public class GetMyPatientsQueryHandler : IRequestHandler<GetMyPatientsQuery, List<PatientDTO>>
 {
     private readonly DataContext _context;
+    private readonly IFileService _fileService;
 
-    public GetMyPatientsQueryHandler(DataContext context)
+    public GetMyPatientsQueryHandler(DataContext context, IFileService fileService)
     {
         _context = context;
+        _fileService = fileService;
     }
 
     public async Task<List<PatientDTO>> Handle(GetMyPatientsQuery request, CancellationToken cancellationToken)
@@ -71,11 +74,12 @@ public class GetMyPatientsQueryHandler : IRequestHandler<GetMyPatientsQuery, Lis
                 IsActive = p.IsActive,
                 Analyzes = p.Analyzes.Select(pa => new AnalyzeDTO
                 {
+                    Id = pa.Id,
                     Title = pa.Title,
                     IsNormal = pa.IsNormal,
                     Unit = pa.Unit,
                     Value = pa.Value,
-                    IconPath = pa.IconPath
+                    IconPath = _fileService.GetFullPathFromRoot(pa.IconPath),
                 }).ToList()
             })
             .ToListAsync(cancellationToken);

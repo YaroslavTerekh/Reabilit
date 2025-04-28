@@ -1,14 +1,11 @@
 ﻿using MediatR;
 using Reabilit.Domain.DTOs;
-using Reabilit.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Reabilit.BL.Behaviours.Banners.GetBanners;
+namespace Reabilit.BL.Behaviours.Analyzes.DeleteAnalyze;
 
-public class GetBannersQuery : IRequest<List<BannerDTO>>
-{
-}
+public record DeleteAnalyzeCommand(Guid AnalyzeId) : IRequest<List<AnalyzeDTO>>;

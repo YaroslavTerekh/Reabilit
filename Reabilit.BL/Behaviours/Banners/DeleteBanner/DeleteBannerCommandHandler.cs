@@ -1,5 +1,8 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
+using Reabilit.BL.Services.Abstractions;
+using Reabilit.BL.Services.Realizations;
 using Reabilit.Domain.Constants;
 using Reabilit.Domain.DbConnection;
 using System;
@@ -13,10 +16,12 @@ namespace Reabilit.BL.Behaviours.Banners.DeleteBanner;
 public class DeleteBannerCommandHandler : IRequestHandler<DeleteBannerCommand>
 {
     private readonly DataContext _context;
+    private readonly IFileService _fileService;
 
-    public DeleteBannerCommandHandler(DataContext context)
+    public DeleteBannerCommandHandler(DataContext context, IFileService fileService)
     {
-        _context = context;   
+        _context = context;
+        _fileService = fileService;
     }
 
     public async Task Handle(DeleteBannerCommand request, CancellationToken cancellationToken)
@@ -31,6 +36,7 @@ public class DeleteBannerCommandHandler : IRequestHandler<DeleteBannerCommand>
         _context.Banners.Remove(banner);
         await _context.SaveChangesAsync(cancellationToken);
 
-        File.Delete(banner.ImagePath);
+
+        _fileService.DeleteFileFromRoot(banner.ImagePath);
     }
 }

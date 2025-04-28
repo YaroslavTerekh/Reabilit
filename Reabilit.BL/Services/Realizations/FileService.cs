@@ -5,23 +5,35 @@ using Microsoft.AspNetCore.Hosting;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore;
+using Reabilit.Domain.Entities;
 
 namespace Reabilit.BL.Services.Realizations;
 
 public class FileService : IFileService
 {
-    private readonly IConfiguration _config;
     private readonly IWebHostEnvironment _webHostEnvironment;
+    private readonly IHttpContextAccessor _httpContextAccessor;
+    private readonly IConfiguration _config;
 
-    public FileService(IConfiguration config, IWebHostEnvironment webHostEnvironment)
+    public FileService(IWebHostEnvironment webHostEnvironment, IHttpContextAccessor httpContextAccessor, IConfiguration config)
     {
-        _config = config;
         _webHostEnvironment = webHostEnvironment;
+        _httpContextAccessor = httpContextAccessor;
+        _config = config;
     }
 
-    public async Task<string> SaveFileAsync(IFormFile file, string fileName, CancellationToken cancellationToken)
+    public string GetFullPathFromRoot(string path)
+        => $"{_httpContextAccessor.HttpContext.Request.Scheme}://{_httpContextAccessor.HttpContext.Request.Host.Value}/{_config.GetSection("AppSettings:StaticFiles_RequestPath").Value!}/{path}";
+
+    public void DeleteFileFromRoot(string path)
     {
-        var folderPath = Path.Combine(_webHostEnvironment.WebRootPath, _config.GetSection("AppSettings:Banner_ContentFolderName").Value!);
+        File.Delete(Path.Combine(_webHostEnvironment.WebRootPath, path));
+    }
+
+    public async Task<string> SaveFileAsync(IFormFile file, string folderName, string fileName, CancellationToken cancellationToken)
+    {
+        var folderPath = Path.Combine(_webHostEnvironment.WebRootPath, folderName);
 
         var fileExtension = Path.GetExtension(file.FileName);
         var fullPath = Path.Combine(folderPath, fileName + fileExtension);
@@ -36,6 +48,6 @@ public class FileService : IFileService
             await file.CopyToAsync(fs);
         }
 
-        return fullPath;
+        return $"{folderName}/{fileName}{fileExtension}";
     }
 }

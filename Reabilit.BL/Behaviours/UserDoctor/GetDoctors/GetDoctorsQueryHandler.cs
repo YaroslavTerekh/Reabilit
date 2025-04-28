@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Reabilit.Domain.DbConnection;
+using Reabilit.Domain.DTOs;
 using Reabilit.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Reabilit.BL.Behaviours.UserDoctor.GetDoctors;
 
-public class GetDoctorsQueryHandler : IRequestHandler<GetDoctorsQuery, List<Doctor>>
+public class GetDoctorsQueryHandler : IRequestHandler<GetDoctorsQuery, List<DoctorDTO>>
 {
     private readonly DataContext _context;
 
@@ -19,7 +20,7 @@ public class GetDoctorsQueryHandler : IRequestHandler<GetDoctorsQuery, List<Doct
         _context = context;
     }
 
-    public async Task<List<Doctor>> Handle(GetDoctorsQuery request, CancellationToken cancellationToken)
+    public async Task<List<DoctorDTO>> Handle(GetDoctorsQuery request, CancellationToken cancellationToken)
     {
         var query = _context.Doctors
             .Include(d => d.AppUser)
@@ -31,6 +32,25 @@ public class GetDoctorsQueryHandler : IRequestHandler<GetDoctorsQuery, List<Doct
                         d.AppUser.LastName.Contains(request.SearchText) ||
                         d.DoctorClass!.ClassName.Contains(request.SearchText));
 
-        return await query.ToListAsync(cancellationToken);
+        return await query
+            .Select(d => new DoctorDTO
+            {
+                Age = d.AppUser!.Age,
+                AppUserId = d.AppUserId!,
+                Biography = d.Biography!,
+                Degree = d.Degree!,
+                ExperienceInYear = d.ExperienceInYear!,
+                FirstName = d.AppUser!.FirstName,
+                LastName = d.AppUser!.LastName,
+                Id = d.Id!,
+                PhoneNumber = d.AppUser!.PhoneNumber!,
+                DoctorClass = new DoctorClassDTO
+                {
+                    Id = d.DoctorClass!.Id,
+                    ClassName = d.DoctorClass.ClassName
+                },
+                DoctorClassId = d.DoctorClassId!
+            })
+            .ToListAsync(cancellationToken);
     }
 }

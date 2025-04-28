@@ -7,7 +7,4 @@ using System.Threading.Tasks;
 
 namespace Reabilit.BL.Behaviours.Banners.DeleteBanner;
 
-public class DeleteBannerCommand : IRequest
-{
-    public Guid BannerId { get; set; }
-}
+public record DeleteBannerCommand(Guid BannerId) : IRequest;

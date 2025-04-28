@@ -1,7 +1,9 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Reabilit.BL.Behaviours.Banners.GetBanners;
 using Reabilit.BL.Behaviours.Content.Cities.GetAllCities;
+using Reabilit.BL.Behaviours.Content.DoctorClasses;
 using Reabilit.Domain.DTOs;
 
 namespace Reabilit.API.Controllers;
@@ -20,4 +22,13 @@ public class ContentController : ControllerBase
     [HttpGet("cities/get")]
     public async Task<IActionResult> GetAllCitiesAsync(CancellationToken cancellationToken = default)
         => Ok(await _sender.Send(new GetAllCitiesQuery(), cancellationToken));
+
+    [HttpGet("doctor-classes/get")]
+    public async Task<IActionResult> GetAllDoctorClassesAsync(CancellationToken cancellationToken = default)
+    => Ok(await _sender.Send(new GetDoctorClassesQuery(), cancellationToken));
+
+
+    [HttpGet("banners/get")]
+    public async Task<IActionResult> GetBannersAsync(CancellationToken cancellationToken = default)
+    => Ok(await _sender.Send(new GetBannersQuery(), cancellationToken));
 }

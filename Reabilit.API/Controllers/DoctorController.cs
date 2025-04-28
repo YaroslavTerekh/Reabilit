@@ -1,6 +1,8 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Reabilit.BL.Behaviours.Analyzes.AddAnalyze;
+using Reabilit.BL.Behaviours.Analyzes.DeleteAnalyze;
 using Reabilit.BL.Behaviours.DoctorSchedules.AddDoctorSchedule;
 using Reabilit.BL.Behaviours.ProcedureEvents.CreateEvent;
 using Reabilit.BL.Behaviours.ProcedureEvents.DoctorGetEvents;
@@ -10,6 +12,7 @@ using Reabilit.BL.Behaviours.UserDoctor.GetDoctors;
 using Reabilit.BL.Behaviours.UserDoctor.GetMyEvents;
 using Reabilit.BL.Behaviours.UserDoctor.GetMyInfo;
 using Reabilit.BL.Behaviours.UserDoctor.GetMyPatients;
+using Reabilit.BL.Behaviours.UserDoctor.GetMyTodaysEvents;
 using Reabilit.BL.Behaviours.UserDoctor.ModifyDoctorInfo;
 using Reabilit.Domain.Constants;
 
@@ -34,6 +37,14 @@ public class DoctorController : BaseController
         
         return Ok(await _sender.Send(query, cancellationToken));
     }
+
+    [HttpPost("analyzes/add")]
+    public async Task<IActionResult> AddAnalyzeAsync([FromForm] AddAnalyzeCommand command, CancellationToken cancellationToken = default)
+        => Ok(await _sender.Send(command, cancellationToken));
+
+    [HttpPost("analyzes/{id:guid}/delete")]
+    public async Task<IActionResult> DeleteAnalyzeAsync([FromRoute] Guid id, CancellationToken cancellationToken = default)
+        => Ok(await _sender.Send(new DeleteAnalyzeCommand(id), cancellationToken));
 
     [HttpPost("event/add")]
     public async Task<IActionResult> AddEventAsync([FromBody] CreateEventCommand command, CancellationToken cancellationToken = default)
@@ -82,4 +93,8 @@ public class DoctorController : BaseController
     [HttpGet("info/get")]
     public async Task<IActionResult> GetMyInfoAsync(CancellationToken cancellationToken = default)
         => Ok(await _sender.Send(new GetMyInfoQuery(CurrentUserId), cancellationToken));
+
+    [HttpGet("events/today/get")]
+    public async Task<IActionResult> GetMyTodayEventsAsync(CancellationToken cancellationToken = default)
+        => Ok(await _sender.Send(new GetMyTodaysEventsQuery(CurrentUserId), cancellationToken));
 }

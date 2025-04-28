@@ -16,12 +16,14 @@ using Reabilit.BL.Services.Realizations;
 using Reabilit.Domain.CustomMiddlewares;
 using Microsoft.AspNetCore.Builder;
 using System.Data;
+using Microsoft.Extensions.FileProviders;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddSingleton<IJWTService, JWTService>();
 builder.Services.AddScoped<IFileService, FileService>();
+builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
@@ -42,12 +44,12 @@ builder.Services.AddAuthorization(options =>
 
     options.AddPolicy(ApplicationPolicies.Doctors, policy =>
     {
-        policy.RequireRole(ApplicationRoles.RoleDoctor);
+        policy.RequireRole(ApplicationRoles.RoleDoctor, ApplicationRoles.RoleAdmin);
     });
 
     options.AddPolicy(ApplicationPolicies.Patients, policy =>
     {
-        policy.RequireRole(ApplicationRoles.RolePatient);
+        policy.RequireRole(ApplicationRoles.RolePatient, ApplicationRoles.RoleAdmin);
     });
 });
 
@@ -127,6 +129,13 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = builder.Environment.WebRootFileProvider,
+    RequestPath = $"/{builder.Configuration.GetSection("AppSettings:StaticFiles_RequestPath").Value!}"
+});
+
 app.UseCors("AllowAngularApp");
 
 app.UseMiddleware<ExceptionHandlingMiddleware>();
