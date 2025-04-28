@@ -16,6 +16,7 @@ using Reabilit.BL.Services.Realizations;
 using Reabilit.Domain.CustomMiddlewares;
 using Microsoft.AspNetCore.Builder;
 using System.Data;
+using Microsoft.Extensions.FileProviders;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -128,6 +129,13 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = builder.Environment.WebRootFileProvider,
+    RequestPath = $"/{builder.Configuration.GetSection("AppSettings:StaticFiles_RequestPath").Value!}"
+});
+
 app.UseCors("AllowAngularApp");
 
 app.UseMiddleware<ExceptionHandlingMiddleware>();
