@@ -3,6 +3,7 @@ $card-height: 200px;
 $primary-color: #000;
 $secondary-color: #333;
 $status-normal-color: green;
+$status-anomal-color: red;
 
 .card {
   width: $card-width;
@@ -50,8 +51,15 @@ $status-normal-color: green;
 
     .status {
       font-size: 24px;
-      color: $status-normal-color;
       font-weight: bold;
+    }
+
+    .status-red {
+      color: $status-anomal-color;
+    }
+
+    .status-green {
+      color: $status-normal-color;
     }
   }
 }

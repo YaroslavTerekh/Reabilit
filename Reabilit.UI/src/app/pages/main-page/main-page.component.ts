@@ -5,6 +5,8 @@ import { RouterLink } from '@angular/router';
 import { ContentService } from '../../services/content/content.service';
 import { BannerDTO } from '../../services/responseModels/BannerDTO';
 import { CommonModule } from '@angular/common';
+import { AnalyzeDTO } from '../../services/responseModels/AnalyzeDTO';
+import { PatientService } from '../../services/patient/patient.service';
 
 @Component({
   selector: 'app-main-page',
@@ -16,16 +18,27 @@ import { CommonModule } from '@angular/common';
 })
 export class MainPageComponent implements OnInit, OnDestroy {
   banners: BannerDTO[] = [];
+  patientAnalyzes: AnalyzeDTO[] = [];
   currentBannerIndex: number = 0;
   interval: any;
 
-  constructor(private readonly contentService: ContentService) {}
+  constructor(
+    private readonly contentService: ContentService,
+    private readonly patientService: PatientService
+  ) {}
 
   ngOnInit(): void {
     this.contentService.getBanners().subscribe({
       next: (res) => {
         this.banners = res;
         this.startBannerRotation();
+
+        this.patientService.GetMyAnalyzes()
+          .subscribe({
+            next: res => {
+              this.patientAnalyzes = res;
+            }
+          })
       },
     });
   }
@@ -40,7 +53,7 @@ export class MainPageComponent implements OnInit, OnDestroy {
     this.interval = setInterval(() => {
       this.currentBannerIndex =
         (this.currentBannerIndex + 1) % this.banners.length;
-    }, 10000); // 10 секунд
+    }, 10000); 
   }
 
   get currentBanner(): BannerDTO {
