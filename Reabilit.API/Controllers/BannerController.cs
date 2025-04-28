@@ -23,7 +23,7 @@ public class BannerController : ControllerBase
     }
 
 
-    [HttpPost("banner/add")]
+    [HttpPost("add")]
     public async Task<IActionResult> AddBannerAsync([FromForm] AddBannerCommand command, CancellationToken cancellationToken = default)
     {
         await _sender.Send(command, cancellationToken);
@@ -31,15 +31,11 @@ public class BannerController : ControllerBase
         return Ok();
     }
 
-    [HttpDelete("banner/delete")]
-    public async Task<IActionResult> DeleteBannerAsync([FromBody] DeleteBannerCommand command, CancellationToken cancellationToken = default)
+    [HttpDelete("delete/{bannerId:guid}")]
+    public async Task<IActionResult> DeleteBannerAsync([FromRoute] Guid bannerId, CancellationToken cancellationToken = default)
     {
-        await _sender.Send(command, cancellationToken);
+        await _sender.Send(new DeleteBannerCommand(bannerId), cancellationToken);
 
         return Ok();
     }
-
-    [HttpGet("banners/get")]
-    public async Task<IActionResult> GetBannersAsync(CancellationToken cancellationToken = default)
-    => Ok(await _sender.Send(new GetBannersQuery(), cancellationToken));
 }

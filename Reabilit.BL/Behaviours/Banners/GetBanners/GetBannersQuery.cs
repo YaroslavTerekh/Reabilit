@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Reabilit.Domain.DTOs;
 using Reabilit.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -8,6 +9,6 @@ using System.Threading.Tasks;
 
 namespace Reabilit.BL.Behaviours.Banners.GetBanners;
 
-public class GetBannersQuery : IRequest<List<Banner>>
+public class GetBannersQuery : IRequest<List<BannerDTO>>
 {
 }
