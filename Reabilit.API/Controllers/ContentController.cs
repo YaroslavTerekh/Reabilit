@@ -20,4 +20,8 @@ public class ContentController : ControllerBase
     [HttpGet("cities/get")]
     public async Task<IActionResult> GetAllCitiesAsync(CancellationToken cancellationToken = default)
         => Ok(await _sender.Send(new GetAllCitiesQuery(), cancellationToken));
+
+    [HttpGet("doctor-classes/get")]
+    public async Task<IActionResult> GetAllDoctorClassesAsync(CancellationToken cancellationToken = default)
+    => Ok(await _sender.Send(new GetDoctorClassesQuery(), cancellationToken));
 }
