@@ -1,6 +1,8 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Reabilit.BL.Behaviours.Analyzes.AddAnalyze;
+using Reabilit.BL.Behaviours.Analyzes.DeleteAnalyze;
 using Reabilit.BL.Behaviours.DoctorSchedules.AddDoctorSchedule;
 using Reabilit.BL.Behaviours.ProcedureEvents.CreateEvent;
 using Reabilit.BL.Behaviours.ProcedureEvents.DoctorGetEvents;
@@ -34,6 +36,14 @@ public class DoctorController : BaseController
         
         return Ok(await _sender.Send(query, cancellationToken));
     }
+
+    [HttpPost("analyzes/add")]
+    public async Task<IActionResult> AddAnalyzeAsync([FromForm] AddAnalyzeCommand command, CancellationToken cancellationToken = default)
+        => Ok(await _sender.Send(command, cancellationToken));
+
+    [HttpPost("analyzes/{id:guid}/delete")]
+    public async Task<IActionResult> DeleteAnalyzeAsync([FromRoute] Guid id, CancellationToken cancellationToken = default)
+        => Ok(await _sender.Send(new DeleteAnalyzeCommand(id), cancellationToken));
 
     [HttpPost("event/add")]
     public async Task<IActionResult> AddEventAsync([FromBody] CreateEventCommand command, CancellationToken cancellationToken = default)

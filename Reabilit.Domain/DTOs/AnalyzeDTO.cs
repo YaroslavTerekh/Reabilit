@@ -8,6 +8,8 @@ namespace Reabilit.Domain.DTOs;
 
 public class AnalyzeDTO
 {
+    public Guid Id { get; set; }
+
     public required string Title { get; set; }
 
     public required string Unit { get; set; }
