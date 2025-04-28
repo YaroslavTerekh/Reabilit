@@ -12,6 +12,7 @@ using Reabilit.BL.Behaviours.UserDoctor.GetDoctors;
 using Reabilit.BL.Behaviours.UserDoctor.GetMyEvents;
 using Reabilit.BL.Behaviours.UserDoctor.GetMyInfo;
 using Reabilit.BL.Behaviours.UserDoctor.GetMyPatients;
+using Reabilit.BL.Behaviours.UserDoctor.GetMyTodaysEvents;
 using Reabilit.BL.Behaviours.UserDoctor.ModifyDoctorInfo;
 using Reabilit.Domain.Constants;
 
@@ -92,4 +93,8 @@ public class DoctorController : BaseController
     [HttpGet("info/get")]
     public async Task<IActionResult> GetMyInfoAsync(CancellationToken cancellationToken = default)
         => Ok(await _sender.Send(new GetMyInfoQuery(CurrentUserId), cancellationToken));
+
+    [HttpGet("events/today/get")]
+    public async Task<IActionResult> GetMyTodayEventsAsync(CancellationToken cancellationToken = default)
+        => Ok(await _sender.Send(new GetMyTodaysEventsQuery(CurrentUserId), cancellationToken));
 }
