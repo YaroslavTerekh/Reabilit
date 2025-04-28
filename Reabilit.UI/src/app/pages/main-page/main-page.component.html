@@ -14,18 +14,16 @@
       {{ currentBanner.description }}
     </div>
   </div>
-  
+
 </div>
 
 <div class="analyzes-section default-content">
   <h3>Ваші показники</h3>
+
   <div class="analyzes">
-    <app-analyze-card></app-analyze-card>
-    <app-analyze-card></app-analyze-card>
-    <app-analyze-card></app-analyze-card>
-    <app-analyze-card></app-analyze-card>
-    <app-analyze-card></app-analyze-card>
-    <app-analyze-card></app-analyze-card>
+    @for(analysis of patientAnalyzes; track analysis) {
+    <app-analyze-card [analysis]="analysis"></app-analyze-card>
+    }
   </div>
 </div>
 

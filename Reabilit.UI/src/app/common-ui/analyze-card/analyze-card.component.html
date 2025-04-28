@@ -1,12 +1,12 @@
 <div class="card">
-    <div class="title">Рівень тиску</div>
+    <div class="title">{{analysis.title}}</div>
     <div class="pressure">
-      <span class="systolic">120</span>
-      <span class="diastolic">80</span>
+      <span class="systolic">{{analysis.value}}</span>
+      <span class="diastolic">{{analysis.unit}}</span>
     </div>
     <div class="icon-and-status">
-      <img src="image3.png" alt="blood pressure" class="icon" />
-      <span class="status">Норма</span>
+      <img [src]="analysis.iconPath" alt="blood pressure" class="icon" />
+      <span class="status" [ngClass]="analysis.isNormal ? 'status-green' : 'status-red'">{{analysis.isNormal ? 'Норма' : 'Аномалія'}}</span>
     </div>
   </div>
   

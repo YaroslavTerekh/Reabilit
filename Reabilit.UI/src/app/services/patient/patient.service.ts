@@ -9,6 +9,7 @@ import { DoctorDTO } from '../responseModels/DoctorDTO';
 import { AddPatientProcedureEvent } from '../requestModels/AddPatientProcedureEvent';
 import { ProcedureEventDTO } from '../responseModels/ProcedureEventDTO';
 import { CancelEvent } from '../requestModels/CancelEvent';
+import { AnalyzeDTO } from '../responseModels/AnalyzeDTO';
 
 @Injectable({
   providedIn: 'root'
@@ -38,5 +39,9 @@ export class PatientService {
 
   public CancelEvent(request: CancelEvent): Observable<any> {
     return this.http.post(`${this.baseUrl}/Patient/events/cancel`, request);
+  }
+
+  public GetMyAnalyzes(): Observable<AnalyzeDTO[]> {
+    return this.http.get<AnalyzeDTO[]>(`${this.baseUrl}/Patient/analyzes/get`)
   }
 }
