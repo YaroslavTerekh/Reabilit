@@ -27,6 +27,10 @@ export class DoctorService {
   public GetMyEvents(): Observable<ProcedureEventDTO[]> {
     return this.http.get<ProcedureEventDTO[]>(`${this.baseUrl}/Doctor/my-events/get`);
   }
+  
+  public GetMyTodaysEvents(): Observable<ProcedureEventDTO[]> {
+    return this.http.get<ProcedureEventDTO[]>(`${this.baseUrl}/Doctor/events/today/get`);
+  }
 
   public GetMyAccount(): Observable<DoctorDTO> {
     return this.http.get<DoctorDTO>(`${this.baseUrl}/Doctor/info/get`);
