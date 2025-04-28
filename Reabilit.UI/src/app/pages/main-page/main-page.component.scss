@@ -48,8 +48,8 @@
     }
     
     .image-placeholder {
-      width: 340px; /* Фіксована ширина */
-      height: 260px; /* Фіксована висота */
+      width: 500px; /* Фіксована ширина */
+      height: 300px; /* Фіксована висота */
       background-color: #777;
       flex-shrink: 0;
       overflow: hidden; /* Виходить за межі, якщо зображення занадто велике */
@@ -100,3 +100,122 @@
     
   }
   
+
+  .procedure-card {
+    background-color: #fafafa;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    margin-bottom: 1.5rem;
+    padding: 1rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  
+    .card-content {
+      display: flex;
+      align-items: center;
+      width: 100%;
+    }
+  
+    .avatar {
+      width: 72px;
+      height: 72px;
+      margin-right: 1rem;
+    }
+  
+    .info {
+      flex-grow: 1;
+  
+      h3 {
+        margin: 0;
+        font-size: 18px;
+        font-weight: 600;
+      }
+  
+      .status-time {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin: 4px 0;
+  
+        .status {
+          padding: 4px 8px;
+          border-radius: 8px;
+          font-size: 12px;
+          font-weight: 600;
+  
+          &.planned {
+            background: #e0f3ff;
+            color: #0077cc;
+          }
+  
+          &.cancelled {
+            background: #fdecea;
+            color: #d32f2f;
+          }
+  
+          &.finished {
+            background: #e8f5e9;
+            color: #388e3c;
+          }
+        }
+  
+        .datetime {
+          font-size: 14px;
+          color: #555;
+        }
+      }
+  
+      h4 {
+        margin: 0.5rem 0 0.25rem;
+        font-size: 16px;
+        font-weight: 500;
+      }
+  
+      p {
+        margin: 0;
+        font-size: 14px;
+        color: #666;
+      }
+    }
+  
+    .actions {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+  
+      button {
+        padding: 6px 12px;
+        font-size: 13px;
+        border-radius: 6px;
+        font-weight: 600;
+        cursor: pointer;
+        border: none;
+        transition: all 0.2s ease;
+      }
+  
+      .green {
+        background-color: #4caf50;
+        color: #fff;
+  
+        &:hover {
+          background-color: #43a047;
+        }
+      }
+  
+      .red {
+        background-color: #f44336;
+        color: #fff;
+  
+        &:hover {
+          background-color: #d32f2f;
+        }
+      }
+  
+      .gray {
+        background-color: #ccc;
+        color: #333;
+        cursor: default;
+      }
+    }
+  }
