@@ -8,6 +8,7 @@ import { FreeSlotsDTO } from '../responseModels/FreeSlotsDTO';
 import { ProcedureEventDTO } from '../responseModels/ProcedureEventDTO';
 import { PatientDTO } from '../responseModels/PatientDTO';
 import { ModifyDoctorInfo } from '../requestModels/ModifyDoctorInfo';
+import { AnalyzeDTO } from '../responseModels/AnalyzeDTO';
 
 @Injectable({
   providedIn: 'root'
@@ -37,5 +38,13 @@ export class DoctorService {
 
   public ModifyDoctorInfo(req: ModifyDoctorInfo): Observable<DoctorDTO> {
     return this.http.put<DoctorDTO>(`${this.baseUrl}/Doctor/info/modify`, req);
+  }
+
+  public AddAnalyze(request: FormData): Observable<AnalyzeDTO[]> {
+    return this.http.post<AnalyzeDTO[]>(`${this.baseUrl}/Doctor/analyzes/add`, request);
+  }
+
+  public DeleteAnalyze(id: string): Observable<AnalyzeDTO[]> {
+    return this.http.post<AnalyzeDTO[]>(`${this.baseUrl}/Doctor/analyzes/${id}/delete`, null);
   }
 }

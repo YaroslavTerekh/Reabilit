@@ -15,13 +15,15 @@ registerLocaleData(localeUk, 'uk-UA');
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit {
   title = 'Реабілітаційний центр';
   protected showLoginModal: boolean = false;
+  protected currentRole!: string;
+  protected isAuthorized: boolean = false;
 
   constructor(
     private readonly authService: AuthService,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.authService.$showLoginModalSubject
@@ -30,5 +32,26 @@ export class AppComponent implements OnInit{
           this.showLoginModal = res
         }
       });
+
+    this.authService.$currentRole.subscribe({
+      next: res => this.currentRole = res
+    })
+
+    this.authService.$isAuthorized.subscribe({
+      next: res => {
+        this.isAuthorized = res;
+
+        if (res) {
+          this.authService.getCurrentUserRole()
+            .subscribe({
+              next: res => {
+                this.authService.$currentRole.next(res.appRole);
+              }
+            })
+        }
+      }
+    })
+
+
   }
 }

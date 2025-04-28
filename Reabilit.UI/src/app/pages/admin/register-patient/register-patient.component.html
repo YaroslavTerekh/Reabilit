@@ -1,0 +1,34 @@
+<div class="profile-wrapper default-content">
+    <h2 class="title">РЕЄСТРАЦІЯ ПАЦІЄНТА</h2>
+    <form [formGroup]="form" class="profile-container form-section">
+      <label>
+        Ім’я
+        <input formControlName="firstName" type="text" />
+      </label>
+      <label>
+        Прізвище
+        <input formControlName="lastName" type="text" />
+      </label>
+      <label>
+        Номер телефону
+        <input formControlName="phoneNumber" type="tel" />
+      </label>
+      <label>
+        Вік
+        <input formControlName="age" type="number" />
+      </label>
+      <label>
+        Пароль
+        <input formControlName="password" type="password" />
+      </label>
+      <label>
+        Місто
+        <select formControlName="cityId">
+          <option selected>Виберіть місто</option>
+          <option *ngFor="let city of cities" [value]="city.id">{{ city.cityName }}</option>
+        </select>
+      </label>
+      <button type="submit" class="btn success" (click)="onSubmit()">ЗАРЕЄСТРУВАТИ</button>
+    </form>
+  </div>
+  

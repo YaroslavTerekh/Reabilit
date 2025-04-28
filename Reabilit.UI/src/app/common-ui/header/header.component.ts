@@ -24,12 +24,11 @@ export class HeaderComponent implements OnInit {
       }
     })
 
-    this.authService.getCurrentUserRole()
-      .subscribe({
-        next: res => {
-          this.isDoctor = res.appRole == "Doctor";
-        }
-      })
+    this.authService.$currentRole.subscribe({
+      next: res => {
+        this.isDoctor = res == "Doctor" ? true : false;
+      }
+    })
   }
 
   protected showLoginModal(): void {

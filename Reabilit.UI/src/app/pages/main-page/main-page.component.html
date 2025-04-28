@@ -6,16 +6,15 @@
     <button [routerLink]="['doctors-list']">🔍 Пошук</button>
   </div>
 
-  <div class="content">
-    <div class="image-placeholder"></div>
+  <div class="content" *ngIf="currentBanner">
+    <div class="image-placeholder">
+      <img [src]="currentBanner.imagePath" [alt]="currentBanner.imageName" />
+    </div>
     <div class="description">
-      Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque
-      laudantium Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium
-      doloremque laudantium Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-      accusantium doloremque laudantium Sed ut perspiciatis unde omnis iste natus error sit
-      voluptatem accusantium doloremque laudantium...
+      {{ currentBanner.description }}
     </div>
   </div>
+  
 </div>
 
 <div class="analyzes-section default-content">

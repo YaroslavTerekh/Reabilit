@@ -1,0 +1,20 @@
+<div class="profile-wrapper">
+    <h2 class="title">ДОДАТИ БАНЕР</h2>
+  
+    <div class="profile-container">
+      <form [formGroup]="bannerForm" (ngSubmit)="onSubmit()" class="form-section" enctype="multipart/form-data">
+        <label>
+          Опис банера
+          <input formControlName="description" type="text" placeholder="Опис" />
+        </label>
+  
+        <label>
+          Зображення
+          <input type="file" (change)="onFileSelected($event)" />
+        </label>
+  
+        <button type="submit" class="btn success" [disabled]="!bannerForm.valid || !selectedFile">Завантажити</button>
+      </form>
+    </div>
+  </div>
+  

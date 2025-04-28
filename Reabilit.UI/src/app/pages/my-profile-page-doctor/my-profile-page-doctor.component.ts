@@ -4,6 +4,7 @@ import { FormGroup, FormBuilder, Validators, FormsModule, ReactiveFormsModule } 
 import { DoctorDTO } from '../../services/responseModels/DoctorDTO';
 import { DoctorService } from '../../services/doctor/doctor.service';
 import { ModifyDoctorInfo } from '../../services/requestModels/ModifyDoctorInfo';
+import { AuthService } from '../../services/authorization/auth.service';
 
 @Component({
   selector: 'app-my-profile-page-doctor',
@@ -17,7 +18,8 @@ export class MyProfilePageDoctorComponent implements OnInit {
 
   constructor(
     private readonly fb: FormBuilder,
-    private readonly doctorService: DoctorService
+    private readonly doctorService: DoctorService,
+    private readonly authService: AuthService
   ) {
     this.doctorForm = this.fb.group({
       firstName: ['', Validators.required],
@@ -75,5 +77,9 @@ export class MyProfilePageDoctorComponent implements OnInit {
       experienceInYear: [res.experienceInYear, [Validators.min(0)]],
       biography: [res.biography]
     });
+  }
+
+  logout(): void {
+    this.authService.logOut();
   }
 }

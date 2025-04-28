@@ -99,3 +99,184 @@
         }
     }
 }
+
+.modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  
+    .modal {
+      background: #fff;
+      padding: 2rem;
+      border-radius: 16px;
+      width: 600px;
+      max-width: 90%;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+      position: relative;
+      font-family: 'Segoe UI', sans-serif;
+      
+      h2 {
+        margin: 0 0 0.5rem 0;
+        font-size: 24px;
+        font-weight: bold;
+      }
+  
+      p {
+        margin: 0.2rem 0;
+        font-size: 14px;
+        color: #555;
+  
+        strong {
+          color: #333;
+        }
+      }
+  
+      .doctor-select {
+        margin: 1.5rem 0 2rem;
+  
+        label {
+          display: block;
+          margin-bottom: 0.5rem;
+          font-weight: 600;
+        }
+  
+        select {
+          width: 100%;
+          padding: 0.5rem;
+          font-size: 14px;
+          border: 1px solid #ccc;
+          border-radius: 8px;
+        }
+  
+        button {
+          margin-top: 1rem;
+          background: #3498db;
+          color: #fff;
+          border: none;
+          padding: 0.5rem 1rem;
+          border-radius: 8px;
+          cursor: pointer;
+          transition: background 0.3s;
+  
+          &:hover {
+            background: #2980b9;
+          }
+        }
+      }
+  
+      .analyzes-section {
+        table {
+          width: 100%;
+          border-collapse: collapse;
+      
+          th, td {
+            border-bottom: 1px solid #ddd;
+            padding: 8px;
+
+            .analyze_icon {
+                width: 50px;
+                height: 50px;
+            }
+
+            .delete-btn {
+                background-color: #e74c3c;
+                color: white;
+                border: none;
+                padding: 5px 10px;
+                font-size: 14px;
+                border-radius: 6px;
+                cursor: pointer;
+                transition: background-color 0.2s ease;
+              }
+              
+              .delete-btn:hover {
+                background-color: #c0392b;
+              }
+              
+          }
+      
+          input, select {
+            width: 100%;
+            padding: 6px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 14px;
+          }
+        }
+      
+        .buttons, .save-cancel-buttons {
+          margin-top: 1rem;
+          display: flex;
+          gap: 0.5rem;
+        }
+      
+        .add-btn {
+          background: #2ecc71;
+          color: white;
+          padding: 0.5rem 1rem;
+          border: none;
+          border-radius: 8px;
+          cursor: pointer;
+        }
+      
+        .save-btn {
+          background: #3498db;
+          color: white;
+          padding: 0.5rem 1rem;
+          border: none;
+          border-radius: 8px;
+          cursor: pointer;
+        }
+      
+        .cancel-btn {
+          background: #e67e22;
+          color: white;
+          padding: 0.5rem 1rem;
+          border: none;
+          border-radius: 8px;
+          cursor: pointer;
+        }
+      
+        .close-btn {
+          background: #e74c3c;
+          color: white;
+          padding: 0.6rem 1.2rem;
+          border: none;
+          border-radius: 8px;
+          cursor: pointer;
+          margin-top: 2rem;
+        }
+      }
+      
+      .close-btn {
+        margin-top: 2rem;
+        background: #e74c3c;
+        color: #fff;
+        border: none;
+        padding: 0.6rem 1.2rem;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: background 0.3s;
+  
+        &:hover {
+          background: #c0392b;
+        }
+      }
+  
+      .normal {
+        color: green;
+        font-weight: bold;
+      }
+  
+      .abnormal {
+        color: red;
+        font-weight: bold;
+      }
+    }
+  }
+  

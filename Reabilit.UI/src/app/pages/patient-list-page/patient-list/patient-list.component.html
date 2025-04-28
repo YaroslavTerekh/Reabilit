@@ -1,32 +1,101 @@
 <div class="patient-list default-content">
-    <h1 class="title">Ваші пацієнти</h1>
-  
-    <div class="card-grid">
-      <div class="patient-card" *ngFor="let p of patients">
-        <div class="header">
-          <h2 class="name">{{ p.firstName }} {{ p.lastName }}</h2>
-          <span class="status" [ngClass]="{ active: p.isActive, inactive: !p.isActive }">
-            {{ p.isActive ? 'Активний' : 'Неактивний' }}
-          </span>
-        </div>
-  
-        <p>Вік: {{ p.age }}</p>
-        <p>Місто: {{ p.city.cityName }}</p>
-  
-        <div class="analyzes" *ngIf="p.analyzes.length > 0">
-          <h4>Аналізи:</h4>
-          <div class="analyze" *ngFor="let a of p.analyzes">
-            <div class="analyze-info">
-              <p class="title">{{ a.title }}</p>
-              <p>
-                <span [ngClass]="{ normal: a.isNormal, abnormal: !a.isNormal }">
-                  {{ a.value }} {{ a.unit }}
-                </span>
-              </p>
-            </div>
+  <h1 class="title">Ваші пацієнти</h1>
+
+  <div class="card-grid">
+    <div class="patient-card" *ngFor="let p of patients" (click)="openPatientModal(p)">
+      <div class="header">
+        <h2 class="name">{{ p.firstName }} {{ p.lastName }}</h2>
+        <span class="status" [ngClass]="{ active: p.isActive, inactive: !p.isActive }">
+          {{ p.isActive ? 'Активний' : 'Неактивний' }}
+        </span>
+      </div>
+
+      <p>Вік: {{ p.age }}</p>
+      <p>Місто: {{ p.city.cityName }}</p>
+
+      <div class="analyzes" *ngIf="p.analyzes.length > 0">
+        <h4>Аналізи:</h4>
+        <div class="analyze" *ngFor="let a of p.analyzes">
+          <div class="analyze-info">
+            <p class="title">{{ a.title }}</p>
+            <p>
+              <span [ngClass]="{ normal: a.isNormal, abnormal: !a.isNormal }">
+                {{ a.value }} {{ a.unit }}
+              </span>
+            </p>
           </div>
         </div>
       </div>
     </div>
   </div>
+</div>
+
+<div class="modal-backdrop" *ngIf="selectedPatient">
+  <div class="modal">
+    <h2>{{ selectedPatient.firstName }} {{ selectedPatient.lastName }}</h2>
+
+    <p><strong>Вік:</strong> {{ selectedPatient.age }}</p>
+    <p><strong>Телефон:</strong> {{ selectedPatient.phoneNumber }}</p>
+    <p><strong>Місто:</strong> {{ selectedPatient.city.cityName }}</p>
+
+    <div class="analyzes-section">
+      <h3>Аналізи</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Назва</th>
+            <th>Результат</th>
+            <th>Одиниця</th>
+            <th>Статус</th>
+            <th>Іконка</th>
+            <th>Дії</th> <!-- Новий стовпець -->
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let analysis of analyzes">
+            <td>{{ analysis.title }}</td>
+            <td>{{ analysis.value }}</td>
+            <td>{{ analysis.unit }}</td>
+            <td>{{ analysis.isNormal ? 'Нормальний' : 'Аномальний' }}</td>
+            <td>
+              <img *ngIf="analysis.iconPath" [src]="analysis.iconPath" alt="Icon" class="analyze-icon">
+            </td>
+            <td>
+              <button (click)="deleteAnalysis(analysis.id)" class="delete-btn">Видалити</button>
+            </td>
+          </tr>
       
+          <tr *ngIf="addingAnalysis">
+            <td><input [(ngModel)]="newAnalysis.title" placeholder="Назва" /></td>
+            <td><input [(ngModel)]="newAnalysis.value" placeholder="Результат" /></td>
+            <td><input [(ngModel)]="newAnalysis.unit" placeholder="Одиниця" /></td>
+            <td>
+              <select [(ngModel)]="newAnalysis.isNormal">
+                <option [value]="true">Нормальний</option>
+                <option [value]="false">Аномальний</option>
+              </select>
+            </td>
+            <td>
+              <input type="file" (change)="onFileSelected($event)" />
+            </td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+      
+      
+
+      <div class="buttons">
+        <button (click)="onAddAnalysis()" *ngIf="!addingAnalysis" class="add-btn">Додати аналіз</button>
+
+        <div *ngIf="addingAnalysis" class="save-cancel-buttons">
+          <button (click)="saveAnalysis()" class="save-btn">Зберегти</button>
+          <button (click)="cancelAdding()" class="cancel-btn">Скасувати</button>
+        </div>
+      </div>
+    </div>
+
+
+    <button class="close-btn" (click)="closeModal()">Закрити</button>
+  </div>
+</div>

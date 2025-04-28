@@ -1,0 +1,57 @@
+<div class="profile-wrapper">
+    <h2 class="title">РЕЄСТРАЦІЯ ЛІКАРЯ</h2>
+  
+    <div class="profile-container">
+      <form [formGroup]="registerDoctorForm" (ngSubmit)="onSubmit()" class="form-section">
+        <label>
+          Ім’я
+          <input formControlName="firstName" type="text" placeholder="Ім’я" />
+        </label>
+  
+        <label>
+          Прізвище
+          <input formControlName="lastName" type="text" placeholder="Прізвище" />
+        </label>
+  
+        <label>
+          Номер телефону
+          <input formControlName="phoneNumber" type="tel" placeholder="Номер телефону" />
+        </label>
+  
+        <label>
+          Вік
+          <input formControlName="age" type="number" placeholder="Вік" />
+        </label>
+  
+        <label>
+          Ступінь
+          <input formControlName="degree" type="text" placeholder="Науковий ступінь" />
+        </label>
+  
+        <label>
+          Досвід (в роках)
+          <input formControlName="experienceInYear" type="number" placeholder="Стаж роботи" />
+        </label>
+  
+        <label>
+          Клас лікаря
+          <select formControlName="doctorClassId">
+            <option selected>Виберіть спеціалізацію</option>
+            <option *ngFor="let doctorClass of doctorClasses" [ngValue]="doctorClass.id">
+              {{ doctorClass.className }}
+            </option>
+          </select>
+        </label>
+  
+        <label>
+          Пароль
+          <input formControlName="password" type="password" placeholder="Пароль" />
+        </label>
+  
+        <button type="submit" class="btn success" [disabled]="registerDoctorForm.invalid">
+          Зареєструвати
+        </button>
+      </form>
+    </div>
+  </div>
+  

@@ -1,0 +1,26 @@
+<div class="profile-wrapper">
+    <h2 class="title">УСІ ПАЦІЄНТИ</h2>
+  
+    <div class="search-container">
+      <input type="text" [(ngModel)]="searchText" (ngModelChange)="onSearchChange()" placeholder="Пошук..." />
+    </div>
+    
+    <div class="patients-table">
+      <div class="table-header">
+        <span>Ім’я</span>
+        <span>Прізвище</span>
+        <span>Вік</span>
+        <span>Телефон</span>
+        <span>Місто</span>
+      </div>
+  
+      <div class="table-row" *ngFor="let patient of patients">
+        <span>{{ patient.firstName }}</span>
+        <span>{{ patient.lastName }}</span>
+        <span>{{ patient.age }}</span>
+        <span>{{ patient.phoneNumber }}</span>
+        <span>{{ patient.city.cityName }}</span>
+      </div>
+    </div>
+  </div>
+  

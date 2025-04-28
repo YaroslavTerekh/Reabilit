@@ -1,0 +1,12 @@
+<div class="profile-wrapper">
+    <h2 class="title">ВСІ БАНЕРИ</h2>
+  
+    <div class="banner-list">
+      <div class="banner-card" *ngFor="let banner of banners">
+        <img [src]="banner.imagePath" alt="Банер" />
+        <p class="description">{{ banner.description }}</p>
+        <button class="btn danger" (click)="deleteBanner(banner.id)">Видалити</button>
+      </div>
+    </div>
+  </div>
+  

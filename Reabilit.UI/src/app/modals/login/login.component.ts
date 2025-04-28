@@ -50,9 +50,13 @@ export class LoginComponent {
         this.toastService.show(`Ваша сесія активна до ${new DatePipe("uk-UA").transform(token.expires, "hh:mm dd/MM/yyyy")}`, 'info');
 
         this.authService.$isAuthorized.next(true);
-      },
-      error: (err) => {        
-        this.toastService.show(err.error?.message, 'error');
+
+        this.authService.getCurrentUserRole()
+          .subscribe({
+            next: res => {
+              this.authService.$currentRole.next(res.appRole);
+            }
+          })
       }
     });
   }
