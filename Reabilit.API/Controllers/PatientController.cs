@@ -8,6 +8,7 @@ using Reabilit.BL.Behaviours.ProcedureEvents.PatientGetEvents;
 using Reabilit.BL.Behaviours.UserDoctor.GetDoctor;
 using Reabilit.BL.Behaviours.UserPatient.AddNewProcedureEvent;
 using Reabilit.BL.Behaviours.UserPatient.CancelEvent;
+using Reabilit.BL.Behaviours.UserPatient.GetMyAnalyzes;
 using Reabilit.BL.Behaviours.UserPatient.GetMyDoctor;
 using Reabilit.BL.Behaviours.UserPatient.GetMyDoctorFreeSlots;
 using Reabilit.BL.Behaviours.UserPatient.GetMyEvents;
@@ -84,4 +85,8 @@ public class PatientController : BaseController
 
         return Ok();
     }
+
+    [HttpGet("analyzes/get")]
+    public async Task<IActionResult> GetAnalyzesAsync(CancellationToken cancellationToken = default)
+        => Ok(await _sender.Send(new GetMyAnalyzesQuery(CurrentUserId), cancellationToken));
 }
