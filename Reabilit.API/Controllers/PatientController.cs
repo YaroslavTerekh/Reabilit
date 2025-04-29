@@ -32,9 +32,13 @@ public class PatientController : BaseController
         _sender = sender;
     }
 
-    [HttpPut("info/modify")]
+    [HttpPost("info/modify")]
     public async Task<IActionResult> ModifyPatientInfoAsync([FromBody] ModifyPatientInfoQuery query, CancellationToken cancellationToken = default)
-        => Ok(await _sender.Send(query, cancellationToken));
+    {
+        query.CurrentUserId = CurrentUserId;
+
+        return Ok(await _sender.Send(query, cancellationToken));
+    }
 
     [HttpPut("info/account/toggle")]
     public async Task<IActionResult> ToggleAccountAsync([FromBody] ToggleAccountCommand command, CancellationToken cancellationToken = default)

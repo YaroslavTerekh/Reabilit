@@ -5,12 +5,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Reabilit.Domain.Entities;
+using System.Text.Json.Serialization;
+using Reabilit.Domain.DTOs;
 
 namespace Reabilit.BL.Behaviours.UserPatient.ModifyPatientInfo;
 
-public class ModifyPatientInfoQuery : IRequest<Patient> // ToDo: Create DTO
+public class ModifyPatientInfoQuery : IRequest<PatientDTO> 
 {
-    public Guid PatientId { get; set; }
+    [JsonIgnore]
+    public Guid CurrentUserId { get; set; }
 
     public required string FirstName { get; set; }
 
