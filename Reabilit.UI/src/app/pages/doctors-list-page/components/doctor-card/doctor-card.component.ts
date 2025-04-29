@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { DoctorDTO } from '../../../../services/responseModels/DoctorDTO';
 
 @Component({
   selector: 'app-doctor-card',
@@ -7,5 +8,6 @@ import { Component } from '@angular/core';
   styleUrl: './doctor-card.component.scss'
 })
 export class DoctorCardComponent {
-
+  @Input()
+  doctor!: DoctorDTO;
 }

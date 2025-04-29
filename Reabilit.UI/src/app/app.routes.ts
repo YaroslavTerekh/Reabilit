@@ -22,7 +22,7 @@ export const routes: Routes = [
     { path: 'my-doctor', component: DoctorProfileComponent },
     { path: 'my-profile', component: MyProfilePageComponent },
     { path: 'my-doctor-profile', component: MyProfilePageDoctorComponent },
-    { path: 'doctors-list', component: DoctorsListPageComponent },
+    { path: 'doctors-list/:searchTerm', component: DoctorsListPageComponent },
     { path: 'my-patients', component: PatientListComponent },
     { path: 'doctor-events', component: DoctorEventsPageComponent },
     { path: 'admin', component: MainComponent, children: [
