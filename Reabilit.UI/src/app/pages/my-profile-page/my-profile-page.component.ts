@@ -9,6 +9,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { CommonModule } from '@angular/common';
 import { CityDTO } from '../../services/responseModels/CityDTO';
 import { ContentService } from '../../services/content/content.service';
+import { ModifyPatientInfo } from '../../services/requestModels/ModifyPatientInfo';
 
 @Component({
   selector: 'app-my-profile-page',
@@ -53,19 +54,8 @@ export class MyProfilePageComponent implements OnInit {
                   .subscribe({
                     next: patient => {
                       this.patient = patient;
-                      console.log(patient);
                       
-  
-                      this.patientInfoForm = this.fb.group({
-                        firstName: [patient.firstName, [Validators.required]],
-                        lastName: [patient.lastName, [Validators.required]],
-                        phoneNumber: [patient.phoneNumber, [Validators.required, Validators.pattern(/^\+380\d{9}$/)]],
-                        age: [patient.age, [Validators.required]],
-                        cityId: [patient.cityId, [Validators.required]]
-                      });
-
-                      console.log(patient.cityId);
-                      
+                      this.initForm(patient);
                     }
                   });
               }
@@ -74,7 +64,34 @@ export class MyProfilePageComponent implements OnInit {
       });
   }
 
-  onSubmit(): void {
+  initForm(patient: PatientDTO): void {
+    this.patientInfoForm = this.fb.group({
+      firstName: [patient.firstName, [Validators.required]],
+      lastName: [patient.lastName, [Validators.required]],
+      phoneNumber: [patient.phoneNumber, [Validators.required, Validators.pattern(/^\+380\d{9}$/)]],
+      age: [patient.age, [Validators.required]],
+      cityId: [patient.cityId, [Validators.required]]
+    });
+  }
 
+  onSubmit(): void {
+    if(this.patientInfoForm.valid) {
+      let request: ModifyPatientInfo = {
+        firstName: this.patientInfoForm.get('firstName')?.value,
+        lastName: this.patientInfoForm.get('lastName')?.value,
+        age: this.patientInfoForm.get('age')?.value,
+        phoneNumber: this.patientInfoForm.get('phoneNumber')?.value,
+        cityId: this.patientInfoForm.get('cityId')?.value
+      };
+
+      this.patientService.ModifyPatientInfo(request)
+        .subscribe({
+          next: patient => {
+            this.patient = patient;
+            
+            this.initForm(patient);
+          }
+        })
+    }
   }
 }

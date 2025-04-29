@@ -2,7 +2,7 @@
     <h2 class="title">МІЙ ПРОФІЛЬ</h2>
   
     <div class="profile-container">
-      <form [formGroup]="patientInfoForm" (ngSubmit)="onSubmit()" class="form-section">
+      <form [formGroup]="patientInfoForm" class="form-section">
         <label>
           Ваше ім’я
           <input formControlName="firstName" type="text" placeholder="Ім’я" />
@@ -26,6 +26,10 @@
               {{ city.cityName }}
             </option>
           </select>
+        </label>
+
+        <label>
+          <button сlass="save" (click)="onSubmit()">Зберегти</button>
         </label>
       </form>
   
