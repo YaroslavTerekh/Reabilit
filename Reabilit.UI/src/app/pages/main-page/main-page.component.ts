@@ -12,11 +12,12 @@ import { DoctorService } from '../../services/doctor/doctor.service';
 import { ProcedureEventDTO } from '../../services/responseModels/ProcedureEventDTO';
 import { EventCardComponent } from '../../common-ui/event-card/event-card.component';
 import { Observable } from 'rxjs';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-main-page',
   standalone: true,
-  imports: [AnalyzeCardComponent, QuestionBoxComponent, RouterLink, CommonModule],
+  imports: [AnalyzeCardComponent, QuestionBoxComponent, RouterLink, CommonModule, FormsModule],
   templateUrl: './main-page.component.html',
   styleUrl: './main-page.component.scss',
   schemas: []
@@ -28,6 +29,7 @@ export class MainPageComponent implements OnInit, OnDestroy {
   currentBannerIndex: number = 0;
   interval: any;
   currentRole!: string;
+  searchTerm: string | null = null;
 
   constructor(
     private readonly contentService: ContentService,

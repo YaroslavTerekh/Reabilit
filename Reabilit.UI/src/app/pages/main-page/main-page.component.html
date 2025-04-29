@@ -2,8 +2,8 @@
   <h1 class="title">Шукайте лікарів та ліки онлайн</h1>
 
   <div class="search-container">
-    <input type="text" placeholder="Введіть прізвище, або спеціальність лікаря" />
-    <button [routerLink]="['doctors-list', ]">🔍 Пошук</button>
+    <input type="text" [(ngModel)]="searchTerm" placeholder="Введіть прізвище, або спеціальність лікаря" />
+    <button [routerLink]="['doctors-list', searchTerm]">🔍 Пошук</button>
   </div>
 
   <div class="content" *ngIf="currentBanner">
