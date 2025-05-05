@@ -1,8 +1,10 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using Reabilit.BL.Services.Abstractions;
 using Reabilit.Domain.Constants;
 using Reabilit.Domain.DbConnection;
+using Reabilit.Domain.DTOs;
 using Reabilit.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -15,10 +17,12 @@ namespace Reabilit.BL.Behaviours.UserPatient.AddNewProcedureEvent;
 public class AddNewProcedureEventCommandHandler : IRequestHandler<AddNewProcedureEventCommand>
 {
     private readonly DataContext _context;
+    private readonly IEventNotificationService _eventNotificationService;
 
-    public AddNewProcedureEventCommandHandler(DataContext context)
+    public AddNewProcedureEventCommandHandler(DataContext context, IEventNotificationService eventNotificationService)
     {
         _context = context;
+        _eventNotificationService = eventNotificationService;
     }
 
     public async Task Handle(AddNewProcedureEventCommand request, CancellationToken cancellationToken)
@@ -78,7 +82,21 @@ public class AddNewProcedureEventCommandHandler : IRequestHandler<AddNewProcedur
             PatientId = patient.Id
         };
 
-        await _context.ProcedureEvents.AddAsync(procedure, cancellationToken);
-        await _context.SaveChangesAsync(cancellationToken);
+
+        try
+        {
+            await _context.ProcedureEvents.AddAsync(procedure, cancellationToken);
+            await _context.SaveChangesAsync(cancellationToken);
+
+            await _eventNotificationService.CreateAndSendEventNotificationAsync
+                (
+                new EventNotificationConfiguration
+                {
+                    AppUserId = doctor.AppUserId,
+                    Message = procedure.Title,
+                    ProcedureEventId = procedure.Id
+                }, cancellationToken);
+        }
+        catch { } //ToDo: Add error catch logic
     }
 }

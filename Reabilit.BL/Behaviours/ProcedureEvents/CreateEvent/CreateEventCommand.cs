@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Reabilit.BL.Behaviours.ProcedureEvents.CreateEvent;
 
-public class CreateEventCommand : IRequest  // ToDo: Add field DateTime StatsOn
+public class CreateEventCommand : IRequest
 {
     public required string Title { get; set; }
     public required string Description { get; set; }

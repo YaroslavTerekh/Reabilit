@@ -18,6 +18,7 @@ public class DataContext : IdentityDbContext<AppUser, AppRole, Guid>
     public DbSet<ProcedureEvent> ProcedureEvents { get; set; }
     public DbSet<DoctorSchedule> DoctorSchedules { get; set; }
     public DbSet<Banner> Banners { get; set; }
+    public DbSet<ProcedureEventNotification> ProcedureEventNotification { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -25,5 +26,6 @@ public class DataContext : IdentityDbContext<AppUser, AppRole, Guid>
 
         modelBuilder.ApplyConfiguration(new PatientConfiguration());
         modelBuilder.ApplyConfiguration(new DoctorConfiguration());
+        modelBuilder.ApplyConfiguration(new ProcedureEventConfiguration());
     }
 } 

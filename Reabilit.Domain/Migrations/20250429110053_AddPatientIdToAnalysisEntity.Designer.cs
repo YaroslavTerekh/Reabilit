@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Reabilit.Domain.DbConnection;
 
@@ -11,9 +12,11 @@ using Reabilit.Domain.DbConnection;
 namespace Reabilit.Domain.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20250429110053_AddPatientIdToAnalysisEntity")]
+    partial class AddPatientIdToAnalysisEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -466,37 +469,6 @@ namespace Reabilit.Domain.Migrations
                     b.ToTable("ProcedureEvents");
                 });
 
-            modelBuilder.Entity("Reabilit.Domain.Entities.ProcedureEventNotification", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("AppUserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsRead")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Message")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid?>("ProcedureEventId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AppUserId");
-
-                    b.HasIndex("ProcedureEventId");
-
-                    b.ToTable("ProcedureEventNotification");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
                 {
                     b.HasOne("Reabilit.Domain.DbConnection.AppRole", null)
@@ -633,29 +605,6 @@ namespace Reabilit.Domain.Migrations
                     b.Navigation("Patient");
                 });
 
-            modelBuilder.Entity("Reabilit.Domain.Entities.ProcedureEventNotification", b =>
-                {
-                    b.HasOne("Reabilit.Domain.Entities.AppUser", "AppUser")
-                        .WithMany("EventsNotifications")
-                        .HasForeignKey("AppUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Reabilit.Domain.Entities.ProcedureEvent", "ProcedureEvent")
-                        .WithMany("EventsNotifications")
-                        .HasForeignKey("ProcedureEventId")
-                        .OnDelete(DeleteBehavior.NoAction);
-
-                    b.Navigation("AppUser");
-
-                    b.Navigation("ProcedureEvent");
-                });
-
-            modelBuilder.Entity("Reabilit.Domain.Entities.AppUser", b =>
-                {
-                    b.Navigation("EventsNotifications");
-                });
-
             modelBuilder.Entity("Reabilit.Domain.Entities.City", b =>
                 {
                     b.Navigation("Patients");
@@ -680,11 +629,6 @@ namespace Reabilit.Domain.Migrations
                     b.Navigation("Analyzes");
 
                     b.Navigation("ProcedureEvents");
-                });
-
-            modelBuilder.Entity("Reabilit.Domain.Entities.ProcedureEvent", b =>
-                {
-                    b.Navigation("EventsNotifications");
                 });
 #pragma warning restore 612, 618
         }

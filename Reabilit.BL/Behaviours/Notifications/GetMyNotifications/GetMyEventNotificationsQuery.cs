@@ -1,0 +1,12 @@
+﻿using MediatR;
+using Reabilit.Domain.DTOs;
+using Reabilit.Domain.Entities;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Reabilit.BL.Behaviours.Notifications.GetMyNotifications;
+
+public record GetMyEventNotificationsQuery(Guid CurrentUserId) : IRequest<List<ProcedureEventNotificationDTO>>;
