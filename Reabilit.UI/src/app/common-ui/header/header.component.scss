@@ -4,71 +4,78 @@
     width: 100%;
     background-color: #fff;
     filter: drop-shadow(0px 2px 5px #3d3d3d);
-
+    z-index: 1000;
+  
     .header-content {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        height: 100%;
-
-        .logo {
-            font-size: 24px;
-        }
-
-        nav {
-            width: 50%;
-            ul {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-
-                .nav-link {
-                    cursor: pointer;
-                }
-
-                li {
-                    font-size: 16px;
-                }
-
-                .section__login_button {
-                    display: flex;
-                    justify-content: space-between;
-                    align-items: center;
-                    width: 20%;
-
-                    .action_button {
-                        width: fit-content;
-                        cursor: pointer;
-                        text-transform: uppercase;
-                        border-radius: 5px;
-                        padding: 10px;
-                        transition: .5s;
-
-                    }
-
-                    .action_button:hover {
-                        transition: .5s;
-                    }
-
-                    .login_button {
-                        border: 1px solid #000;
-                    }
-
-                    .login_button:hover {
-                        background-color: rgb(169, 196, 255);
-                    }
-
-                    .myaccount_button {
-                        border: 1px solid #3dc2ff;
-                        background-color: #3dc2ff;
-                    }
-                }
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 100%;
+  
+      .logo {
+        font-size: 24px;
+      }
+  
+      nav {
+        width: 60%;
+  
+        ul {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          gap: 20px;
+  
+          .nav-link {
+            cursor: pointer;
+          }
+  
+          li {
+            font-size: 16px;
+            list-style: none;
+          }
+  
+          .section__login_button {
+            display: flex;
+            align-items: center;
+            gap: 24px; // 🔼 Було 12px, стало більше
+            margin-left: 20px; // 🔼 За потреби — можна ще трохи зсунути вліво
+          
+            .notification-btn {
+              position: relative;
             }
+          
+            .action_button {
+              cursor: pointer;
+              text-transform: uppercase;
+              border-radius: 5px;
+              padding: 8px 12px;
+              transition: 0.3s;
+              font-size: 14px;
+              white-space: nowrap;
+            }
+          
+            .login_button {
+              border: 1px solid #000;
+            }
+          
+            .login_button:hover {
+              background-color: rgb(169, 196, 255);
+            }
+          
+            .myaccount_button {
+              border: 1px solid #3dc2ff;
+              background-color: #3dc2ff;
+              color: white;
+            }
+          }
+          
         }
+      }
     }
-}
-
-.box {
+  }
+  
+  .box {
     height: 50px;
     width: 100%;
-}
+  }
+  

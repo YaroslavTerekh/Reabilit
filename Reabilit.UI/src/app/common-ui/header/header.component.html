@@ -1,35 +1,46 @@
 <header class="main-header">
     <div class="header-content wide-content">
-        <div class="logo actor-regular">
-            REABILIT.ME
-        </div>
-        <nav>
-            <ul>
-                <li [routerLink]="['']" class="nav-link">Головна</li>
-                <ng-container *ngIf="!isDoctor">
-                    <li [routerLink]="['events']" class="nav-link">Мої записи</li>
-                    <li [routerLink]="['my-doctor']" class="nav-link">Мій лікар</li>
-                </ng-container>
-                <ng-container *ngIf="isDoctor">
-                    <li [routerLink]="['doctor-events']" class="nav-link">Мої записи</li>
-                    <li [routerLink]="['my-patients']" class="nav-link">Мої пацієнти</li>
-                </ng-container>
-
-                <li class="section__login_button">
-                    <div>N</div>
-                    @if(!isAuthorized) {
-                    <p class="action_button login_button" (click)="showLoginModal()">Увійти</p>
-                    } @else {                    
-                    <ng-container *ngIf="!isDoctor">
-                        <p class="action_button myaccount_button" [routerLink]="['my-profile']">Мій акаунт</p>
-                    </ng-container>
-                    <ng-container *ngIf="isDoctor">
-                        <p class="action_button myaccount_button" [routerLink]="['my-doctor-profile']">Мій акаунт</p>
-                    </ng-container>
-                    }
-                </li>
-            </ul>
-        </nav>
+      <div class="logo actor-regular">
+        REABILIT.ME
+      </div>
+      <nav>
+        <ul>
+          <li [routerLink]="['']" class="nav-link">Головна</li>
+          <ng-container *ngIf="!isDoctor">
+            <li [routerLink]="['events']" class="nav-link">Мої записи</li>
+            <li [routerLink]="['my-doctor']" class="nav-link">Мій лікар</li>
+          </ng-container>
+          <ng-container *ngIf="isDoctor">
+            <li [routerLink]="['doctor-events']" class="nav-link">Мої записи</li>
+            <li [routerLink]="['my-patients']" class="nav-link">Мої пацієнти</li>
+          </ng-container>
+  
+          <li class="section__login_button">
+            <span mat-icon-button
+                    class="notification-btn"
+                    [matBadge]="newNotificationCount"
+                    matBadgeColor="warn"
+                    matBadgeOverlap="false"
+                    matBadgePosition="above after"
+                    [matBadgeHidden]="newNotificationCount === 0"
+                    (click)="showNotifications()">
+              <mat-icon>notifications</mat-icon>
+          </span>
+  
+            @if (!isAuthorized) {
+              <p class="action_button login_button" (click)="showLoginModal()">Увійти</p>
+            } @else {
+              <ng-container *ngIf="!isDoctor">
+                <p class="action_button myaccount_button" [routerLink]="['my-profile']">Мій акаунт</p>
+              </ng-container>
+              <ng-container *ngIf="isDoctor">
+                <p class="action_button myaccount_button" [routerLink]="['my-doctor-profile']">Мій акаунт</p>
+              </ng-container>
+            }
+          </li>
+        </ul>
+      </nav>
     </div>
-</header>
-<div class="box"></div>
+  </header>
+  <div class="box"></div>
+  

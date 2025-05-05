@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 })
 export class AuthService {
   public $showLoginModalSubject: ReplaySubject<boolean> = new ReplaySubject<boolean>();
+  public $showNotificationsModalSubject: ReplaySubject<boolean> = new ReplaySubject<boolean>();
   public $isAuthorized: ReplaySubject<boolean> = new ReplaySubject<boolean>();
   public $currentRole: ReplaySubject<string> = new ReplaySubject<string>();
   private readonly baseUrl: string = config.apiUrl;

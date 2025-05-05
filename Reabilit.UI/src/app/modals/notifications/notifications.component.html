@@ -1,0 +1,26 @@
+<div class="modal-overlay" (click)="closeNotifications()"></div>
+<div class="overlay">
+  <div class="notification-modal">
+    <div class="modal-header">
+      <div class="modal-tabs">
+        <button class="tab-button active">Записи</button>
+        <button class="tab-button">Чати</button>
+      </div>
+      <button class="mark-all-read" (click)="readAllNotifications()">Прочитати все</button>
+    </div>
+
+    <div class="notification-list">
+      @for (notification of eventNotifications; track notification) {
+      <div class="notification-item">
+        <span class="message-status" [ngClass]="notification.isRead ? 'message-status-read' : 'message-status-new'"> </span> 
+        <span class="message">{{notification.message}}</span>
+        <div class="actions">
+          <button class="read-btn" (click)="readNotification(notification.id)">Прочитати</button>
+          <button class="delete-btn" (click)="deleteEventNotification(notification.id)">🗑</button>
+        </div>
+      </div>
+      }
+
+    </div>
+  </div>
+</div>

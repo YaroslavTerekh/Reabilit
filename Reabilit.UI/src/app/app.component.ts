@@ -6,12 +6,13 @@ import { AuthService } from './services/authorization/auth.service';
 import { ToastErrorComponent } from "./modals/toast-error/toast-error.component";
 import localeUk from '@angular/common/locales/uk';
 import { registerLocaleData } from '@angular/common';
+import { NotificationsComponent } from "./modals/notifications/notifications.component";
 
 registerLocaleData(localeUk, 'uk-UA');
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, HeaderComponent, LoginComponent, ToastErrorComponent],
+  imports: [RouterOutlet, HeaderComponent, LoginComponent, ToastErrorComponent, NotificationsComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
@@ -20,6 +21,7 @@ export class AppComponent implements OnInit {
   protected showLoginModal: boolean = false;
   protected currentRole!: string;
   protected isAuthorized: boolean = false;
+  protected showNotificationsModal: boolean = false;
 
   constructor(
     private readonly authService: AuthService,
@@ -32,6 +34,13 @@ export class AppComponent implements OnInit {
           this.showLoginModal = res
         }
       });
+
+    this.authService.$showNotificationsModalSubject
+      .subscribe({
+        next: res => {
+          this.showNotificationsModal = res;
+        }
+      })
 
     this.authService.$currentRole.subscribe({
       next: res => this.currentRole = res
