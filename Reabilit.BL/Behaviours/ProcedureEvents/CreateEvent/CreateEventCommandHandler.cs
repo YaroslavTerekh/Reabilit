@@ -1,7 +1,9 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Reabilit.BL.Services.Abstractions;
 using Reabilit.Domain.Constants;
 using Reabilit.Domain.DbConnection;
+using Reabilit.Domain.DTOs;
 using Reabilit.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -14,15 +16,19 @@ namespace Reabilit.BL.Behaviours.ProcedureEvents.CreateEvent;
 public class CreateEventCommandHandler : IRequestHandler<CreateEventCommand>
 {
     private readonly DataContext _context;
+    private readonly IEventNotificationService _eventNotificationService;
 
-    public CreateEventCommandHandler(DataContext context)
+    public CreateEventCommandHandler(DataContext context, IEventNotificationService eventNotificationService)
     {
         _context = context;
+        _eventNotificationService = eventNotificationService;
     }
 
     public async Task Handle(CreateEventCommand request, CancellationToken cancellationToken)
     {
-        if (!await _context.Patients.AnyAsync(p => p.Id == request.PatientId, cancellationToken))
+        var patient = await _context.Patients.FirstOrDefaultAsync(p => p.Id == request.PatientId, cancellationToken);
+
+        if (patient is null)
         {
             throw new NotFoundException(ErrorMessages.Status404UserNotFound(UserRole.Patient));
         }
@@ -51,12 +57,12 @@ public class CreateEventCommandHandler : IRequestHandler<CreateEventCommand>
             time = time.Add(TimeSpan.FromMinutes(30));
         }
 
-        if(!allSlots.Contains(request.StartsOn.TimeOfDay))
+        if (!allSlots.Contains(request.StartsOn.TimeOfDay))
         {
             throw new RequestException("такого слоту німа");
         }
 
-        if(await _context.ProcedureEvents.AnyAsync(pe => pe.StartsOn == request.StartsOn, cancellationToken))
+        if (await _context.ProcedureEvents.AnyAsync(pe => pe.StartsOn == request.StartsOn, cancellationToken))
         {
             throw new RequestException("дата зайнята");
         }
@@ -70,8 +76,21 @@ public class CreateEventCommandHandler : IRequestHandler<CreateEventCommand>
             StartsOn = request.StartsOn
         };
 
-        await _context.ProcedureEvents.AddAsync(procedureEvent, cancellationToken);
-        await _context.SaveChangesAsync(cancellationToken);
+        try
+        {
+            await _context.ProcedureEvents.AddAsync(procedureEvent, cancellationToken);
+            await _context.SaveChangesAsync(cancellationToken);
+
+            await _eventNotificationService.CreateAndSendEventNotificationAsync
+                (
+                new EventNotificationConfiguration
+                {
+                    AppUserId = doctor.AppUserId,
+                    Message = procedureEvent.Title, //ToDo: Add Messages
+                    ProcedureEventId = procedureEvent.Id
+                }, cancellationToken);
+        }
+        catch { } //ToDo: Add error catch logic
     }
 }
 

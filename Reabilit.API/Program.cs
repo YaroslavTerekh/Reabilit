@@ -23,6 +23,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddSingleton<IJWTService, JWTService>();
 builder.Services.AddScoped<IFileService, FileService>();
+builder.Services.AddScoped<IEventNotificationService, EventNotificationService>();
 builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddControllers();

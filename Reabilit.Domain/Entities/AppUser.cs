@@ -17,4 +17,6 @@ public class AppUser : IdentityUser<Guid>
     public required string LastName { get; set; }
 
     public int Age { get; set; }
+
+    public List<ProcedureEventNotification> EventsNotifications { get; set; } = new();
 }

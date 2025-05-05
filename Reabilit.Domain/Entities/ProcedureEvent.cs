@@ -18,6 +18,8 @@ public class ProcedureEvent : BaseEntity
 
     public Guid DoctorId { get; set; }
     public Doctor? Doctor { get; set; }
+
+    public List<ProcedureEventNotification> EventsNotifications { get; set; } = new();
 }
 
 public enum ProcedureEventStatus
