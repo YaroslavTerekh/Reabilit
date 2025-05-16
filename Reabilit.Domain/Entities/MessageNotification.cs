@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace Reabilit.Domain.Entities;
 
-//public class MessageNotification : BaseNotification
-//{
-    
-//}
+public class MessageNotification : BaseNotification
+{
+    public Guid? ChatMessageId { get; set; }
+
+    public ChatMessage? ChatMessage { get; set; }
+}

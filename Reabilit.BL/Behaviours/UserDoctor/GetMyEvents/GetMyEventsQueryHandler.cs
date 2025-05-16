@@ -35,12 +35,14 @@ public class GetMyEventsQueryHandler : IRequestHandler<GetMyEventsQuery, List<Pr
 
         return await _context.ProcedureEvents
             .Where(pe => pe.DoctorId == doctorId)
+            .OrderByDescending(pe => pe.CreatedDate)
             .Select(pe => new ProcedureEventDTO
             {
                 Id = pe.Id,
                 Title = pe.Title,
                 Description = pe.Description,
                 StartsOn = pe.StartsOn,
+                Result = pe.Result,
                 Status = pe.Status,
                 Doctor = null,
                 Patient = new PatientDTO

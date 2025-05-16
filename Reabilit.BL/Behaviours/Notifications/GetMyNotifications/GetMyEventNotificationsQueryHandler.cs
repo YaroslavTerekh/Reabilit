@@ -30,6 +30,7 @@ public class GetMyEventNotificationsQueryHandler : IRequestHandler<GetMyEventNot
 
         return await _context.ProcedureEventNotification
             .Where(pen => pen.AppUserId == request.CurrentUserId)
+            .OrderByDescending(cmn => cmn.CreatedDate)
             .Include(pen => pen.ProcedureEvent)
             .Select(pen => new ProcedureEventNotificationDTO
             {

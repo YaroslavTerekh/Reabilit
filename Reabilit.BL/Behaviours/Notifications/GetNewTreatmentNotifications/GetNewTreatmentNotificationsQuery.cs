@@ -1,0 +1,11 @@
+﻿using MediatR;
+using Reabilit.Domain.Entities;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Reabilit.BL.Behaviours.Notifications.GetNewTreatmentNotifications;
+
+public record GetNewTreatmentNotificationsQuery(Guid CurrentUserId) : IRequest<List<TreatmentNotification>>;

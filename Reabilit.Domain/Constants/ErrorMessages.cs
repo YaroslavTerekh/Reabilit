@@ -31,6 +31,8 @@ public static class ErrorMessages
             EntityType.ProcedureEvent => "Запису не знайдено",
             EntityType.Notification => "Сповіщення не знайдено",
             EntityType.User => "Цього користувача не знайдено",
+            EntityType.ChatMessage => "Повідомлення не знайдено",
+            EntityType.DoctorSchedule => "Розкладу дня не знайдено",
             _ => "Не знайдено"
         };
     }
@@ -65,5 +67,7 @@ public enum EntityType
     ProcedureEvent = 5,
     Banner = 6,
     Notification = 7,
-    User = 8
+    User = 8,
+    ChatMessage = 9,
+    DoctorSchedule = 10
 }

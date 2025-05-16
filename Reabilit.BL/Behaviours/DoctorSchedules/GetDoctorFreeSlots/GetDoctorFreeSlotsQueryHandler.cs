@@ -38,46 +38,36 @@ public class GetDoctorFreeSlotsQueryHandler : IRequestHandler<GetDoctorFreeSlots
         foreach (DayOfWeek day in Enum.GetValues(typeof(DayOfWeek)))
         {
             var schedule = doctor.DoctorSchedules.FirstOrDefault(s => s.Day == day);
+            var freeSlot = new FreeSlot { Day = day };
 
-            var absentSlot = new FreeSlot() { Day = day };
-
-            if (schedule is null)
+            if (schedule != null)
             {
-                result.Add(absentSlot);
-                continue;
-            }
-        }
-
-        foreach (var schedule in doctor.DoctorSchedules)
-        {
-            var freeSlot = new FreeSlot()
-            {
-                Day = schedule.Day
-            };
-
-            var allSlots = new List<TimeSpan>();
-
-            var time = schedule.StartTime;
-            while (time + TimeSpan.FromMinutes(30) <= schedule.EndTime)
-            {
-                allSlots.Add(time);
-                time = time.Add(TimeSpan.FromMinutes(30));
-            }
-
-            foreach (var slot in allSlots)
-            {
-                if(!doctor.ProcedureEvents.Any(pe => pe.StartsOn.DayOfWeek == schedule.Day && pe.StartsOn.TimeOfDay == slot && pe.Status == ProcedureEventStatus.Planned))
+                var allSlots = new List<TimeSpan>();
+                var time = schedule.StartTime;
+                while (time + TimeSpan.FromMinutes(30) <= schedule.EndTime)
                 {
-                    freeSlot.Slots.Add(new SlotHour { Time = slot, IsAvailable = true });
-
-                    continue;
+                    allSlots.Add(time);
+                    time = time.Add(TimeSpan.FromMinutes(30));
                 }
 
-                freeSlot.Slots.Add(new SlotHour { Time = slot, IsAvailable = false });
+                foreach (var slot in allSlots)
+                {
+                    bool isBusy = doctor.ProcedureEvents.Any(pe =>
+                        pe.StartsOn.DayOfWeek == day &&
+                        pe.StartsOn.TimeOfDay == slot &&
+                        pe.Status == ProcedureEventStatus.Planned);
+
+                    freeSlot.Slots.Add(new SlotHour
+                    {
+                        Time = slot,
+                        IsAvailable = !isBusy
+                    });
+                }
             }
 
             result.Add(freeSlot);
         }
+
 
         return result.OrderBy(fs => fs.Day).ToList();
     }

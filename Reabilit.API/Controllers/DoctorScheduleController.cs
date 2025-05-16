@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Reabilit.BL.Behaviours.DoctorSchedules.DeleteDoctorSchedule;
 using Reabilit.BL.Behaviours.DoctorSchedules.GetDoctorFreeSlots;
 using Reabilit.BL.Behaviours.UserDoctor.ModifyDoctorInfo;
 using Reabilit.Domain.Constants;
@@ -22,5 +23,13 @@ public class DoctorScheduleController : ControllerBase
 
     [HttpPost("slots/get")]
     public async Task<IActionResult> GetDoctorFreeSlotsAsync([FromBody] GetDoctorFreeSlotsQuery query, CancellationToken cancellationToken = default)
-    => Ok(await _sender.Send(query, cancellationToken));
+        => Ok(await _sender.Send(query, cancellationToken));
+
+    [HttpDelete("slots/delete/{dayOfWeek:int}")]
+    public async Task<IActionResult> GetDoctorFreeSlotsAsync([FromRoute] DayOfWeek dayOfWeek, CancellationToken cancellationToken = default)
+    {
+        await _sender.Send(new DeleteDoctorScheduleCommand(dayOfWeek), cancellationToken);
+        
+        return Ok();
+    }
 }
