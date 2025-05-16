@@ -1,9 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using MediatR;
+using Microsoft.AspNetCore.SignalR;
+using Microsoft.EntityFrameworkCore;
 using Reabilit.BL.Services.Abstractions;
 using Reabilit.Domain.Constants;
 using Reabilit.Domain.DbConnection;
 using Reabilit.Domain.DTOs;
 using Reabilit.Domain.Entities;
+using Reabilit.Domain.SignalrHub;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,10 +18,12 @@ namespace Reabilit.BL.Services.Realizations;
 public class EventNotificationService : IEventNotificationService
 {
     private readonly DataContext _context;
+    private readonly IHubContext<NotificationsHub> _hubContext;
 
-    public EventNotificationService(DataContext context)
+    public EventNotificationService(DataContext context, IHubContext<NotificationsHub> hubContext)
     {
         _context = context;
+        _hubContext = hubContext;
     }
 
     public Task DeleteNotificationAsync(Guid id, CancellationToken cancellationToken = default)
@@ -49,7 +54,8 @@ public class EventNotificationService : IEventNotificationService
         try
         {
             await _context.ProcedureEventNotification.AddAsync(eventNotification, cancellationToken);
-            // ToDo: Sending notifications via SignalR
+
+            await _hubContext.Clients.User(eventNotification.AppUserId.ToString()).SendAsync(nameof(CreateAndSendEventNotificationAsync), eventNotification);
 
             await _context.SaveChangesAsync(cancellationToken);
         }

@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using Reabilit.BL.Behaviours.Analyzes.AddAnalyze;
 using Reabilit.BL.Behaviours.Analyzes.DeleteAnalyze;
 using Reabilit.BL.Behaviours.DoctorSchedules.AddDoctorSchedule;
+using Reabilit.BL.Behaviours.ProcedureEvents.AddProcedureEventResult;
+using Reabilit.BL.Behaviours.ProcedureEvents.AddTreatmentRecommendation;
 using Reabilit.BL.Behaviours.ProcedureEvents.CreateEvent;
 using Reabilit.BL.Behaviours.ProcedureEvents.DoctorGetEvents;
 using Reabilit.BL.Behaviours.ProcedureEvents.EditEvent;
@@ -97,4 +99,20 @@ public class DoctorController : BaseController
     [HttpGet("events/today/get")]
     public async Task<IActionResult> GetMyTodayEventsAsync(CancellationToken cancellationToken = default)
         => Ok(await _sender.Send(new GetMyTodaysEventsQuery(CurrentUserId), cancellationToken));
+
+    [HttpPatch("events/result/change")]
+    public async Task<IActionResult> ChangeEventResultAsync(AddProcedureEventResultCommand command, CancellationToken cancellationToken = default)
+    {
+        await _sender.Send(command, cancellationToken);
+
+        return Ok();
+    }
+
+    [HttpPost("treatment/add")]
+    public async Task<IActionResult> AddTreatmentAsync([FromBody] AddTreatmentRecommendationCommand command, CancellationToken cancellationToken = default)
+    {
+        await _sender.Send(command, cancellationToken);
+
+        return Ok();
+    }
 }

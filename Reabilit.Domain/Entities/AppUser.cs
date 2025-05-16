@@ -19,4 +19,7 @@ public class AppUser : IdentityUser<Guid>
     public int Age { get; set; }
 
     public List<ProcedureEventNotification> EventsNotifications { get; set; } = new();
+
+    public List<ChatMessage> SentMessages { get; set; } = new();
+    public List<ChatMessage> ReceivedMessages { get; set; } = new();
 }

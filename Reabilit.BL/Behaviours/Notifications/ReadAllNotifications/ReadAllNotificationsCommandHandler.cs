@@ -27,11 +27,29 @@ public class ReadAllNotificationsCommandHandler : IRequestHandler<ReadAllNotific
             throw new AuthException(StatusCodes.Status401Unauthorized, ErrorMessages.Unauthorized401);
         }
 
-        var notifications = await _context.ProcedureEventNotification
+        var eventNotifications = await _context.ProcedureEventNotification
             .Where(pen => pen.AppUserId == request.CurrentUserId)
             .ToListAsync(cancellationToken);
 
-        foreach(var notification in notifications)
+        foreach (var notification in eventNotifications)
+        {
+            notification.IsRead = true;
+        }
+
+        var messageNotifications = await _context.MessageNotification
+            .Where(pen => pen.AppUserId == request.CurrentUserId)
+            .ToListAsync(cancellationToken);
+
+        foreach (var notification in messageNotifications)
+        {
+            notification.IsRead = true;
+        }
+
+        var treatmentNotifications = await _context.TreatmentNotification
+            .Where(pen => pen.AppUserId == request.CurrentUserId)
+            .ToListAsync(cancellationToken);
+
+        foreach (var notification in treatmentNotifications)
         {
             notification.IsRead = true;
         }

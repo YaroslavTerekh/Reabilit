@@ -12,6 +12,7 @@ public class ProcedureEventDTO
     public Guid Id { get; set; }
     public required string Title { get; set; }
     public required string Description { get; set; }
+    public required string Result { get; set; }
     public ProcedureEventStatus Status { get; set; }
     public DateTime StartsOn { get; set; }
     public PatientDTO? Patient { get; set; }

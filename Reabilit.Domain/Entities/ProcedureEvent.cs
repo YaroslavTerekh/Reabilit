@@ -10,6 +10,8 @@ public class ProcedureEvent : BaseEntity
 {
     public required string Title { get; set; }
     public required string Description { get; set; }
+    public string? Result { get; set; }
+
     public ProcedureEventStatus Status { get; set; } = ProcedureEventStatus.Planned;
     public DateTime StartsOn { get; set; }
 

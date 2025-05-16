@@ -17,6 +17,10 @@ using Reabilit.Domain.CustomMiddlewares;
 using Microsoft.AspNetCore.Builder;
 using System.Data;
 using Microsoft.Extensions.FileProviders;
+using Reabilit.Domain.SignalrHub;
+using Microsoft.AspNetCore.SignalR;
+using Hangfire;
+using Newtonsoft.Json;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,7 +28,29 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddSingleton<IJWTService, JWTService>();
 builder.Services.AddScoped<IFileService, FileService>();
 builder.Services.AddScoped<IEventNotificationService, EventNotificationService>();
+builder.Services.AddScoped<ITreatmentNotificationService, TreatmentNotificationService>();
+builder.Services.AddScoped<IMessageNotificationsService, MessageNotificationService>();
+builder.Services.AddScoped<IChatService, ChatService>();
+builder.Services.AddTransient<IProcedureEventJobsService, ProcedureEventJobsService>();
+builder.Services.AddSingleton<IUserIdProvider, CustomUserIdProvider>();
 builder.Services.AddHttpContextAccessor();
+
+builder.Services.AddSignalR(e =>
+{
+    e.MaximumReceiveMessageSize = 102400000;
+}).AddJsonProtocol(config =>
+{
+    config.PayloadSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
+    config.PayloadSerializerOptions.WriteIndented = true;
+});
+
+builder.Services.AddHangfire((sp, config) =>
+{
+    config.UseSqlServerStorage(builder.Configuration.GetConnectionString("DefaultConnection"));
+    config.UseSerializerSettings(new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore });
+}
+);
+builder.Services.AddHangfireServer();
 
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
@@ -112,6 +138,21 @@ builder.Services.AddAuthentication(options => {
             ValidateAudience = false,
             ValidateLifetime = true
         };
+        options.Events = new JwtBearerEvents
+        {
+            OnMessageReceived = context =>
+            {
+                var accessToken = context.Request.Query["token"];
+
+                var path = context.HttpContext.Request.Path;
+                if (!string.IsNullOrEmpty(accessToken) && path.StartsWithSegments("/notifications"))
+                {
+                    context.Token = accessToken;
+                }
+                return Task.CompletedTask;
+            }
+        };
+
     });
 
 builder.Services.AddMediatr();
@@ -143,8 +184,11 @@ app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 app.UseHttpsRedirection();
 
+app.UseHangfireDashboard();
+
 app.UseAuthentication();
 app.UseAuthorization();
+app.MapHub<NotificationsHub>("/notifications");
 
 app.MapControllers();
 

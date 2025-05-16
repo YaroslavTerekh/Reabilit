@@ -40,6 +40,7 @@ public class GetMyTodaysEventsQueryHandler : IRequestHandler<GetMyTodaysEventsQu
                 Id = pe.Id,
                 Title = pe.Title,
                 Description = pe.Description,
+                Result = pe.Result,
                 StartsOn = pe.StartsOn,
                 Status = pe.Status,
                 Doctor = null,

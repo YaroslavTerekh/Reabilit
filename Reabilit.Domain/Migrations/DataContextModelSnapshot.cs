@@ -298,6 +298,37 @@ namespace Reabilit.Domain.Migrations
                     b.ToTable("Banners");
                 });
 
+            modelBuilder.Entity("Reabilit.Domain.Entities.ChatMessage", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsRead")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("MessageText")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("ReceiverId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("SenderId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ReceiverId");
+
+                    b.HasIndex("SenderId");
+
+                    b.ToTable("ChatMessages");
+                });
+
             modelBuilder.Entity("Reabilit.Domain.Entities.City", b =>
                 {
                     b.Property<Guid>("Id")
@@ -396,6 +427,37 @@ namespace Reabilit.Domain.Migrations
                     b.ToTable("DoctorSchedules");
                 });
 
+            modelBuilder.Entity("Reabilit.Domain.Entities.MessageNotification", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("AppUserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("ChatMessageId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsRead")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Message")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AppUserId");
+
+                    b.HasIndex("ChatMessageId");
+
+                    b.ToTable("MessageNotification");
+                });
+
             modelBuilder.Entity("Reabilit.Domain.Entities.Patient", b =>
                 {
                     b.Property<Guid>("Id")
@@ -447,6 +509,9 @@ namespace Reabilit.Domain.Migrations
                     b.Property<Guid>("PatientId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("Result")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("StartsOn")
                         .HasColumnType("datetime2");
 
@@ -495,6 +560,36 @@ namespace Reabilit.Domain.Migrations
                     b.HasIndex("ProcedureEventId");
 
                     b.ToTable("ProcedureEventNotification");
+                });
+
+            modelBuilder.Entity("Reabilit.Domain.Entities.TreatmentNotification", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("AppUserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsRead")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Message")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Recommendations")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AppUserId");
+
+                    b.ToTable("TreatmentNotification");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
@@ -559,6 +654,25 @@ namespace Reabilit.Domain.Migrations
                     b.Navigation("Patient");
                 });
 
+            modelBuilder.Entity("Reabilit.Domain.Entities.ChatMessage", b =>
+                {
+                    b.HasOne("Reabilit.Domain.Entities.AppUser", "Receiver")
+                        .WithMany("ReceivedMessages")
+                        .HasForeignKey("ReceiverId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Reabilit.Domain.Entities.AppUser", "Sender")
+                        .WithMany("SentMessages")
+                        .HasForeignKey("SenderId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Receiver");
+
+                    b.Navigation("Sender");
+                });
+
             modelBuilder.Entity("Reabilit.Domain.Entities.Doctor", b =>
                 {
                     b.HasOne("Reabilit.Domain.Entities.AppUser", "AppUser")
@@ -587,6 +701,23 @@ namespace Reabilit.Domain.Migrations
                         .IsRequired();
 
                     b.Navigation("Doctor");
+                });
+
+            modelBuilder.Entity("Reabilit.Domain.Entities.MessageNotification", b =>
+                {
+                    b.HasOne("Reabilit.Domain.Entities.AppUser", "AppUser")
+                        .WithMany()
+                        .HasForeignKey("AppUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Reabilit.Domain.Entities.ChatMessage", "ChatMessage")
+                        .WithMany()
+                        .HasForeignKey("ChatMessageId");
+
+                    b.Navigation("AppUser");
+
+                    b.Navigation("ChatMessage");
                 });
 
             modelBuilder.Entity("Reabilit.Domain.Entities.Patient", b =>
@@ -651,9 +782,24 @@ namespace Reabilit.Domain.Migrations
                     b.Navigation("ProcedureEvent");
                 });
 
+            modelBuilder.Entity("Reabilit.Domain.Entities.TreatmentNotification", b =>
+                {
+                    b.HasOne("Reabilit.Domain.Entities.AppUser", "AppUser")
+                        .WithMany()
+                        .HasForeignKey("AppUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AppUser");
+                });
+
             modelBuilder.Entity("Reabilit.Domain.Entities.AppUser", b =>
                 {
                     b.Navigation("EventsNotifications");
+
+                    b.Navigation("ReceivedMessages");
+
+                    b.Navigation("SentMessages");
                 });
 
             modelBuilder.Entity("Reabilit.Domain.Entities.City", b =>

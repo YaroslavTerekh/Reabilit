@@ -19,12 +19,16 @@ public class DataContext : IdentityDbContext<AppUser, AppRole, Guid>
     public DbSet<DoctorSchedule> DoctorSchedules { get; set; }
     public DbSet<Banner> Banners { get; set; }
     public DbSet<ProcedureEventNotification> ProcedureEventNotification { get; set; }
+    public DbSet<TreatmentNotification> TreatmentNotification { get; set; }
+    public DbSet<MessageNotification> MessageNotification { get; set; }
+    public DbSet<ChatMessage> ChatMessages { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
 
         modelBuilder.ApplyConfiguration(new PatientConfiguration());
+        modelBuilder.ApplyConfiguration(new ChatMessageConfiguration());
         modelBuilder.ApplyConfiguration(new DoctorConfiguration());
         modelBuilder.ApplyConfiguration(new ProcedureEventConfiguration());
     }

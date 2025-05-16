@@ -18,15 +18,19 @@ public class AddNewProcedureEventCommandHandler : IRequestHandler<AddNewProcedur
 {
     private readonly DataContext _context;
     private readonly IEventNotificationService _eventNotificationService;
+    private readonly IProcedureEventJobsService _procedureEventJobsService;
 
-    public AddNewProcedureEventCommandHandler(DataContext context, IEventNotificationService eventNotificationService)
+    public AddNewProcedureEventCommandHandler(DataContext context, IEventNotificationService eventNotificationService, IProcedureEventJobsService procedureEventJobsService)
     {
         _context = context;
         _eventNotificationService = eventNotificationService;
+        _procedureEventJobsService = procedureEventJobsService;
     }
 
     public async Task Handle(AddNewProcedureEventCommand request, CancellationToken cancellationToken)
     {
+        request.StartsOn = request.StartsOn.ToLocalTime();
+
         var patient = await _context.Patients
             .Where(p => p.AppUserId == request.CurrentUserId)
             .FirstOrDefaultAsync(cancellationToken);
@@ -41,7 +45,7 @@ public class AddNewProcedureEventCommandHandler : IRequestHandler<AddNewProcedur
             .Include(d => d.AppUser)
             .FirstOrDefaultAsync(d => d.Id == patient.DoctorId, cancellationToken);
 
-        if(doctor is null)
+        if (doctor is null)
         {
             throw new NotFoundException(ErrorMessages.Status404UserNotFound(UserRole.Doctor));
         }
@@ -96,6 +100,17 @@ public class AddNewProcedureEventCommandHandler : IRequestHandler<AddNewProcedur
                     Message = procedure.Title,
                     ProcedureEventId = procedure.Id
                 }, cancellationToken);
+
+            await _eventNotificationService.CreateAndSendEventNotificationAsync
+                (
+                new EventNotificationConfiguration
+                {
+                    AppUserId = patient.AppUserId,
+                    Message = procedure.Title,
+                    ProcedureEventId = procedure.Id
+                }, cancellationToken);
+
+            await _procedureEventJobsService.AddFinishProcedureEventJob(procedure.Id, cancellationToken);
         }
         catch { } //ToDo: Add error catch logic
     }

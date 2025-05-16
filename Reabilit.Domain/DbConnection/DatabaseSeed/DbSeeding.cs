@@ -53,6 +53,7 @@ public static class DbSeeding
             await roleManager.CreateAsync(new AppRole(ApplicationRoles.RolePatient));
 
         var admins = await userManager.GetUsersInRoleAsync(ApplicationRoles.RoleAdmin);
+        var supports = await userManager.GetUsersInRoleAsync(ApplicationRoles.RoleSupport);
 
         if (admins.Count < 1)
         {
@@ -68,6 +69,22 @@ public static class DbSeeding
 
             await userManager.CreateAsync(admin, "Pa$$word123!");
             await userManager.AddToRoleAsync(admin, ApplicationRoles.RoleAdmin);
+        }
+
+        if (supports.Count < 1)
+        {
+            var suport = new AppUser
+            {
+                UserName = "Support",
+                FirstName = "Support",
+                LastName = "Support",
+                PhoneNumber = "+380999999991",
+                Email = "Support@gmail.com",
+                PhoneNumberConfirmed = true
+            };
+
+            await userManager.CreateAsync(suport, "Pa$$word123!");
+            await userManager.AddToRoleAsync(suport, ApplicationRoles.RoleSupport);
         }
 
         var cities = await context.Cities.ToListAsync();
