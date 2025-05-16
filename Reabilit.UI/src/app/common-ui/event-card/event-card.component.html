@@ -2,8 +2,7 @@
     <div class="card-left">
       <img src="man-doc.png" alt="Doctor photo" />
       <div class="buttons">
-        <button class="btn green">ПЕРЕНЕСТИ</button>
-        <button class="btn red" (click)="onCancel()">СКАСУВАТИ</button>
+        <button class="btn red" *ngIf="event?.status == 0" (click)="onCancel()">ВІДМІНИТИ</button>
       </div>
     </div>
   

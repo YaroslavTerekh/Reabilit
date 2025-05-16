@@ -1,39 +1,87 @@
 <div class="container">
-    <h2>МІЙ ПРОФІЛЬ ЛІКАРЯ</h2>
-    <div class="profile-box">
-        <form [formGroup]="doctorForm" (ngSubmit)="onSubmit()">
-            <label>Ваше ім’я
-                <input type="text" formControlName="firstName">
-            </label>
+  <h2>МІЙ ПРОФІЛЬ ЛІКАРЯ</h2>
+  <div class="profile-box">
+    <div class="forms-container">
+      <!-- Ліва частина – профіль лікаря -->
+      <form [formGroup]="doctorForm" (ngSubmit)="onSubmit()" class="profile-form">
+        <h3>Мій профіль</h3>
 
-            <label>Ваше прізвище
-                <input type="text" formControlName="lastName">
-            </label>
+        <label>Ім’я
+          <input type="text" formControlName="firstName">
+        </label>
 
-            <label>Ваш номер телефону
-                <input type="text" formControlName="phoneNumber">
-            </label>
+        <label>Прізвище
+          <input type="text" formControlName="lastName">
+        </label>
 
-            <label>Ваш вік
-                <input type="number" formControlName="age">
-            </label>
+        <label>Номер телефону
+          <input type="text" formControlName="phoneNumber">
+        </label>
 
-            <label>Ваш ступінь
-                <input type="text" formControlName="degree">
-            </label>
+        <label>Вік
+          <input type="number" formControlName="age">
+        </label>
 
-            <label>Досвід (років)
-                <input type="number" formControlName="experienceInYear">
-            </label>
+        <label>Ступінь
+          <input type="text" formControlName="degree">
+        </label>
 
-            <label>Біографія
-                <textarea rows="4" formControlName="biography"></textarea>
-            </label>
+        <label>Досвід (років)
+          <input type="number" formControlName="experienceInYear">
+        </label>
 
-            <div class="button-group">
-                <button type="submit" class="btn-green">ЗБЕРЕГТИ ЗМІНИ</button>
-                <button class="btn-red" (click)="logout()">ВИЙТИ</button>
-            </div>
-        </form>
+        <label>Біографія
+          <textarea rows="4" formControlName="biography"></textarea>
+        </label>
+
+        <div class="button-group">
+          <button type="submit" class="btn-green">ЗБЕРЕГТИ ЗМІНИ</button>
+          <button type="button" class="btn-red" (click)="logout()">ВИЙТИ</button>
+        </div>
+      </form>
+
+      <div class="schedule-wrapper">
+        <!-- Графік роботи -->
+        <div class="schedule-box">
+          <h3>Графік роботи</h3>
+          <ul>
+            <li *ngFor="let item of doctorSchedule" [ngClass]="{ 'not-working': item.id == null }">
+              <ng-container *ngIf="item.id != null">
+                {{ item.value }}
+                <mat-icon (click)="deleteDoctorSchedule(item.id)" class="delete-icon">delete</mat-icon>
+              </ng-container>
+              <ng-container *ngIf="item.id == null">
+                {{ item.value }}
+              </ng-container>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Форма додавання графіку -->
+        <div class="add-schedule-form" [formGroup]="scheduleForm">
+          <h3>Додати графік</h3>
+
+          <label>
+            День:
+            <select formControlName="day">
+              <option *ngFor="let day of daysOfWeek" [value]="day.value">{{ day.label }}</option>
+            </select>
+          </label>
+
+          <label>
+            Початок:
+            <input type="time" formControlName="startTime" />
+          </label>
+
+          <label>
+            Завершення:
+            <input type="time" formControlName="endTime" />
+          </label>
+
+          <button type="button" (click)="onAddSchedule()">Додати</button>
+        </div>
+      </div>
     </div>
+
+  </div>
 </div>

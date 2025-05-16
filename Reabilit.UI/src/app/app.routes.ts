@@ -15,6 +15,7 @@ import { AddBannerComponent } from './pages/admin/add-banner/add-banner.componen
 import { AllBannersComponent } from './pages/admin/all-banners/all-banners.component';
 import { AllDoctorsComponent } from './pages/admin/all-doctors/all-doctors.component';
 import { AllPatientsComponent } from './pages/admin/all-patients/all-patients.component';
+import { MainChatComponent } from './pages/chat/main-chat/main-chat.component';
 
 export const routes: Routes = [
     { path: '', component: MainPageComponent },
@@ -34,4 +35,5 @@ export const routes: Routes = [
         { path: 'doctors/all', component: AllDoctorsComponent },
         { path: 'patients/all', component: AllPatientsComponent },
     ] },
+    { path: 'chats', component: MainChatComponent}
 ];

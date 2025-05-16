@@ -28,9 +28,10 @@
           </select>
         </label>
 
-        <label>
-          <button сlass="save" (click)="onSubmit()">Зберегти</button>
-        </label>
+        <div class="button-row">
+          <button class="btn save" (click)="onSubmit()">Зберегти</button>
+          <button class="btn exit" (click)="onExit()">Вихід</button>
+        </div>
       </form>
   
       <div class="doctor-section">
@@ -40,8 +41,8 @@
           <p class="doctor-type">{{patient?.doctor?.doctorClass?.className}}</p>
     
           <div class="button-group">
-            <button class="btn danger">СКАРГА</button>
-            <button class="btn warning">ЗАПИТ НА ЗАМІНУ</button>
+            <button class="btn danger" (click)="openReportModal()">СКАРГА</button>
+            <button class="btn warning" (click)="askForChange()">ЗАПИТ НА ЗАМІНУ</button>
             <button [routerLink]="['/my-doctor']" class="btn success">ЗАПИС НА ПРИЙОМ</button>
           </div>
         } @else {
@@ -51,3 +52,14 @@
     </div>
   </div>
   
+
+<div *ngIf="isReportModalOpen" class="modal-overlay">
+  <div class="modal-content">
+    <h3>Напишіть вашу скаргу</h3>
+    <textarea [(ngModel)]="reportText" placeholder="Опишіть вашу скаргу"></textarea>
+    <div class="modal-buttons">
+      <button (click)="submitReport()">Відправити</button>
+      <button (click)="closeReportModal()">Закрити</button>
+    </div>
+  </div>
+</div>

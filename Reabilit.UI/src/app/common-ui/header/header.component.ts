@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatBadgeModule } from '@angular/material/badge';
 import { NotificationsService } from '../../services/notifications/notifications.service';
+import { SignalrService } from '../../services/chat/signalr.service';
 
 @Component({
   selector: 'app-header',
@@ -19,17 +20,17 @@ export class HeaderComponent implements OnInit {
 
   constructor(
     private readonly authService: AuthService,
-    private readonly notificationsService: NotificationsService
+    private readonly notificationsService: NotificationsService,
+    private readonly signalrService: SignalrService
   ) { }
 
   ngOnInit(): void {
-
-    this.notificationsService.$newNotificationsCountSubject
-    .subscribe({
-      next: res => {
-        this.newNotificationCount = res
-      }
-    })
+    this.signalrService.$newNotificationsCount
+      .subscribe({
+        next: res => {
+            this.newNotificationCount = res
+        }
+      })
 
     this.authService.$isAuthorized.subscribe({
       next: res => {
@@ -38,7 +39,17 @@ export class HeaderComponent implements OnInit {
         if(res) {
           this.notificationsService.getEventNewNotifications()
             .subscribe({
-              next: res => this.newNotificationCount = res.length
+              next: res => this.signalrService.$newNotificationsCount.next(this.newNotificationCount + res.length)
+            })
+
+          this.notificationsService.getMessageNewNotifications()
+            .subscribe({
+              next: res => this.signalrService.$newNotificationsCount.next(this.newNotificationCount + res.length)
+            })
+            
+          this.notificationsService.getTreatmentNewNotifications()
+            .subscribe({
+              next: res => this.signalrService.$newNotificationsCount.next(this.newNotificationCount + res.length)
             })
         }
       }
@@ -58,4 +69,5 @@ export class HeaderComponent implements OnInit {
   protected showNotifications(): void {
     this.authService.$showNotificationsModalSubject.next(true);
   }
+
 }

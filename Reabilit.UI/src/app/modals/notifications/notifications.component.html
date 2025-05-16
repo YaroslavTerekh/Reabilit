@@ -3,24 +3,49 @@
   <div class="notification-modal">
     <div class="modal-header">
       <div class="modal-tabs">
-        <button class="tab-button active">Записи</button>
-        <button class="tab-button">Чати</button>
+        <button class="tab-button" [class.active]="activeTab === 'events'" (click)="switchTab('events')">Записи</button>
+        <button class="tab-button" [class.active]="activeTab === 'messages'" (click)="switchTab('messages')">Чати</button>
+        <button class="tab-button" [class.active]="activeTab === 'results'" (click)="switchTab('results')">Результати</button>
       </div>
       <button class="mark-all-read" (click)="readAllNotifications()">Прочитати все</button>
     </div>
 
     <div class="notification-list">
-      @for (notification of eventNotifications; track notification) {
-      <div class="notification-item">
-        <span class="message-status" [ngClass]="notification.isRead ? 'message-status-read' : 'message-status-new'"> </span> 
-        <span class="message">{{notification.message}}</span>
-        <div class="actions">
-          <button class="read-btn" (click)="readNotification(notification.id)">Прочитати</button>
-          <button class="delete-btn" (click)="deleteEventNotification(notification.id)">🗑</button>
-        </div>
-      </div>
+      @if (activeTab === 'events') {
+        @for (notification of eventNotifications; track notification) {
+          <div class="notification-item">
+            <span class="message-status" [ngClass]="notification.isRead ? 'message-status-read' : 'message-status-new'"></span>
+            <span class="message">{{notification.message}}</span>
+            <div class="actions">
+              <button class="read-btn" *ngIf="!notification.isRead" (click)="readNotification(notification.id)"><mat-icon>not_interested</mat-icon></button>
+              <button class="delete-btn" (click)="deleteEventNotification(notification.id)"><mat-icon>delete</mat-icon></button>
+            </div>
+          </div>
+        }
+      } @else if (activeTab === 'messages') {
+        @for (msg of messageNotifications; track msg) {
+          <div class="notification-item">
+            <span class="message-status" [ngClass]="msg.isRead ? 'message-status-read' : 'message-status-new'"></span>
+            <span class="message">{{msg.message}}</span>
+            <div class="actions">
+              <button class="read-btn" *ngIf="!msg.isRead" (click)="readMessageNotification(msg.id)"><mat-icon>not_interested</mat-icon></button>
+              <button class="delete-btn" (click)="deleteMessageNotification(msg.id)"><mat-icon>delete</mat-icon></button>
+            </div>
+          </div>
+        } 
+      } @else {
+        @for (treatment of treatmentNotifications; track treatment) {
+          <div class="notification-item">
+            <span class="message-status" [ngClass]="treatment.isRead ? 'message-status-read' : 'message-status-new'"></span>
+            <span class="message">{{treatment.message}}</span>
+            <div class="actions">
+              <button class="check-btn" (click)="showInfoResult(treatment)"><mat-icon>visibility</mat-icon></button>
+              <button class="read-btn" *ngIf="!treatment.isRead" (click)="readTreatmentNotification(treatment.id)"><mat-icon>not_interested</mat-icon></button>
+              <button class="delete-btn" (click)="deleteTreatmentNotification(treatment.id)"><mat-icon>delete</mat-icon></button>
+            </div>
+          </div>
+        }
       }
-
     </div>
   </div>
 </div>

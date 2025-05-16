@@ -1,3 +1,63 @@
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+
+  .modal-window {
+    background: #fff;
+    padding: 25px 20px;
+    border-radius: 12px;
+    text-align: center;
+    max-width: 350px;
+    width: 90%;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+
+    p {
+      margin-bottom: 20px;
+      font-size: 16px;
+    }
+
+    .modal-actions {
+      display: flex;
+      justify-content: space-around;
+
+      button {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 6px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background 0.2s ease;
+      }
+
+      .confirm-btn {
+        background: #00aaff;
+        color: #fff;
+
+        &:hover {
+          background: #008fcc;
+        }
+      }
+
+      .cancel-btn {
+        background: #e0e0e0;
+
+        &:hover {
+          background: #c7c7c7;
+        }
+      }
+    }
+  }
+}
+
+
 .schedule {
     h3 {
       text-align: center;
@@ -7,6 +67,11 @@
     .days-grid {
       column-count: 4;
       column-gap: 20px;
+
+      .inactive-day {
+        background-color: #d6d6d6;
+        opacity: .6;
+      }
     }
     
     .day {
@@ -49,8 +114,9 @@
   }
 
   .inactive {
-    background: #c7c7c7;
+    background: #9ec4ce;
     color: #000;
+    opacity: .5;
   }
 
   .absent {

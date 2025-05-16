@@ -1,14 +1,24 @@
+<div class="modal-backdrop" *ngIf="confirmationData">
+  <div class="modal-window">
+    <p>Ви впевнені, що хочете записатись на<br><strong>{{ getUkrainianDateTime(confirmationData.time) }}</strong>?</p>
+    <div class="modal-actions">
+      <button class="confirm-btn" (click)="confirmReservation()">Так</button>
+      <button class="cancel-btn" (click)="cancelReservation()">Скасувати</button>
+    </div>
+  </div>
+</div>
+
 <div class="schedule">
     <h3>ЗАПИС НА ПРИЙОМ</h3>
   
     <div class="days-grid">
       @for (day of docWeekSchedule; track day) {
-        <div class="day">
-          <h4>{{ weekDates[day.day] }}</h4>
+        <div class="day" [ngClass]="day.slots.length <= 0 || weekDates[day.day].isPast ? 'inactive-day' : ''">
+          <h4>{{ weekDates[day.day].formatted }}</h4>
           @if(day.slots.length > 0) {
             <div class="times">
               @for (time of day.slots; track time) {
-                <button [ngClass]="time.isAvailable ? 'active' : 'inactive'" (click)="reserveSlot(getFullDateTime(day.day, time.time))">{{ time.time }}</button>
+                <button [ngClass]="!isSlotInPast(day.day, time.time) && time.isAvailable ? 'active' : 'inactive'" (click)="reserveSlot(day.day, time)">{{ time.time }}</button>
               }
             </div>
           } @else {

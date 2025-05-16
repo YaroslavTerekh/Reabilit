@@ -9,6 +9,10 @@ import { ProcedureEventDTO } from '../responseModels/ProcedureEventDTO';
 import { PatientDTO } from '../responseModels/PatientDTO';
 import { ModifyDoctorInfo } from '../requestModels/ModifyDoctorInfo';
 import { AnalyzeDTO } from '../responseModels/AnalyzeDTO';
+import { AddEventResult } from '../requestModels/AddEventResult';
+import { AddTreatmentRecommendation } from '../requestModels/AddTreatmentRecommendation';
+import { AddDoctorScheduleRequest } from '../requestModels/AddDoctorScheduleRequest';
+import { GetDoctorSlotsRequest } from '../requestModels/GetDoctorSlotsRequest';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +23,18 @@ export class DoctorService {
   constructor(
     private readonly http: HttpClient
   ) { }
+
+  public AddSchedule(request: AddDoctorScheduleRequest): Observable<any> {
+    return this.http.post(`${this.baseUrl}/Doctor/schedule/add`, request);
+  }
+
+  public GetDoctorSchedule(request: GetDoctorSlotsRequest): Observable<FreeSlotsDTO[]> {
+    return this.http.post<FreeSlotsDTO[]>(`${this.baseUrl}/DoctorSchedule/slots/get`, request);
+  }
+
+    public DeleteDoctorSchedule(id: string): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/DoctorSchedule/slots/delete/${id}`);
+  }
 
   public GetMyPatients(): Observable<PatientDTO[]> {
     return this.http.get<PatientDTO[]>(`${this.baseUrl}/Doctor/my-patients/get`);
@@ -46,6 +62,14 @@ export class DoctorService {
 
   public AddAnalyze(request: FormData): Observable<AnalyzeDTO[]> {
     return this.http.post<AnalyzeDTO[]>(`${this.baseUrl}/Doctor/analyzes/add`, request);
+  }
+
+  public AddEventResult(request: AddEventResult): Observable<any> {
+    return this.http.patch(`${this.baseUrl}/Doctor/events/result/change`, request);
+  }
+  
+  public AddTreatmentRecommendation(request: AddTreatmentRecommendation): Observable<any> {
+    return this.http.post(`${this.baseUrl}/Doctor/treatment/add`, request);
   }
 
   public DeleteAnalyze(id: string): Observable<AnalyzeDTO[]> {

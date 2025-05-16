@@ -1,0 +1,45 @@
+<div class="chat-container">
+  @if(currentRole == "Support") {
+  <div class="sidebar">
+    <input type="text" class="search" placeholder="Пошук пацієнта..." [(ngModel)]="searchText" />
+
+
+    <div class="chat-list">
+      <div *ngFor="let chat of filteredChats()" class="chat-item" [class.active]="chat.receiverId === selectedUserId"
+        (click)="selectUser(chat.receiverId)">
+        {{ chat.receiver!.firstName! }} {{ chat.receiver!.lastName }}
+        <div *ngIf="chat.hasNewMessages" class="unread-badge"></div>
+      </div>
+    </div>
+
+
+    <button class="logout-button">Вийти</button>
+  </div>
+  }
+  <div class="chat-panel">
+    @if(currentRole == "Support") {
+    <div class="chat-header">
+      <span>Пацієнт: {{ selectedUserName }}</span>
+    </div>
+    }
+    <div class="chat-body" #chatBody>
+      <div *ngFor="let msg of messages" class="message" [ngClass]="{ 'user': msg.isSender }">
+        {{ msg.messageText }}
+      </div>
+    </div>
+
+    @if(currentRole == "Support") {
+    <div class="quick-replies">
+      <div class="quick-reply" (click)="messageText='Добрий день!'">Добрий день!</div>
+      <div class="quick-reply" (click)="messageText='Як себе почуваєте?'">Як себе почуваєте?</div>
+      <div class="quick-reply" (click)="messageText='Чи є біль?'">Чи є біль?</div>
+      <div class="quick-reply" (click)="messageText='Приймайте ліки за графіком'">Приймайте ліки за графіком</div>
+    </div>
+    }
+
+    <div class="chat-input">
+      <input type="text" [(ngModel)]="messageText" placeholder="Напишіть повідомлення..." />
+      <button (click)="sendMessage()">Надіслати</button>
+    </div>
+  </div>
+</div>

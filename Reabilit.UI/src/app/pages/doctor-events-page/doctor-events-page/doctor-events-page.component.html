@@ -24,18 +24,31 @@
           <p>{{ item.description }}</p>
         </div>
   
-        <div class="actions">
-          <button class="green">ПЕРЕЙТИ</button>
-  
-          <button class="red" *ngIf="item.status === 0">
-            СКАСУВАТИ
-          </button>
-  
-          <button class="gray" *ngIf="item.status === 2" disabled>
-            ЗАВЕРШЕНО
-          </button>
+        <div class="actions" *ngIf="item.status == 2">
+          <button class="green" *ngIf="item.result != null" (click)="openModal(item)"><mat-icon>border_color</mat-icon></button>
+          <button class="blue" *ngIf="item.result == null" (click)="openModal(item)"><mat-icon>mode_edit</mat-icon></button>
         </div>
       </div>
     </div>
   </div>
   
+
+  <div class="modal-overlay" *ngIf="activeProcedure" (click)="closeModal()">
+  <div class="modal" (click)="$event.stopPropagation()">
+    <h2 class="modal-title">Інформація про процедуру</h2>
+
+    <div class="modal-section" *ngIf="!activeProcedure.result">
+      <label for="examination">🩺 Результат огляду</label>
+      <textarea id="examination" [(ngModel)]="examinationResult" placeholder="Опишіть результат огляду..."></textarea>
+      <button class="send-btn" (click)="sendExaminationResult()">Надіслати результат</button>
+    </div>
+
+    <div class="modal-section">
+      <label for="advice">💊 Порада в лікуванні</label>
+      <textarea id="advice" [(ngModel)]="treatmentAdvice" placeholder="Вкажіть рекомендації..."></textarea>
+      <button class="send-btn" (click)="sendTreatmentAdvice()">Надіслати пораду</button>
+    </div>
+
+    <button class="close-btn" (click)="closeModal()">Закрити</button>
+  </div>
+</div>

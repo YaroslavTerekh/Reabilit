@@ -1,11 +1,12 @@
 <div class="search-section">
-  <h1 class="title">Шукайте лікарів та ліки онлайн</h1>
+  <h1 class="title">Шукайте лікарів онлайн</h1>
+
 
   <div class="search-container">
     <input type="text" [(ngModel)]="searchTerm" placeholder="Введіть прізвище, або спеціальність лікаря" />
     <button [routerLink]="['doctors-list', searchTerm]">🔍 Пошук</button>
   </div>
-
+  @if(currentRole == "Patient" || !isAuthorized){
   <div class="content" *ngIf="currentBanner">
     <div class="image-placeholder">
       <img [src]="currentBanner.imagePath" [alt]="currentBanner.imageName" />
@@ -14,66 +15,73 @@
       {{ currentBanner.description }}
     </div>
   </div>
+  }
 
 </div>
 
 <div class="analyzes-section default-content">
   <ng-container *ngIf="currentRole">
     @if (currentRole == "Patient") {
-      <h3>Ваші показники</h3>
-      <div class="analyzes">
-        @for (analysis of patientAnalyzes; track analysis) {
-          <app-analyze-card [analysis]="analysis"></app-analyze-card>
-        }
-      </div>
+    <h3>Ваші показники</h3>
+    <div class="analyzes">
+      @for (analysis of patientAnalyzes; track analysis) {
+      <app-analyze-card *ngIf="!analysis.isNormal" [analysis]="analysis"></app-analyze-card>
+      }
+    </div>
     }
     @else if (currentRole == "Doctor") {
-      <ng-container *ngIf="myEvents$ | async as myEvents">
-        <h3>Сьогодішні записи</h3>
-        @for (item of myEvents; track item) {
-          <div class="procedure-card">
-            <div class="card-content">
-              <img src="patient.png" class="avatar" />
-        
-              <div class="info">
-                <h3>Пацієнт {{ item.patient?.firstName }} {{ item.patient?.lastName }}</h3>
-                <div class="status-time">
-                  <span class="status" [ngClass]="{
-                      planned: item.status === 0,
-                      cancelled: item.status === 1,
-                      finished: item.status === 2
-                    }">
-                    {{
-                      item.status === 0 ? 'Заплановано' :
-                      item.status === 1 ? 'Скасовано' :
-                      'Завершено'
-                    }}
-                  </span>
-                  <span class="datetime">{{ formatUADateTime(item.startsOn) }}</span>
-                </div>
-        
-                <h4>{{ item.title }}</h4>
-                <p>{{ item.description }}</p>
-              </div>
-        
-              <div class="actions">
-                <button class="green">ПЕРЕЙТИ</button>
-        
-                <button class="red" *ngIf="item.status === 0">
-                  СКАСУВАТИ
-                </button>
-        
-                <button class="gray" *ngIf="item.status === 2" disabled>
-                  ЗАВЕРШЕНО
-                </button>
-              </div>
+    <ng-container *ngIf="myEvents$ | async as myEvents">
+      <h3>Сьогодішні записи</h3>
+      @if(myEvents.length > 0) {
+      @for (item of myEvents; track item) {
+
+      <div class="procedure-card">
+        <div class="card-content">
+          <img src="patient.png" class="avatar" />
+
+          <div class="info">
+            <h3>Пацієнт {{ item.patient?.firstName }} {{ item.patient?.lastName }}</h3>
+            <div class="status-time">
+              <span class="status" [ngClass]="{
+                          planned: item.status === 0,
+                          cancelled: item.status === 1,
+                          finished: item.status === 2
+                        }">
+                {{
+                item.status === 0 ? 'Заплановано' :
+                item.status === 1 ? 'Скасовано' :
+                'Завершено'
+                }}
+              </span>
+              <span class="datetime">{{ formatUADateTime(item.startsOn) }}</span>
             </div>
+
+            <h4>{{ item.title }}</h4>
+            <p>{{ item.description }}</p>
           </div>
-        }
-      </ng-container>
+
+          <div class="actions">
+            <button class="green">ПЕРЕЙТИ</button>
+
+            <button class="red" *ngIf="item.status === 0">
+              СКАСУВАТИ
+            </button>
+
+            <button class="gray" *ngIf="item.status === 2" disabled>
+              ЗАВЕРШЕНО
+            </button>
+          </div>
+        </div>
+      </div>
+      }
+      } @else if(myEvents.length == 0) {
+        <p class="no-events">На даний момент у вас немає записів</p>
+      }
+    </ng-container>
     }
   </ng-container>
 </div>
 
-
+@if(currentRole == "Patient") {
 <app-question-box></app-question-box>
+}

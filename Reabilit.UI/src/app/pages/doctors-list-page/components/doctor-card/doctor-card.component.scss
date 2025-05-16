@@ -1,19 +1,23 @@
 .doctor-card {
-  background-color: #fff; 
-  border-radius: 5px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-  overflow: hidden;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.06);
   display: flex;
   flex-direction: column;
-  height: 100%;
-  border: 1px solid #e0e0e0; 
+  overflow: hidden;
+  transition: transform 0.2s ease;
 
-  .doctor-image {
-    height: 120px; 
-    background-color: #e9ecef; 
+  &:hover {
+    transform: translateY(-4px);
+  }
+
+  .avatar {
+    height: 200px;
+    background: #f1f1f1;
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
+    overflow: hidden;
 
     img {
       width: 100%;
@@ -22,62 +26,37 @@
     }
   }
 
-  .doctor-info {
-    padding: 15px;
+  .info {
+    padding: 16px;
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    flex-grow: 1;
+    gap: 6px;
 
-    .doctor-name {
-      font-size: 1.1em;
-      font-weight: 500; 
-      margin-bottom: 5px;
-      color: #333; 
+    h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #222;
+      margin: 0;
     }
 
-    .doctor-degree,
-    .doctor-class {
-      color: #6c757d; 
-      font-size: 0.9em;
-    }
-
-    .doctor-details {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 8px;
-
-      .detail-item {
-        font-size: 0.9em;
-        color: #495057;
-
-        .detail-label {
-          font-weight: bold;
-        }
-      }
-    }
-
-    .doctor-bio {
+    .specialty {
+      font-size: 0.95rem;
       color: #555;
-      font-size: 0.95em;
-      margin-bottom: 12px;
-      flex-grow: 1;
-      line-height: 1.4;
     }
 
-    .view-details-button {
-      background-color: #007bff; 
-      color: white;
-      border: none;
-      padding: 8px 12px; 
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 0.9em;
-      transition: background-color 0.2s ease-in-out;
+    .experience {
+      font-size: 0.85rem;
+      color: #777;
+    }
 
-      &:hover {
-        background-color: #0056b3;
-      }
+    .bio {
+      font-size: 0.9rem;
+      color: #444;
+      margin-top: 6px;
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
     }
   }
 }

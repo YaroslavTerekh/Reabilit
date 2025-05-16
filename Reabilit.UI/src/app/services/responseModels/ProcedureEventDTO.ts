@@ -5,6 +5,7 @@ export interface ProcedureEventDTO {
     id: string,
     title: string,
     description: string,
+    result: string,
     status: ProcedureEventStatus,
     startsOn: string,
     patient: PatientDTO | null,

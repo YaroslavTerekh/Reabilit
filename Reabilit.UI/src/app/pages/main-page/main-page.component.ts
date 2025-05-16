@@ -30,6 +30,7 @@ export class MainPageComponent implements OnInit, OnDestroy {
   interval: any;
   currentRole!: string;
   searchTerm: string | null = null;
+  isAuthorized: boolean = false;
 
   constructor(
     private readonly contentService: ContentService,
@@ -39,6 +40,13 @@ export class MainPageComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
+    this.authService.$isAuthorized
+      .subscribe({
+        next: res => {
+          this.isAuthorized = res;
+        }
+      })
+
     this.authService.$currentRole.subscribe({
       next: res => {
         this.currentRole = res;

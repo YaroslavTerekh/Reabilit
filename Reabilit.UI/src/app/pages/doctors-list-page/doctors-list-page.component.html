@@ -1,18 +1,19 @@
-<div class="search-bar">
-    <input type="text" placeholder="Пошук лікаря..." [(ngModel)]="searchTerm" (input)="onSearchInput()" />
-  </div>
-  
-  <div class="doctor-list-container default-content">
-    <ng-container *ngIf="filteredDoctors.length > 0; else emptyList">
-      @for (doctor of filteredDoctors; track doctor) {
-        <app-doctor-card [doctor]="doctor"></app-doctor-card>
-      }
-    </ng-container>
-  
-    <ng-template #emptyList>
-      <div class="empty-list">
-        Список лікарів порожній.
-      </div>
-    </ng-template>
-  </div>
-  
+<div class="search-wrapper">
+  <input
+    type="text"
+    [(ngModel)]="searchTerm"
+    (input)="onSearchInput()"
+    placeholder="🔍 Пошук лікаря за ім'ям або спеціальністю..." />
+</div>
+
+<div class="doctor-grid">
+  <ng-container *ngIf="filteredDoctors.length > 0; else noDoctors">
+    @for (doctor of filteredDoctors; track doctor) {
+      <app-doctor-card [doctor]="doctor"></app-doctor-card>
+    }
+  </ng-container>
+
+  <ng-template #noDoctors>
+    <div class="no-results">Лікарів не знайдено 🕵️</div>
+  </ng-template>
+</div>

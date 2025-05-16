@@ -1,34 +1,36 @@
-.doctor-list-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 20px;
-    padding: 20px;
-  }
-  
-  .empty-list {
-    padding: 20px;
-    text-align: center;
-    color: #777;
-  }
+.search-wrapper {
+  padding: 30px 20px;
+  display: flex;
+  justify-content: center;
 
-  .search-bar {
+  input {
     width: 100%;
-    padding: 20px;
-    display: flex;
-    justify-content: center;
-  
-    input {
-      width: 100%;
-      max-width: 400px;
-      padding: 10px 15px;
-      border: 1px solid #ccc;
-      border-radius: 12px;
-      font-size: 16px;
-      outline: none;
-      transition: border-color 0.3s ease;
-  
-      &:focus {
-        border-color: #007bff;
-      }
+    max-width: 600px;
+    padding: 14px 20px;
+    border: 1px solid #ddd;
+    border-radius: 50px;
+    font-size: 16px;
+    outline: none;
+    background-color: #f9f9f9;
+    transition: border-color 0.3s;
+
+    &:focus {
+      border-color: #0d6efd;
+      background-color: #fff;
     }
   }
+}
+
+.doctor-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+  padding: 20px 30px;
+}
+
+.no-results {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #888;
+  padding: 40px 20px;
+}

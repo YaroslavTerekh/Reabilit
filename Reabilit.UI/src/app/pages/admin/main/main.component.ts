@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { AuthService } from '../../../services/authorization/auth.service';
 
 @Component({
   selector: 'app-main',
@@ -9,4 +10,11 @@ import { RouterModule } from '@angular/router';
 })
 export class MainComponent {
 
+  constructor(
+    private readonly authService: AuthService
+  ){}
+
+  logout(): void {
+    this.authService.logOut();
+  }
 }

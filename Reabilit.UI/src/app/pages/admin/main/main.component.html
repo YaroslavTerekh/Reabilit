@@ -1,32 +1,33 @@
 <div class="profile-wrapper">
-    <h2 class="title">АДМІН-ПАНЕЛЬ</h2>
-  
-    <div class="admin-table">
-      <div class="admin-row">
-        <div class="admin-label">Пацієнти</div>
-        <div class="admin-actions">
-          <button [routerLink]="['patients/all']" class="btn primary">Переглянути</button>
-          <button [routerLink]="['patient/register']" class="btn success">Додати</button>
-        </div>
-      </div>
-  
-      <div class="admin-row">
-        <div class="admin-label">Лікарі</div>
-        <div class="admin-actions">
-          <button [routerLink]="['doctors/all']" class="btn primary">Переглянути</button>
-          <button [routerLink]="['doctor/register']" class="btn success">Додати</button>
-        </div>
-      </div>
+  <h2 class="title">АДМІН-ПАНЕЛЬ</h2>
 
-      <div class="admin-row">
-        <div class="admin-label">Банери</div>
-        <div class="admin-actions">
-          <button [routerLink]="['banner/all']" class="btn primary">Переглянути</button>
-          <button [routerLink]="['banner/add']" class="btn success">Додати</button>
-        </div>
+  <div class="admin-table">
+    <div class="admin-row">
+      <div class="admin-label">Пацієнти</div>
+      <div class="admin-actions">
+        <button [routerLink]="['patients/all']" class="btn primary">Переглянути</button>
+        <button [routerLink]="['patient/register']" class="btn success">Додати</button>
+      </div>
+    </div>
+
+    <div class="admin-row">
+      <div class="admin-label">Лікарі</div>
+      <div class="admin-actions">
+        <button [routerLink]="['doctors/all']" class="btn primary">Переглянути</button>
+        <button [routerLink]="['doctor/register']" class="btn success">Додати</button>
+      </div>
+    </div>
+
+    <div class="admin-row">
+      <div class="admin-label">Банери</div>
+      <div class="admin-actions">
+        <button [routerLink]="['banner/all']" class="btn primary">Переглянути</button>
+        <button [routerLink]="['banner/add']" class="btn success">Додати</button>
       </div>
     </div>
   </div>
-  
 
-  <router-outlet></router-outlet>
+  <button (click)="logout()" class="btn logout">ВИЙТИ</button>
+</div>
+
+<router-outlet></router-outlet>

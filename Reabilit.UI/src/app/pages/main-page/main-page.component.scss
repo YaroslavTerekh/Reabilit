@@ -82,13 +82,19 @@
       margin-bottom: 24px;
       font-size: 22px;
     }
+
+    .no-events {
+      display: flex;
+      align-self: center;
+      justify-content: center;
+    }
   
     .analyzes {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 20px;
       margin: 0 auto;
-    
+
       @media (max-width: 1024px) {
         grid-template-columns: repeat(2, 1fr);
       }

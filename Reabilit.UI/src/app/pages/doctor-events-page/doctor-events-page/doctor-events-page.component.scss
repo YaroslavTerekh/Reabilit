@@ -103,6 +103,15 @@
           background-color: #43a047;
         }
       }
+    
+      .blue {
+        background-color: #4c6baf;
+        color: #fff;
+  
+        &:hover {
+          background-color: #4361a1;
+        }
+      }
   
       .red {
         background-color: #f44336;
@@ -121,3 +130,105 @@
     }
   }
   
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal {
+  background: #fff;
+  border-radius: 16px;
+  padding: 2rem;
+  width: 100%;
+  max-width: 600px;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.modal-title {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.modal-section {
+  margin-bottom: 2rem;
+
+  label {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    display: block;
+    color: #333;
+  }
+
+  textarea {
+      width: 100%;
+      height: 120px; // ← Фіксована висота (можеш змінити під себе)
+      padding: 12px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+      resize: none; // ← Забороняє змінювати розмір вручну
+      transition: border-color 0.2s;
+
+      &:focus {
+        border-color: #0077cc;
+        outline: none;
+      }
+  }
+
+  .send-btn {
+    margin-top: 0.75rem;
+    background-color: #0077cc;
+    color: #fff;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+
+    &:hover {
+      background-color: #005fa3;
+    }
+  }
+}
+
+.close-btn {
+  display: block;
+  margin: 0 auto;
+  padding: 8px 20px;
+  background-color: #e0e0e0;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  color: #333;
+  cursor: pointer;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: #c2c2c2;
+  }
+}

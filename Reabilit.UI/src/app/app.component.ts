@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { HeaderComponent } from "./common-ui/header/header.component";
-import { RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { LoginComponent } from "./modals/login/login.component";
 import { AuthService } from './services/authorization/auth.service';
 import { ToastErrorComponent } from "./modals/toast-error/toast-error.component";
 import localeUk from '@angular/common/locales/uk';
 import { registerLocaleData } from '@angular/common';
 import { NotificationsComponent } from "./modals/notifications/notifications.component";
+import { SignalrService } from './services/chat/signalr.service';
 
 registerLocaleData(localeUk, 'uk-UA');
 
@@ -25,6 +26,8 @@ export class AppComponent implements OnInit {
 
   constructor(
     private readonly authService: AuthService,
+    private readonly signalrService: SignalrService,
+    private readonly router: Router
   ) { }
 
   ngOnInit(): void {
@@ -51,10 +54,21 @@ export class AppComponent implements OnInit {
         this.isAuthorized = res;
 
         if (res) {
+          this.signalrService.startConnection();
+          this.signalrService.addTransferChartDataListener();
+
           this.authService.getCurrentUserRole()
             .subscribe({
               next: res => {
                 this.authService.$currentRole.next(res.appRole);
+
+                if(res.appRole == "Admin") {
+                  this.router.navigate(['admin']);
+                }
+
+                if(res.appRole == "Support") {
+                  this.router.navigate(['chats']);
+                }
               }
             })
         }

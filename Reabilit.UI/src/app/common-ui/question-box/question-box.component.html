@@ -1,9 +1,8 @@
 <div class="question-box default-content">
-    <h3>Залишились питання?</h3>
-    <p>Надсилайте їх вашому онлайн-асистенту</p>
-    
-    <textarea placeholder="Ваше повідомлення..."></textarea>
-    
-    <button>НАДІСЛАТИ</button>
-  </div>
-  
+  <h3>Залишились питання?</h3>
+  <p>Надсилайте їх вашому онлайн-асистенту</p>
+
+  <textarea [(ngModel)]="message" placeholder="Ваше повідомлення..." [disabled]="isSending"></textarea>
+
+  <button (click)="sendMessage()" [disabled]="isSending || !message.trim()">НАДІСЛАТИ</button>
+</div>
