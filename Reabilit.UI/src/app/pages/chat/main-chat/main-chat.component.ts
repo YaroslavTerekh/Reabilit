@@ -128,4 +128,8 @@ export class MainChatComponent implements OnInit, AfterViewInit {
       (`${c.receiver?.firstName ?? ''} ${c.receiver?.lastName ?? ''}`).toLowerCase().includes(text)
     );
   }
+
+  logout(): void {
+    this.authService.logOut();
+  }
 }

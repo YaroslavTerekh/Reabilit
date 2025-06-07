@@ -9,6 +9,7 @@ import { GetUsersRequest } from '../requestModels/GetUsersRequest';
 import { PatientDTO } from '../responseModels/PatientDTO';
 import { RegisterPatient } from '../requestModels/RegisterPatient';
 import { DoctorDTO } from '../responseModels/DoctorDTO';
+import { AssingDoctorToPatient } from '../requestModels/AssingDoctorToPatient';
 
 @Injectable({
   providedIn: 'root'
@@ -42,5 +43,9 @@ export class AdminService {
 
   public getDoctorsByText(request: GetUsersRequest): Observable<DoctorDTO[]> {
     return this.http.post<DoctorDTO[]>(`${this.baseUrl}/Doctor/doctors/get`, request)
+  }
+
+  public assignDoctorToPatient(request: AssingDoctorToPatient): Observable<any> {
+    return this.http.post(`${this.baseUrl}/Admin/patient/attach-doctor`, request)
   }
 }
