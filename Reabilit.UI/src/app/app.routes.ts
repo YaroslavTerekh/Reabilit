@@ -35,5 +35,5 @@ export const routes: Routes = [
         { path: 'doctors/all', component: AllDoctorsComponent },
         { path: 'patients/all', component: AllPatientsComponent },
     ] },
-    { path: 'chats', component: MainChatComponent}
+    { path: 'chats', component: MainChatComponent }
 ];

@@ -20,6 +20,7 @@ public class AdminController : ControllerBase
         _sender = sender;
     }
 
+    [AllowAnonymous]
     [HttpPost("regiter/patient")]
     public async Task<IActionResult> RegisterPatientAsync([FromBody] RegisterPatientCommand command, CancellationToken cancellationToken = default)
     {

@@ -5,6 +5,8 @@ import { CityDTO } from '../../../services/responseModels/CityDTO';
 import { ContentService } from '../../../services/content/content.service';
 import { RegisterDoctor } from '../../../services/requestModels/RegisterDoctor';
 import { AdminService } from '../../../services/admin/admin.service';
+import { RegisterPatient } from '../../../services/requestModels/RegisterPatient';
+import { ToastService } from '../../../services/error-handling/toast.service';
 
 @Component({
   selector: 'app-register-patient',
@@ -19,6 +21,7 @@ export class RegisterPatientComponent implements OnInit{
   constructor(
     private readonly fb: FormBuilder,
     private readonly contentService: ContentService,
+    private readonly toastService: ToastService,
     private readonly adminService: AdminService
   ) {}
 
@@ -42,27 +45,22 @@ export class RegisterPatientComponent implements OnInit{
 
   onSubmit() {
     if (this.form.valid) {
-      let request: RegisterDoctor = {
+      let request: RegisterPatient = {
         firstName: this.form.get('firstName')?.value,
         lastName: this.form.get('lastName')?.value,
         age: this.form.get('age')?.value,
         phoneNumber: this.form.get('phoneNumber')?.value,
-        degree: this.form.get('degree')?.value,
-        experienceInYear: this.form.get('experienceInYear')?.value,
-        doctorClassId: this.form.get('doctorClassId')?.value,
         password: this.form.get('password')?.value,
-      };
+        cityId: this.form.get('cityId')?.value
+      }
 
-      this.adminService.registerDoctor(request)
+      this.adminService.registerPatient(request)
         .subscribe({
-          next: res=> {
-            console.log(res);
-            
+          next: res => {
+            this.toastService.show("Успішно створено", "success")
           }
-        })
-    } else {
-      console.log(this.form.errors);
-      
+        }); 
+    } else {  
     }
   }
 }

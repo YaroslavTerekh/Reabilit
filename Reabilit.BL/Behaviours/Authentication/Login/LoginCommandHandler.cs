@@ -31,12 +31,12 @@ public class LoginCommandHandler : IRequestHandler<LoginCommand, AuthToken>
             throw new NotFoundException(ErrorMessages.Status404UserNotFound(UserRole.Default));
         }
 
-        //var result = await _userManager.CheckPasswordAsync(user, request.Password);
+        var result = await _userManager.CheckPasswordAsync(user, request.Password);
 
-        //if(!result)
-        //{
-        //    throw new RequestException(ErrorMessages.WrongPassword);
-        //}
+        if (!result)
+        {
+            throw new RequestException(ErrorMessages.WrongPassword);
+        }
 
         return _jwtService.GenerateJWT(user, (await _userManager.GetRolesAsync(user)).ToArray());
     }

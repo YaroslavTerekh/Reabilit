@@ -25,7 +25,8 @@ export class QuestionBoxComponent {
       message: this.message
     };
 
-    this.chatService.sendMessageToSupport(request).subscribe({
+    this.chatService.sendMessageToSupport(request)
+    .subscribe({
       next: () => {
         this.message = '';
         this.isSending = false;

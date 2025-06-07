@@ -33,6 +33,8 @@ public class GetPatientsQueryHandler : IRequestHandler<GetPatientsQuery, List<Pa
                         p.AppUser.LastName.Contains(request.SearchText) ||
                         p.City!.CityName.Contains(request.SearchText));
 
+        var result = await query.ToListAsync();
+
         return await query
             .Select(p => new PatientDTO
             {
@@ -44,7 +46,7 @@ public class GetPatientsQueryHandler : IRequestHandler<GetPatientsQuery, List<Pa
                     Id = p.CityId,
                     CityName = p.City!.CityName
                 },
-                Doctor = new DoctorDTO
+                Doctor = p.Doctor == null ? null : new DoctorDTO
                 {
                     Age = p.Doctor!.AppUser!.Age,
                     AppUserId = p.Doctor.AppUserId,

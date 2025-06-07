@@ -37,7 +37,7 @@ public class GetPatientQueryHandler : IRequestHandler<GetPatientQuery, PatientDT
                     Id = p.CityId,
                     CityName = p.City!.CityName
                 },
-                Doctor = new DoctorDTO
+                Doctor = p.Doctor == null ? null : new DoctorDTO
                 {
                     Age = p.Doctor!.AppUser!.Age,
                     AppUserId = p.Doctor.AppUserId,

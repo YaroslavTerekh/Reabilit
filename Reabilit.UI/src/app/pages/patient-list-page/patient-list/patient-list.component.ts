@@ -82,9 +82,6 @@ export class PatientListComponent implements OnInit {
           this.newAnalysis = { title: '', value: '', unit: '', isNormal: true, iconPath: '', id: '' };
           this.selectedFile = null;
           this.addingAnalysis = false;
-        },
-        error: (error) => {
-          console.error('Помилка при додаванні аналізу:', error);
         }
       });
   }

@@ -27,9 +27,6 @@ export class EventsPageComponent implements OnInit {
     .subscribe({
       next: res => {
         this.events = res;
-      },
-      error: err => {
-        this.toastService.show(err.error?.message, "error");
       }
     })
   }
